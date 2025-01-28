@@ -65,3 +65,23 @@
 - [Task 2] - Estimated time: [X hours]
 
 ---
+### Vladyslav Boiko
+
+#### Goals for the Week
+- (Leave empty for the first week.)
+
+#### Progress and Issues
+- Tasks completed:
+  - Wrote use cases for using the FrugalFinder app.
+  - Set up GitHub on a personal laptop.
+- Key learnings:
+  - How to use GitHub in a team.
+  - Project planning.
+- Issues encountered:
+  - No issues encountered.
+
+#### Goals for Next Week
+- [Task 1] - Help my team to develop system architecture: [2 hours]
+- [Task 2] - Research stores that have APIs or will be easier to do web scraper: [3 hours]
+
+---
