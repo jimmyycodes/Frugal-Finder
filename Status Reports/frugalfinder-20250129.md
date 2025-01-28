@@ -45,14 +45,14 @@
 
 ---
 
-### [Team Member 2]
+### Di Ramirez-Diaz
 
 #### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- (Leave empty for the first week.)
 
 #### Progress and Issues
 - Tasks completed:
-  - [Task 1]
+  - Wrote use case for adding items to cart.
   - [Task 2]
 - Key learnings:
   - [What was learned this week]
