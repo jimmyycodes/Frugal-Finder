@@ -52,13 +52,12 @@
 
 #### Progress and Issues
 - Tasks completed:
-  - Wrote use case for adding items to cart.
-  - [Task 2]
+  - Worked on living doc, setting up project requirements and guidelines.
+  - Created use case for adding items to shopping cart.
 - Key learnings:
-  - [What was learned this week]
+  - How to create use cases and handle possible exception and failure sequences.
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - Figuring out which features are required for an MVP, and which could be 'bonus' features that could be implemented later. Setup a list of our basic app requirements.
 
 #### Goals for Next Week
 - [Task 1] - Estimated time: [X hours]
