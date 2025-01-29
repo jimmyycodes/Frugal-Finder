@@ -60,8 +60,7 @@
   - Figuring out which features are required for an MVP, and which could be 'bonus' features that could be implemented later. Setup a list of our basic app requirements.
 
 #### Goals for Next Week
-- [Task 1] - Estimated time: [X hours]
-- [Task 2] - Estimated time: [X hours]
+- Create project architecture schematic. - Estimated time: [3 hours]
 
 ---
 ### Vladyslav Boiko
