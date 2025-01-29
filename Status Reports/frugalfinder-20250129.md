@@ -22,6 +22,29 @@
 
 ---
 
+### Nathan Moreland
+
+### Goals for the Week
+- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+
+### Progress and Issues
+- Tasks completed:
+  - Finished section 6 of the living doc and turned in the living doc to canvas
+  - Decided what roles people prefer in the group
+- Key learnings:
+  - Using Git
+  - pull requests / making changes
+- Issues encountered:
+  - Distributing front-end work
+  - How to use Git
+
+### Goals for Next Week
+- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
+- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
+- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+
+---
+
 ## Progress and Plans of Team Members
 
 ### Jimmy Le
@@ -36,8 +59,8 @@
 - Key learnings:
   - Learned how to scope out and plan our projects via the 3 P's.
 - Issues encountered:
-  - The schematics of data scraping multiple stores and multiple same bucketed products. 
-    - Realize that based on the time given we can dumb it down to strictly udistrict stores for the prototype. 
+  - The schematics of data scraping multiple stores and multiple same bucketed products.
+    - Realize that based on the time given we can dumb it down to strictly udistrict stores for the prototype.
 
 #### Goals for Next Week
 - A fully fleshed up system design archeticture of our app - Estimated time: [5 hours]
