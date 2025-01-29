@@ -24,24 +24,24 @@
 
 ## Progress and Plans of Team Members
 
-### [Team Member 1]
+### [David Lym]
 
 #### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- (Leave empty for the first week.)
 
 #### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Finished individual test cases on the living doc for the app.
+  - Assigned myself a role along with other team members for better structure.
 - Key learnings:
-  - [What was learned this week]
+  - We were taught to think about test cases with the telephone example, then we learned more about version control and it's uses.
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - Discussion about giving users a slider deciding whether to save money or time
+  - Solution: We decided to focus on giving users better prices first and see how we can further optimize time saving.
 
 #### Goals for Next Week
-- [Task 1] - Estimated time: [X hours]
-- [Task 2] - Estimated time: [X hours]
+- Research Webscraper for stores - Estimated time: [2 hours]
+- Integrate Google Maps API - Estimated time: [3~ hours]
 
 ---
 
