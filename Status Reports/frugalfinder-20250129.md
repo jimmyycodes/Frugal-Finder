@@ -127,3 +127,22 @@
 - [Task 2] - Research stores that have APIs or will be easier to do web scraper: [3 hours]
 
 ---
+### Ronin Crawford
+
+#### Goals for the Week
+- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+
+#### Progress and Issues
+- Tasks completed:
+  - Write a use case on the living doc
+  - Get GitHub set up on my laptop
+- Key learnings:
+  - I learned how to use git with a team and GitHub
+- Issues encountered:
+  - I messed up setting my repository on my local machine but Nathan helped me
+
+#### Goals for Next Week
+- Help develop architecture schematic: [3 hours]
+- Start researching how the AWS cloud infrastructure works [2 hours]
+
+---
