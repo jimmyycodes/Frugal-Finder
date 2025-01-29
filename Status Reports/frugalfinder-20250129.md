@@ -24,24 +24,24 @@
 
 ## Progress and Plans of Team Members
 
-### [Team Member 1]
+### Jimmy Le
 
 #### Goals for the Week
 - (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
 
 #### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Worked on living doc, setting up project requirements and guidelines.
+  - Worked on use case regarding searching and for people who know specifics of their product vs. people who don't
 - Key learnings:
-  - [What was learned this week]
+  - Learned how to scope out and plan our projects via the 3 P's.
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - The schematics of data scraping multiple stores and multiple same bucketed products. 
+    - Realize that based on the time given we can dumb it down to strictly udistrict stores for the prototype. 
 
 #### Goals for Next Week
-- [Task 1] - Estimated time: [X hours]
-- [Task 2] - Estimated time: [X hours]
+- A fully fleshed up system design archeticture of our app - Estimated time: [5 hours]
+- Begin coding our parts(I will be researchign data scraping and running scripts)
 
 ---
 
