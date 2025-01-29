@@ -22,6 +22,27 @@
 
 ---
 
+### [David Lym]
+
+#### Goals for the Week
+- (Leave empty for the first week.)
+
+#### Progress and Issues
+- Tasks completed:
+  - Finished individual test cases on the living doc for the app.
+  - Assigned myself a role along with other team members for better structure.
+- Key learnings:
+  - We were taught to think about test cases with the telephone example, then we learned more about version control and it's uses.
+- Issues encountered:
+  - Discussion about giving users a slider deciding whether to save money or time
+  - Solution: We decided to focus on giving users better prices first and see how we can further optimize time saving.
+
+#### Goals for Next Week
+- Research Webscraper for stores - Estimated time: [2 hours]
+- Integrate Google Maps API - Estimated time: [3~ hours]
+
+---
+
 ### Nathan Moreland
 
 ### Goals for the Week
