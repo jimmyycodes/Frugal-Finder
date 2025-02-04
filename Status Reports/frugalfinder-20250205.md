@@ -1,4 +1,4 @@
-# Weekly Status Report (1/28)
+# Weekly Status Report (2/28)
 
 ## Project Status
 
@@ -47,22 +47,23 @@
 ## [Nathan Moreland]
 
 ### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- The goal for this week is to get a clear idea of what we can start coding.
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Software Architecture document
+  - Database/backend diagram
 - Key learnings:
-  - [What was learned this week]
+  - How to design backend
+  - Designing UI/UX
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - We had lots of different ideas about how to web scrape/when to web scrape.
+      - We will understand more once it begins to be realized
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- Setup Firebase
+- Rough working UI
+- Understand how webscraper connects to database
 
 ---
 
