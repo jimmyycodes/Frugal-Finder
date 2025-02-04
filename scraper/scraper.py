@@ -5,55 +5,56 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 import undetected_chromedriver as uc
+import time
 
 class WaitForProductsToLoad:
-    def __init__(self, locator, timeout=10):
+    def __init__(self, locator, timeout=30, poll_frequency=1):
         self.locator = locator
         self.timeout = timeout
+        self.poll_frequency = poll_frequency
 
     def __call__(self, driver):
-        elements = driver.find_elements(*self.locator)
-        if len(elements) > 0:
-            WebDriverWait(driver, self.timeout).until(
-                lambda d: len(d.find_elements(*self.locator)) == len(elements)
-            )
-            return elements
-        return False
+        previous_count = 0
+        stable_count = 0
+        while stable_count < 3:  # Wait for the count to be stable for 3 consecutive checks
+            elements = driver.find_elements(*self.locator)
+            current_count = len(elements)
+            if current_count > previous_count:
+                previous_count = current_count
+                stable_count = 0
+            else:
+                stable_count += 1
+            time.sleep(self.poll_frequency)
+        return elements
 
+def scroll_to_bottom(driver):
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    while True:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)  # Wait for new products to load
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            break
+        last_height = new_height
 
 def scrape_dynamic_safeway(url):
-
-    '''
-    Adding user agent to the 'chromedriver' to avoid getting blocked by the website.
-    Headless mode is enabled to avoid opening a browser window.
-    '''
     chrome_options = Options()
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
     chrome_options.add_argument(f'user-agent={user_agent}')
-    chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--headless")
+
     driver = uc.Chrome(options=chrome_options)
 
-    '''
-    Load the page, wait for the products to load, then scrape for the name and price.
-    First, it creates a product_card list of all the product containers, then it iterates
-    through each card for name and price. Selectors are as follows:
-    .product-card-container: product container, contains image, price, name, etc
-    .product-title__name: product name
-    .product-price__saleprice: product price
-
-    Returns a list of dictionaries containing the name and price of each product.
-    '''
     try:
         driver.get(url)
         print("Page loaded, waiting for products to load...")
 
-        product_locator = (By.CLASS_NAME, "product-card-container")
-        product_cards = WebDriverWait(driver, 20).until(WaitForProductsToLoad(product_locator))
-        # WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "product-card-container")))
-        print("Products loaded.")
+        scroll_to_bottom(driver)
 
-        # product_cards = driver.find_elements(By.CLASS_NAME, "product-card-container")
+        product_locator = (By.CLASS_NAME, "product-card-container")
+        product_cards = WebDriverWait(driver, 30).until(WaitForProductsToLoad(product_locator))
         print(f"Found {len(product_cards)} products.")
+
         products = []
 
         for product in product_cards:
@@ -66,11 +67,11 @@ def scrape_dynamic_safeway(url):
                     "price": price
                 })
             except Exception as e:
-                print(e)
+                print(f"Error processing product: {e}")
 
         return products
     except Exception as e:
-        print(e)
+        print(f"An error occurred: {e}")
         return []
     finally:
         driver.quit()
