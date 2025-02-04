@@ -130,21 +130,21 @@
 ## [Ronin Crawford]
 
 ### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- Help develop architecture schematic: [3 hours]
+- Start researching how the AWS cloud infrastructure works [2 hours]
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Help develop architecture schematic
+  - Switched to Firebase, started research on it
 - Key learnings:
-  - [What was learned this week]
+  - I gained a much clearer picture of how the project is going to be set up and developed
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - I struggled to come up with risks for our project, which was fixed by talking more with other members of the team
+  - Originally we planned to use AWS, but then switched to Firebase, so I had to switch what I was learning about
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- Start setting up the back-end and database to get ready for a beta test - Estimated time: [2 hours]
+- Work on the testing and continuous integration plan - Estimated time: [3 hours]
 
 ---
