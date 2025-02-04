@@ -69,22 +69,22 @@
 ## [Jimmy Le]
 
 ### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- Continue to work on the webscrapper and being able to scrape all items for a specific search query.
+- Start looking at setting up Firestore DB.
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Created a scrapper file and began the development of the scrapper tool particularly focusing on being able to scrape by using the backend api website use to populate the front end instead of grabbing raw html from the front page. 
 - Key learnings:
-  - [What was learned this week]
+  - There are a lot of pre built tools that help you do this such as Insomnia and Panda.
+  - These tool help organize adn format the response request as a json back to us. Panda is specifically use to convert this data in a readbale .xml file which can be used to set up in a DB view format. 
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - learning curve for understanding these libraries are very hard.
+  - Selenium is good for virtually mimicking a browser opening to avoid bot detection however it isn't good for modern website with dynamic front end features.
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- Finish the web scrapping tool and begin setting it up to fill the DB.
+- Start looking towards setting up a rough front end to communicate to our back end.
 
 ---
 
