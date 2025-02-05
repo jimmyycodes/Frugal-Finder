@@ -3,29 +3,36 @@
 ## Project Status
 
 ### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+-Finalize Google Maps API integration within the React Native app.
+-Develop and refine the web scraper to extract grocery store data efficiently.
+-Set up and optimize the Firestore database for storing and managing scraped data.
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Successfully integrated Google Maps API into the React Native environment.
+  - Developed an initial web scraper focused on API-based data extraction.
+  - Completed the Software Architecture Document and database schema.
 - Key learnings:
-  - [What was learned this week]
+  - Improved understanding of Google Maps API integration and its cost considerations.
+  - Explored various web scraping approaches HTML vs API.
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - React Native setup was more complex than expected, requiring additional research and installation of dependencies (Android SDK, Emulator).
+    - Solution: Installed missing dependencies and refined setup documentation.
+  - Web scraping challenges: Some websites have dynamic content that Selenium struggles with.
+    - Solution: Shifted to API-based data extraction, which provides structured and easily parseable data.
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- Finalize Google Maps API integration within the React Native app. (David Lym, Nathan Moreland – Estimated time: 6 hours)
+- Develop and refine the web scraper to extract grocery store data efficiently. (Jimmy Le, Di Ramirez-Diaz – Estimated time: 8 hours)
+- Set up and optimize the Firestore database for storing and managing scraped data. (Vladyslav Boiko, Ronin Crawford – Estimated time: 5 hours)
 
 ---
 
 ### [David Lym]
 
 #### Goals for the Week
-- Continue coding the react-native front end and connecting googleMaps API
+- Continue coding the react-native front end and connecting googleMaps API with every
+feature.
 
 #### Progress and Issues
 - Tasks completed:
