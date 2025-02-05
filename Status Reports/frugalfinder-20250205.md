@@ -22,25 +22,26 @@
 
 ---
 
-## [David Lym]
+### [David Lym]
 
-### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+#### Goals for the Week
+- Continue coding the react-native front end and connecting googleMaps API
 
-### Progress and Issues
+#### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Finished setting up the dependencies and packages needed for the environment.
+  - Create a google API and learned a little more about its usuage.
 - Key learnings:
-  - [What was learned this week]
+  - I learned more about git and version controll, along with how I can use googleMaps API .
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - The environment is unusually difficult to set up, needed more research on how to reslove issues &
+  api costs.
+  - Solution: Do a little more research into what dependencies needed to be installed,
+  (had to install Android Studio for SDK & Emulator).
 
-### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+#### Goals for Next Week
+- Get a working Map in the app - Estimated time: [4 hours]
+- Figure out how to set points from algorithm into maps - Estimated time: [5~ hours]
 
 ---
 
@@ -75,10 +76,10 @@
 
 ### Progress and Issues
 - Tasks completed:
-  - Created a scrapper file and began the development of the scrapper tool particularly focusing on being able to scrape by using the backend api website use to populate the front end instead of grabbing raw html from the front page. 
+  - Created a scrapper file and began the development of the scrapper tool particularly focusing on being able to scrape by using the backend api website use to populate the front end instead of grabbing raw html from the front page.
 - Key learnings:
   - There are a lot of pre built tools that help you do this such as Insomnia and Panda.
-  - These tool help organize adn format the response request as a json back to us. Panda is specifically use to convert this data in a readbale .xml file which can be used to set up in a DB view format. 
+  - These tool help organize adn format the response request as a json back to us. Panda is specifically use to convert this data in a readbale .xml file which can be used to set up in a DB view format.
 - Issues encountered:
   - learning curve for understanding these libraries are very hard.
   - Selenium is good for virtually mimicking a browser opening to avoid bot detection however it isn't good for modern website with dynamic front end features.
@@ -119,7 +120,7 @@
 - Key learnings:
   - A lot of different system designs.
 - Issues encountered:
-  - How our Firestore database will work? Do we need indexes or if we update database super frequently it will slow it down? 
+  - How our Firestore database will work? Do we need indexes or if we update database super frequently it will slow it down?
   - What items we will parse and do we need to store every single item from each store?
 
 ### Goals for Next Week
