@@ -8,7 +8,7 @@ def get_network_data():
         headers = site['headers']
         cookies = site['cookies']
 
-        response = cureq.get(url, headers=headers, cookies=cookies, impersonate='chrome')
+        response = cureq.get(url, headers=headers, cookies=cookies, impersonate='chrome', timeout=100)
         if response.status_code == 200:
             df = pd.DataFrame(response.json())
             df.to_json(site['name'] + '_network_data.json', orient='records', lines=True)
