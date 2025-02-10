@@ -23,20 +23,25 @@ jobs:
           cache: 'npm'  # or yarn
 
       - name: Install dependencies
+        working-directory: FrugalApp
         run: npm install  # or npm install
 
       - name: Install Expo and EAS CLI
+        working-directory: FrugalApp
         run: npm install -g expo-cli eas-cli
 
       - name: Login to Expo
+        working-directory: FrugalApp
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: eas login --token $EXPO_TOKEN
 
       - name: Expo Doctor (optional)
+        working-directory: FrugalApp
         run: expo doctor
 
       - name: Run Jest tests
+        working-directory: FrugalApp
         run: npm test  # or npm test
 
 
