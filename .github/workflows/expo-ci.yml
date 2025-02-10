@@ -25,14 +25,18 @@ jobs:
       - name: Install dependencies
         run: npm install  # or npm install
 
-      - name: Setup Expo CLI
-        run: npm install -g expo-cli
+      - name: Install Expo and EAS CLI
+        run: npm install -g expo-cli eas-cli
 
-      - name: Check Expo account
-        run: expo whoami
+      - name: Login to Expo
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas login --token $EXPO_TOKEN
+
+      - name: Expo Doctor (optional)
+        run: expo doctor
 
       - name: Run Jest tests
         run: npm test  # or npm test
 
-      - name: Expo Doctor (optional)
-        run: expo doctor
+
