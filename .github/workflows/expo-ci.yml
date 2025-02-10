@@ -1,0 +1,38 @@
+name: Expo CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'  # or yarn
+
+      - name: Install dependencies
+        run: npm install  # or npm install
+
+      - name: Setup Expo CLI
+        run: npm install -g expo-cli
+
+      - name: Check Expo account
+        run: expo whoami
+
+      - name: Run Jest tests
+        run: npm test  # or npm test
+
+      - name: Expo Doctor (optional)
+        run: expo doctor
