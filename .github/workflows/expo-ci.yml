@@ -23,7 +23,7 @@ jobs:
           cache: 'npm'  # or yarn
           cache-dependency-path: FrugalApp/package-lock.json
 
-      - name: 🏗 Setup EAS
+      - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
@@ -35,7 +35,4 @@ jobs:
 
       - name: Run Jest tests
         working-directory: FrugalApp
-        run: npm test  # or npm test
-
-      - name: 🚀 Build app
-        run: eas build --non-interactive
+        run: npm test  -- --ci
