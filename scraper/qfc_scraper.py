@@ -7,8 +7,15 @@ import time
 
 PATH = '/Users/dibaggioramirez-diaz/Downloads/chromedriver-mac-arm64/chromedriver'
 URL = "https://www.qfc.com/search?query=meat&searchType=default_search"
+PRODUCT_CARD = "ProductCard"
+LOAD_MORE_BUTTON = "LoadMore__load-more-button"
+PRODUCT_DESC_TRUNC = "ProductDescription-truncated"
+PROMO_PRICE = "kds-Price-promotional"
+# PRICE_SUPERSCRIPT = "kds-Price-superscript"
+REGULAR_PRICE = "kds-Price-original"
+
 service = Service(executable_path=PATH)
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome()
 
 # Set the geolocation to Seattle, specifically the UW campus
 params = {
@@ -26,43 +33,38 @@ TODO: Add a loop to continuously click the "Load More" button until all search r
 Add all these products to a big list, then parse them out to get name, price, and image.
 """
 
-# Wait for the initial search results to be present
-try:
-  initial_elements = WebDriverWait(driver, 10).until(
-    EC.presence_of_all_elements_located((By.CLASS_NAME, "ProductCard"))
-  )
-  print(f"Found {len(initial_elements)} initial elements")
-  print("Initial elements:")
-  for element in initial_elements:
-    print(element.get_attribute('outerHTML'))
-except Exception as e:
-  print(f"Could not find initial elements: {e}")
-  driver.quit()
+# Wait for elements to load (longer timeout for React-rendered content)
+wait = WebDriverWait(driver, 15)  # Increased to 15 seconds for reliability
 
-# Wait for the "Load More" button to be present and clickable
 try:
-  load_more = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.CLASS_NAME, "LoadMore__load-more-button"))
-  )
-  print("Found load more button")
-except Exception as e:
-  print(f"Could not find load more button: {e}")
-  driver.quit()
+  #Wait until at least one product appears
+  product_cards = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, PRODUCT_CARD)))
+  print(f"Found {len(product_cards)} product cards.")
 
-# Click the "Load More" button
-load_more.click()
-print("Clicked the load more button")
+  for product in product_cards:
+    try:
+      # Extract the product name
+      name = product.find_element(By.CLASS_NAME, PRODUCT_DESC_TRUNC).text
 
-# Wait for new content to load
-try:
-  new_elements = WebDriverWait(driver, 10).until(
-    EC.presence_of_all_elements_located((By.CLASS_NAME, "ProductCard"))
-  )
-  print(f"Found {len(new_elements)} elements after clicking load more")
-  print("New elements:")
-  for element in new_elements:
-    print(element.get_attribute('outerHTML'))
+      try:
+        # Extract the price
+        # Some products have promotional prices, check if promo price exists, if not, use regular price
+        try:
+          price = product.find_element(By.CLASS_NAME, PROMO_PRICE).text
+        except Exception:
+          price = product.find_element(By.CLASS_NAME, REGULAR_PRICE).text
+
+        # Clean up the price string
+        price = price.replace("\n", "").replace(" ", "").replace("lb", "/lb")
+      except Exception:
+        price = "N/A"
+
+      print(f"Name: {name}, Price: {price}")
+
+    except Exception as e:
+      print("Error extracting product details:", e)
+
 except Exception as e:
-  print(f"Could not find new elements: {e}")
+  print("Timeout: No search results found.", e)
 
 driver.quit()
