@@ -125,21 +125,22 @@
 ## [Vladyslav Boiko]
 
 ### Goals for the Week
-- Help develop architecture schematic: [3 hours]
-- Start researching how webscrapers function [3 hours]
+- Finish AWS database setup: [3 hours]
 
 ### Progress and Issues
 - Tasks completed:
-  - Finished our system design architecture.
+  - Created AWS account (switched from Firestone DB).
+  - Created MySQL DB on AWS and accounts.
 - Key learnings:
-  - A lot of different system designs.
+  - AWS huge infrastructure is working for entry level users like me.
+  - How to use JUnit tests, test-automation and CI.
 - Issues encountered:
-  - How our Firestore database will work? Do we need indexes or if we update database super frequently it will slow it down?
-  - What items we will parse and do we need to store every single item from each store?
+  - Encountered issue of connecting AWS into VSCode AWS toolkit. 
+  - Cannot figure out how AWS IAM credentials and permissions are working to access MySQl DB from VSCode from different machines.
 
 ### Goals for Next Week
-- Work on the webscraper for Safeway/TraderJoe's food products: [5 hours]
-- Design database on Firestore DB: [5 hours]
+- Help with webscrapers: [2 hours]
+- Prepare for Beta Release [5 hours]
 
 ---
 ## [Ronin Crawford]
