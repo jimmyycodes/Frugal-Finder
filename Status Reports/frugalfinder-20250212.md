@@ -1,4 +1,4 @@
-# Weekly Status Report (2/12)
+# Weekly Status Report (3/12)
 
 ## Project Status
 
@@ -61,23 +61,22 @@
 ## [Nathan Moreland]
 
 ### Goals for the Week
-- The goal for this week is to get a clear idea of what we can start coding.
+- Finish Figma design, move onto react native building
+- help teams with AWS and wbscraping
 
 ### Progress and Issues
 - Tasks completed:
-  - Software Architecture document
-  - Database/backend diagram
+  - majority of Figma
+  - CI integration in github
 - Key learnings:
-  - How to design backend
-  - Designing UI/UX
+  - How to create CI yaml instructions for github
 - Issues encountered:
-  - We had lots of different ideas about how to web scrape/when to web scrape.
-      - We will understand more once it begins to be realized
+  - getting account tokens and using github secrets
+  - AWS connection
 
 ### Goals for Next Week
-- Setup Firebase
-- Rough working UI
-- Understand how webscraper connects to database
+- Start on react native building 2.5 hrs
+- connect backend 2 hrs
 
 ---
 
