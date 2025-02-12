@@ -85,21 +85,22 @@
 
 ### Goals for the Week
 - Continue to work on the webscrapper and being able to scrape all items for a specific search query.
-- Start looking at setting up Firestore DB.
+- Start looking at helping set up the DB
+- Look into how to test scrapers using pyTest.
+- Set up front end on my local laptop.
 
 ### Progress and Issues
 - Tasks completed:
-  - Created a scrapper file and began the development of the scrapper tool particularly focusing on being able to scrape by using the backend api website use to populate the front end instead of grabbing raw html from the front page.
+  - Finished the webscraping code for trader joes.
 - Key learnings:
-  - There are a lot of pre built tools that help you do this such as Insomnia and Panda.
-  - These tool help organize adn format the response request as a json back to us. Panda is specifically use to convert this data in a readbale .xml file which can be used to set up in a DB view format.
+  - Because we are targeting seattle based stores we decided to limit our search to currently 3 stores(QFC, Trader Joes, and Target) because of this, we found that all of these are CSR based websites meaning they render the front end through javascript and not server side.
+  - When realizing this we learned that using selenium will be the best use of our scraper.
 - Issues encountered:
-  - learning curve for understanding these libraries are very hard.
-  - Selenium is good for virtually mimicking a browser opening to avoid bot detection however it isn't good for modern website with dynamic front end features.
+  - There's a lot of things to consider when scraping using selenium. We need to handle any irregular pop ups that come onto the screen and on top of these, learn how to format the data you scrape.
 
 ### Goals for Next Week
-- Finish the web scrapping tool and begin setting it up to fill the DB.
-- Start looking towards setting up a rough front end to communicate to our back end.
+- Finish the other two scraper and begin populating this information into our DB
+- Help finish setting up the DB to connect to AWS.
 
 ---
 
