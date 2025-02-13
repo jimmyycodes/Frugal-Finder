@@ -145,21 +145,22 @@
 ## [Ronin Crawford]
 
 ### Goals for the Week
-- Help develop architecture schematic: [3 hours]
-- Start researching how the AWS cloud infrastructure works [2 hours]
+- Start setting up the back-end and database to get ready for a beta test - Estimated time: [2 hours]
+- Work on the testing and continuous integration plan - Estimated time: [3 hours]
 
 ### Progress and Issues
 - Tasks completed:
-  - Help develop architecture schematic
-  - Switched to Firebase, started research on it
+  - Worked on setting up AWS to work with our project, got stuck
+  - Helped finish the testing and CI plan
 - Key learnings:
-  - I gained a much clearer picture of how the project is going to be set up and developed
+  - I gained a lot of insight into how AWS will potentially work with our app
+  - I learned about the value of a solid testing and CI plan to help streamline development
 - Issues encountered:
-  - I struggled to come up with risks for our project, which was fixed by talking more with other members of the team
-  - Originally we planned to use AWS, but then switched to Firebase, so I had to switch what I was learning about
+  - I got very stuck trying to set up the AWS MySQL database, problems with connecting it to VSCode AWS toolkit
+  - Also could not figure out how AWS IAM credentials work, will continue to work on this week
 
 ### Goals for Next Week
-- Start setting up the back-end and database to get ready for a beta test - Estimated time: [2 hours]
-- Work on the testing and continuous integration plan - Estimated time: [3 hours]
+- Work on more on setting up AWS: [3 hours]
+- Help set up a basic back-end to prepare for the beta release: [4 hours]
 
 ---
