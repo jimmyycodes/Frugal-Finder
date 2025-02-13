@@ -14,6 +14,7 @@ PRODUCT_DESC_TRUNC = "ProductDescription-truncated"
 PROMO_PRICE = "kds-Price-promotional"
 # PRICE_SUPERSCRIPT = "kds-Price-superscript"
 REGULAR_PRICE = "kds-Price-original"
+NO_THANKS_BUTTON = "QSIWebResponsiveDialog-Layout1-SI_9yJLD8psVL8MwL4_button QSIWebResponsiveDialog-Layout1-SI_9yJLD8psVL8MwL4_button-2 QSIWebResponsiveDialog-Layout1-SI_9yJLD8psVL8MwL4_button-medium QSIWebResponsiveDialog-Layout1-SI_9yJLD8psVL8MwL4_button-border-radius-moderately-rounded"
 
 chrome_options = Options()
 chrome_options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.6943.54 Safari/537.36")
@@ -34,10 +35,30 @@ driver.get(URL)
 count = 1
 wait = WebDriverWait(driver, 20)
 
+def close_popup():
+  try:
+    no_thanks_button = WebDriverWait(driver, 2).until(
+      EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'No thanks')]"))
+    )
+
+    # if the button is not found, break
+    if no_thanks_button is None:
+      return
+
+    no_thanks_button.click()
+    print("Popup closed")
+    time.sleep(1)
+  except NoSuchElementException:
+    print("No popup found, continuing...")
+  except TimeoutException:
+    print("Popup not found within timeout")
+  except Exception as e:
+    print("Error closing popup:", e)
+
 def scrape_products():
   try:
     # add a pop-up close function here if needed
-
+    close_popup()
     product_cards = wait.until(
       EC.visibility_of_all_elements_located((By.CLASS_NAME, PRODUCT_CARD))
     )
@@ -75,6 +96,7 @@ def scrape_products():
 while True:
   scrape_products()
   try:
+    # close_popup()
     load_more_button = wait.until(
       EC.presence_of_element_located((By.CLASS_NAME, LOAD_MORE_BUTTON))
     )
@@ -83,6 +105,7 @@ while True:
       print("No more products to load.")
       break
 
+    # close_popup()
     load_more_button.click()
     count += 1
     print(f"Loading more products... {count}")
@@ -94,5 +117,6 @@ while True:
     print("Unexpected error:", e)
     break
 
-
+print("Done")
+time.sleep(120)
 driver.quit()
