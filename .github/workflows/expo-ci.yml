@@ -19,20 +19,20 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18.x
           cache: 'npm'  # or yarn
+          cache-dependency-path: FrugalApp/package-lock.json
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install dependencies
+        working-directory: FrugalApp
         run: npm install  # or npm install
 
-      - name: Setup Expo CLI
-        run: npm install -g expo-cli
-
-      - name: Check Expo account
-        run: expo whoami
-
       - name: Run Jest tests
-        run: npm test  # or npm test
-
-      - name: Expo Doctor (optional)
-        run: expo doctor
+        working-directory: FrugalApp
+        run: npm test  -- --ci
