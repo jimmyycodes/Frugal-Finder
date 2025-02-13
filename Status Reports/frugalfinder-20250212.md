@@ -106,18 +106,18 @@
 ## [Di Ramirez-Diaz]
 
 ### Goals for the Week
-- Work on system architecture/design section. Start working on web scraper.
+- Finish up web scraping for QFC, and factor out functionality to be used on a larger scale. Connect the scraping functionality to the database.
 
 ### Progress and Issues
 - Tasks completed:
-  - Finished the system architecture/design.
+  - Scraper is able to scrape product information on a single page.
 - Key learnings:
-  - Different approaches/templates for system design.
+  - Different libraries that are helpful to implement scraping such as Selenium.
 - Issues encountered:
-  - Trying to figure out scrapers. Should we scrape HTML or network requests. What are the pros and cons, HTML is more feasible but tedious. Network requests are harder to understand but information the received is easy to parse.
+  - Current implementation of scraping can't scrape products available. Need to implement something that navigates/scrolls through all products.
 
 ### Goals for Next Week
-- Have our scraper design figured out, decided our approach on either HTML or network requests.
+- Have scrapers built for QFC, Target, and Trader Joe's. Connect these scrapers to build the database.
 
 ---
 
