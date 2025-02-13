@@ -17,6 +17,11 @@ REGULAR_PRICE = "kds-Price-original"
 
 chrome_options = Options()
 chrome_options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.6943.54 Safari/537.36")
+chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+chrome_options.add_argument("--window-size=1920,1080")
+chrome_options.add_argument("--disable-notifications")
+chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+chrome_options.add_experimental_option("useAutomationExtension", False)
 driver = webdriver.Chrome(options=chrome_options)
 params = {
   "latitude": 47.655548,
@@ -27,7 +32,7 @@ params = {
 driver.execute_cdp_cmd("Emulation.setGeolocationOverride", params)
 driver.get(URL)
 count = 1
-wait = WebDriverWait(driver, 10)
+wait = WebDriverWait(driver, 20)
 
 def scrape_products():
   try:
@@ -69,7 +74,6 @@ def scrape_products():
 
 while True:
   scrape_products()
-  WebDriverWait(driver, 10)
   try:
     load_more_button = wait.until(
       EC.presence_of_element_located((By.CLASS_NAME, LOAD_MORE_BUTTON))
