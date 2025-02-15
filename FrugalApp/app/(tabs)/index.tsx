@@ -3,7 +3,6 @@ import { View, Text, TextInput, Image, ScrollView, FlatList, TouchableOpacity, S
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { WalmartIcon } from '@/components/Icons/SvgHandler';
 
 const categories = [
   { id: 1, name: 'Vegetables', image: require('@/assets/images/veggies.svg') },
