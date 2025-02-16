@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
-import {Defs, G, LinearGradient, Stop} from "react-native-svg";
+import {Defs, LinearGradient, Stop, G} from "react-native-svg";
 
 // TODO: find easier way for SVGs and SVG urls
 
@@ -110,6 +110,34 @@ const TraderJoesIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgP
   </Svg>
 );
 
+const SecondaryButton = ({ width = 280, height = 44, ...props }: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 280 44"
+    fill="none"
+    {...props}
+  >
+    <Defs>
+      <LinearGradient
+        id="paint0_linear_118_410"
+        x1="0"
+        y1="-2.93333"
+        x2="279.899"
+        y2="52.5743"
+        gradientUnits="userSpaceOnUse"
+      >
+        <Stop offset="0" stopColor="#B9B9B9" />
+        <Stop offset="1" stopColor="#B9B9B9" />
+      </LinearGradient>
+    </Defs>
+    <Path
+      d="M0 5C0 2.23858 2.23858 0 5 0H275C277.761 0 280 2.23858 280 5V39C280 41.7614 277.761 44 275 44H5C2.23857 44 0 41.7614 0 39V5Z"
+      fill="url(#paint0_linear_118_410)"
+    />
+  </Svg>
+);
+
 const PrimaryButton = ({width=398, height=79, ...props}: SvgProps) => (
   <Svg
     width={width}
@@ -141,4 +169,4 @@ const PrimaryButton = ({width=398, height=79, ...props}: SvgProps) => (
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton };
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton };
