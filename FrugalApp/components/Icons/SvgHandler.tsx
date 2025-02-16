@@ -1,5 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
+import {Defs, G, LinearGradient, Stop} from "react-native-svg";
 
 // TODO: find easier way for SVGs and SVG urls
 
@@ -109,4 +110,35 @@ const TraderJoesIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgP
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon };
+const PrimaryButton = ({width=398, height=79, ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 398 79"
+    fill="none"
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <G filter="url(#filter0_d_116_406)">
+      <Path
+        d="M9 5C9 2.23858 11.2386 0 14 0H384C386.761 0 389 2.23858 389 5V55C389 57.7614 386.761 60 384 60H14C11.2386 60 9 57.7614 9 55V5Z"
+        fill="url(#paint0_linear_116_406)"
+      />
+    </G>
+    <Defs>
+      <LinearGradient
+        id="paint0_linear_116_406"
+        x1={9}
+        y1={-3.99999}
+        x2={389}
+        y2={71}
+        gradientUnits="userSpaceOnUse"
+      >
+        <Stop offset={0.0139783} stopColor="#AEDC81" />
+        <Stop offset={1} stopColor="#6CC51D" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton };
