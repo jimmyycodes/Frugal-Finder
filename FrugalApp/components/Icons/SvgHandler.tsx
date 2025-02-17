@@ -109,4 +109,50 @@ const TraderJoesIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgP
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon };
+const GasIcon = ({width = 26, height = 26, fill = 'none', ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 26 26"
+    fill={fill}
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M18 24.9668V8.19268C18 4.8038 18 3.10936 16.9185 2.05657C15.837 1.00378 14.0965 1.00378 10.6154 1.00378H9.38462C5.90347 1.00378 4.1629 1.00378 3.08145 2.05657C2 3.10936 2 4.8038 2 8.19268V24.9668"
+      stroke="#868889"
+      strokeWidth={2}
+    />
+    <Path
+      d="M11.7143 5.99622H8.28571C7.20822 5.99622 6.66947 5.99622 6.33473 6.36176C6 6.72732 6 7.31567 6 8.49236C6 9.66906 6 10.2574 6.33473 10.623C6.66947 10.9885 7.20822 10.9885 8.28571 10.9885H11.7143C12.7918 10.9885 13.3305 10.9885 13.6653 10.623C14 10.2574 14 9.66906 14 8.49236C14 7.31567 14 6.72732 13.6653 6.36176C13.3305 5.99622 12.7918 5.99622 11.7143 5.99622Z"
+      stroke="#868889"
+      strokeWidth={2}
+    />
+    <Path
+      d="M7 18.9761H13"
+      stroke="#868889"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+    <Path
+      d="M19 24.9669H1"
+      stroke="#868889"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+    <Path
+      d="M22.0833 3.00073L23.522 4.23192C23.6827 4.36953 23.7631 4.43834 23.8363 4.50847C24.526 5.16997 24.9426 6.09703 24.9945 7.08647C25 7.19137 25 7.30152 25 7.5218V21.0978C25 22.1317 24.2165 22.9699 23.25 22.9699C22.2835 22.9699 21.5 22.1317 21.5 21.0978V21.0087C21.5 20.0239 20.7538 19.2257 19.8333 19.2257H18"
+      stroke="#868889"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+    <Path
+      d="M25 7.99304H23.5C22.6716 7.99304 22 8.77533 22 9.74034V12.558C22 13.3101 22.4131 13.9778 23.0257 14.2156L25 14.9822"
+      stroke="#868889"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, GasIcon };
