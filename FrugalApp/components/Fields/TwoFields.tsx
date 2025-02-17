@@ -2,17 +2,18 @@ import React, { FC, useState } from 'react';
 import { View, Text, TextInput, Image, StyleSheet } from 'react-native';
 import { GasIcon } from '../Icons/SvgHandler';
 
-interface TwoFieldComponentProps {
-
+interface TwoFieldProps {
+// I guess were using an interface for this one. has some benifits
   /**
    * Optional title text
    */
   title?: string;
 
-  /**
-   * Optional icon component
-   */
-  icon?: string;
+  placeholder1?: string;
+
+  placeholder2?: string;
+
+  icon?: boolean;
 
   /**
    * Called when either field updates;
@@ -21,7 +22,7 @@ interface TwoFieldComponentProps {
   onUpdate: (fieldName: 'fieldOne' | 'fieldTwo', value: string) => void;
 }
 
-const TwoFieldComponent: FC<TwoFieldComponentProps> = ({ title, icon, onUpdate }) => {
+const TwoFields: FC<TwoFieldProps> = ({ title, icon, onUpdate, placeholder1, placeholder2 }) => {
   const [fieldOneValue, setFieldOneValue] = useState('');
   const [fieldTwoValue, setFieldTwoValue] = useState('');
 
@@ -39,25 +40,29 @@ const TwoFieldComponent: FC<TwoFieldComponentProps> = ({ title, icon, onUpdate }
     <View style={styles.container}>
 
       {/* Optional Icon */}
+      {icon ? <GasIcon style={styles.image} /> : null}
 
       {/* Optional Title */}
       {title ? <Text style={styles.title}>{title}</Text> : null}
 
-      {/* First Input Field */}
-      <TextInput
-        style={styles.input}
-        placeholder="Example Field One"
-        value={fieldOneValue}
-        onChangeText={handleFieldOneChange}
-      />
+      <View style={styles.inputContainer}>
+        {/* First Input Field */}
+        <TextInput
+          style={styles.input}
+          placeholder={placeholder1 ? placeholder1 : 'Example'}
+          value={fieldOneValue}
+          onChangeText={handleFieldOneChange}
+        />
 
-      {/* Second Input Field */}
-      <TextInput
-        style={styles.input}
-        placeholder="Example Field Two"
-        value={fieldTwoValue}
-        onChangeText={handleFieldTwoChange}
-      />
+        {/* Second Input Field */}
+        <TextInput
+          style={styles.input}
+          placeholder={placeholder2 ? placeholder2 : 'Example'}
+          value={fieldTwoValue}
+          onChangeText={handleFieldTwoChange}
+        />
+      </View>
+
     </View>
   );
 };
@@ -66,26 +71,38 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    width: '90%',
+    height: 60,
+    borderRadius: 5,
   },
   image: {
     width: 24,
     height: 24,
     marginRight: 8,
+    marginLeft: 10,
   },
   title: {
     fontSize: 16,
-    fontWeight: 'bold',
     marginRight: 8,
+    marginLeft: 10,
+    fontFamily: 'Poppins',
+    color: '#868889',
   },
   input: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginHorizontal: 4,
+    marginHorizontal: 10,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 4,
+    borderRadius: 5,
+    backgroundColor: '#F4F5F9',
+    width: 120,
+    height: 45,
+    fontSize: 15,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    margin: 'auto',
   },
 });
 
-export default TwoFieldComponent;
+export default TwoFields;
