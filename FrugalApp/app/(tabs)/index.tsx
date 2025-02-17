@@ -176,7 +176,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
-      <SearchBar onFilterPress={Temp} onTextUpdate={Temp} />
+      {/* <SearchBar onFilterPress={Temp} onTextUpdate={Temp} /> */}
     </View>
   );
 }

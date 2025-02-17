@@ -1,5 +1,6 @@
 import {View, Text, StyleSheet, Pressable, TextInput} from 'react-native';
 import { SearchIcon } from '../Icons/SvgHandler';
+import { SettingsIcon } from '../Icons/SvgHandler';
 
 type searchButtonProps = {
     onFilterPress: () => void;
@@ -11,6 +12,7 @@ export default function SearchBar({onFilterPress, onTextUpdate}: searchButtonPro
       <View style={styles.container}>
         <SearchIcon />
         <TextInput placeholder='Search keywords...' />
+        <SettingsIcon />
       </View>
     );
 }
@@ -24,5 +26,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F5F9',
     borderRadius: 10,
     margin: 10,
+    width: '90%',
   },
+  text: {
+    textAlign: 'left',
+  }
 });
