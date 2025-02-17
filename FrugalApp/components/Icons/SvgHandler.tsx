@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
-
+import {Mask, Defs, Rect, LinearGradient, Stop, G} from 'react-native-svg';
 // TODO: find easier way for SVGs and SVG urls
 
 // 1.
@@ -129,6 +129,209 @@ const TraderJoesIcon = ({
   </Svg>
 );
 
+const ArrowIcon = ({
+  width = 11,
+  height = 18,
+  fill = "none",
+  ...props
+}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 11 18"
+    fill="none"
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M0.218991 8.42909L9.33522 0.220559C9.63437 -0.0735195 10.1195 -0.0735195 10.4187 0.220559C10.7178 0.514614 10.7178 0.991752 10.4187 1.28583L1.85211 8.99999L10.4179 16.7141C10.7171 17.0082 10.7171 17.4853 10.4179 17.7794C10.1188 18.0735 9.63361 18.0735 9.33449 17.7794L0.218232 9.57088C0.0587902 9.41411 -0.00956726 9.20628 0.00108242 9.00074C-0.00883102 8.79443 0.0595036 8.58663 0.218991 8.42909Z"
+      fill="#868889"
+    />
+  </Svg>
+);
+
+const RemoveCartIcon = ({
+  width = 18,
+  height = 18,
+  fill = "none",
+  ...props
+}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    fill={fill}
+    viewBox="0 0 32 32"
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path d="M11.188 4.781c6.188 0 11.219 5.031 11.219 11.219s-5.031 11.188-11.219 11.188-11.188-5-11.188-11.188 5-11.219 11.188-11.219zM11.25 17.625l3.563 3.594c0.438 0.438 1.156 0.438 1.594 0 0.406-0.406 0.406-1.125 0-1.563l-3.563-3.594 3.563-3.594c0.406-0.438 0.406-1.156 0-1.563-0.438-0.438-1.156-0.438-1.594 0l-3.563 3.594-3.563-3.594c-0.438-0.438-1.156-0.438-1.594 0-0.406 0.406-0.406 1.125 0 1.563l3.563 3.594-3.563 3.594c-0.406 0.438-0.406 1.156 0 1.563 0.438 0.438 1.156 0.438 1.594 0z" />
+  </Svg>
+);
+
+const AddToCartIcon = ({
+  width = 100,
+  height = 100,
+  fill = "none",
+  ...props
+}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 68 100"
+    fill={fill}
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Mask
+      id="path-1-outside-1_62_575"
+      maskUnits="userSpaceOnUse"
+      x={0}
+      y={0}
+      width={68}
+      height={100}
+      fill="black"
+    >
+      <Rect fill="white" width={68} height={100} />
+      <Path d="M2 0H68V100H2V0Z" />
+    </Mask>
+    <Path
+      d="M4 100V0H0V100H4Z"
+      fill="#BDBCBC"
+      mask="url(#path-1-outside-1_62_575)"
+    />
+    <Rect
+      x={2}
+      width={66}
+      height={100}
+      rx={5}
+      fill="url(#paint0_linear_62_575)"
+    />
+    <Path
+      d="M48.9957 58.1528L47.7795 44.6123C47.7534 44.3117 47.4972 44.084 47.1975 44.084H44.6957C44.661 41.8252 42.7933 40 40.5 40C38.2067 40 36.339 41.8252 36.3043 44.084H33.8025C33.4985 44.084 33.2466 44.3117 33.2205 44.6123L32.0043 58.1528C32.0043 58.1699 32 58.1871 32 58.2043C32 59.746 33.429 61 35.188 61H45.812C47.571 61 49 59.746 49 58.2043C49 58.1871 49 58.1699 48.9957 58.1528ZM40.5 41.1595C42.1461 41.1595 43.4882 42.465 43.523 44.084H37.477C37.5118 42.465 38.8539 41.1595 40.5 41.1595ZM45.812 59.8405H35.188C34.0848 59.8405 33.1901 59.119 33.1727 58.2301L34.3367 45.2479H36.2999V47.0086C36.2999 47.3307 36.5606 47.5883 36.8863 47.5883C37.2121 47.5883 37.4727 47.3307 37.4727 47.0086V45.2479H43.523V47.0086C43.523 47.3307 43.7836 47.5883 44.1094 47.5883C44.4351 47.5883 44.6957 47.3307 44.6957 47.0086V45.2479H46.6589L47.8273 58.2301C47.8099 59.119 46.9108 59.8405 45.812 59.8405Z"
+      fill="white"
+    />
+    <Defs>
+      <LinearGradient
+        id="paint0_linear_62_575"
+        x1={2}
+        y1={0}
+        x2={68.874}
+        y2={1.23147}
+        gradientUnits="userSpaceOnUse"
+      >
+        <Stop stopColor="white" />
+        <Stop offset={1} stopColor="#6CC51D" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+
+
+const SecondaryButton = ({ width = 280, height = 44, ...props }: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 280 44"
+    fill="none"
+    {...props}
+  >
+    <Defs>
+      <LinearGradient
+        id="paint0_linear_118_410"
+        x1="0"
+        y1="-2.93333"
+        x2="279.899"
+        y2="52.5743"
+        gradientUnits="userSpaceOnUse"
+      >
+        <Stop offset="0" stopColor="#B9B9B9" />
+        <Stop offset="1" stopColor="#B9B9B9" />
+      </LinearGradient>
+    </Defs>
+    <Path
+      d="M0 5C0 2.23858 2.23858 0 5 0H275C277.761 0 280 2.23858 280 5V39C280 41.7614 277.761 44 275 44H5C2.23857 44 0 41.7614 0 39V5Z"
+      fill="url(#paint0_linear_118_410)"
+    />
+  </Svg>
+);
+
+const PrimaryButton = ({width=398, height=79, ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 398 79"
+    fill="none"
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <G filter="url(#filter0_d_116_406)">
+      <Path
+        d="M9 5C9 2.23858 11.2386 0 14 0H384C386.761 0 389 2.23858 389 5V55C389 57.7614 386.761 60 384 60H14C11.2386 60 9 57.7614 9 55V5Z"
+        fill="url(#paint0_linear_116_406)"
+      />
+    </G>
+    <Defs>
+      <LinearGradient
+        id="paint0_linear_116_406"
+        x1={9}
+        y1={-3.99999}
+        x2={389}
+        y2={71}
+        gradientUnits="userSpaceOnUse"
+      >
+        <Stop offset={0.0139783} stopColor="#AEDC81" />
+        <Stop offset={1} stopColor="#6CC51D" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+
+const GasIcon = ({width = 26, height = 26, fill = 'none', ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 26 26"
+    fill={fill}
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M18 24.9668V8.19268C18 4.8038 18 3.10936 16.9185 2.05657C15.837 1.00378 14.0965 1.00378 10.6154 1.00378H9.38462C5.90347 1.00378 4.1629 1.00378 3.08145 2.05657C2 3.10936 2 4.8038 2 8.19268V24.9668"
+      stroke="#868889"
+      strokeWidth={2}
+    />
+    <Path
+      d="M11.7143 5.99622H8.28571C7.20822 5.99622 6.66947 5.99622 6.33473 6.36176C6 6.72732 6 7.31567 6 8.49236C6 9.66906 6 10.2574 6.33473 10.623C6.66947 10.9885 7.20822 10.9885 8.28571 10.9885H11.7143C12.7918 10.9885 13.3305 10.9885 13.6653 10.623C14 10.2574 14 9.66906 14 8.49236C14 7.31567 14 6.72732 13.6653 6.36176C13.3305 5.99622 12.7918 5.99622 11.7143 5.99622Z"
+      stroke="#868889"
+      strokeWidth={2}
+    />
+    <Path
+      d="M7 18.9761H13"
+      stroke="#868889"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+    <Path
+      d="M19 24.9669H1"
+      stroke="#868889"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+    <Path
+      d="M22.0833 3.00073L23.522 4.23192C23.6827 4.36953 23.7631 4.43834 23.8363 4.50847C24.526 5.16997 24.9426 6.09703 24.9945 7.08647C25 7.19137 25 7.30152 25 7.5218V21.0978C25 22.1317 24.2165 22.9699 23.25 22.9699C22.2835 22.9699 21.5 22.1317 21.5 21.0978V21.0087C21.5 20.0239 20.7538 19.2257 19.8333 19.2257H18"
+      stroke="#868889"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+    <Path
+      d="M25 7.99304H23.5C22.6716 7.99304 22 8.77533 22 9.74034V12.558C22 13.3101 22.4131 13.9778 23.0257 14.2156L25 14.9822"
+      stroke="#868889"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
 const SearchIcon = ({
   width = 20,
   height = 20,
@@ -150,4 +353,5 @@ const SearchIcon = ({
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, SearchIcon };
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon };
+
