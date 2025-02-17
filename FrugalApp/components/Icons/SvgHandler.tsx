@@ -1,7 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
-import { Mask, Defs, Rect, LinearGradient, Stop } from "react-native-svg";
-
+import {Mask, Defs, Rect, LinearGradient, Stop, G} from 'react-native-svg';
 // TODO: find easier way for SVGs and SVG urls
 
 // 1.
@@ -227,11 +226,64 @@ const AddToCartIcon = ({
   </Svg>
 );
 
-export {
-  NoIcon,
-  WalmartIcon,
-  SafeWayIcon,
-  TraderJoesIcon,
-  ArrowIcon,
-  RemoveCartIcon,
-  AddToCartIcon,};
+
+const SecondaryButton = ({ width = 280, height = 44, ...props }: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 280 44"
+    fill="none"
+    {...props}
+  >
+    <Defs>
+      <LinearGradient
+        id="paint0_linear_118_410"
+        x1="0"
+        y1="-2.93333"
+        x2="279.899"
+        y2="52.5743"
+        gradientUnits="userSpaceOnUse"
+      >
+        <Stop offset="0" stopColor="#B9B9B9" />
+        <Stop offset="1" stopColor="#B9B9B9" />
+      </LinearGradient>
+    </Defs>
+    <Path
+      d="M0 5C0 2.23858 2.23858 0 5 0H275C277.761 0 280 2.23858 280 5V39C280 41.7614 277.761 44 275 44H5C2.23857 44 0 41.7614 0 39V5Z"
+      fill="url(#paint0_linear_118_410)"
+    />
+  </Svg>
+);
+
+const PrimaryButton = ({width=398, height=79, ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 398 79"
+    fill="none"
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <G filter="url(#filter0_d_116_406)">
+      <Path
+        d="M9 5C9 2.23858 11.2386 0 14 0H384C386.761 0 389 2.23858 389 5V55C389 57.7614 386.761 60 384 60H14C11.2386 60 9 57.7614 9 55V5Z"
+        fill="url(#paint0_linear_116_406)"
+      />
+    </G>
+    <Defs>
+      <LinearGradient
+        id="paint0_linear_116_406"
+        x1={9}
+        y1={-3.99999}
+        x2={389}
+        y2={71}
+        gradientUnits="userSpaceOnUse"
+      >
+        <Stop offset={0.0139783} stopColor="#AEDC81" />
+        <Stop offset={1} stopColor="#6CC51D" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon };
