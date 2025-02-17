@@ -3,22 +3,17 @@ import { View, Text, TextInput, Image, ScrollView, FlatList, TouchableOpacity, S
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import CategoriesSection from '@/components/Categories/CategoriesSection';
+import FeaturedItems from '@/components/FeaturedItems/FeaturedItems';
 
-const categories = [
-  { id: 1, name: 'Vegetables', image: require('@/assets/images/veggies.svg') },
-  { id: 2, name: 'Fruits', image: require('@/assets/images/fruits.svg') },
-  { id: 3, name: 'Beverages', image: require('@/assets/images/beverages.svg') },
-  { id: 4, name: 'Grocery', image: require('@/assets/images/oil.svg') },
-  { id: 5, name: 'Household', image: require('@/assets/images/household.svg') },
-];
 
 const products = [
-  { id: 1, name: 'Fresh Peach', price: '$5.00 - $8.00', image: require('@/assets/images/banana.jpg') },
-  { id: 2, name: 'Organic Apple', price: '$3.00 - $5.00', image: require('@/assets/images/banana.jpg') },
-  { id: 3, name: 'Banana Bunch', price: '$2.00 - $4.00', image: require('@/assets/images/banana.jpg') },
-  { id: 4, name: 'Carrot Pack', price: '$1.50 - $3.00', image: require('@/assets/images/banana.jpg') },
-  { id: 5, name: 'Tomato Pack', price: '$2.50 - $4.50', image: require('@/assets/images/banana.jpg') },
-  { id: 6, name: 'Broccoli Bunch', price: '$3.00 - $5.00', image: require('@/assets/images/banana.jpg') },
+  { id: 1, name: 'Fresh Peach', price: '$5.00 - $8.00', image: require('@/assets/images/bagFruit.svg') },
+  { id: 2, name: 'Organic Apple', price: '$3.00 - $5.00', image: require('@/assets/images/bagFruit.svg') },
+  { id: 3, name: 'Banana Bunch', price: '$2.00 - $4.00', image: require('@/assets/images/bagFruit.svg') },
+  { id: 4, name: 'Carrot Pack', price: '$1.50 - $3.00', image: require('@/assets/images/bagFruit.svg') },
+  { id: 5, name: 'Tomato Pack', price: '$2.50 - $4.50', image: require('@/assets/images/bagFruit.svg') },
+  { id: 6, name: 'Broccoli Bunch', price: '$3.00 - $5.00', image: require('@/assets/images/bagFruit.svg') },
 ];
 
 export default function HomeScreen() {
@@ -27,6 +22,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
       {/* Search Bar */}
       <View style={styles.searchBar}>
         <Ionicons name="search" size={24} color="gray" style={styles.searchIcon} />
@@ -41,39 +37,15 @@ export default function HomeScreen() {
       {/* Ready to Save Banner */}
       <View style={styles.readyToSaveContainer}>
         <Text style={styles.readyToSaveText}>Ready to Save?</Text>
-        <Image source={require('@/assets/images/banana.jpg')} style={styles.readyToSaveImage} />
+        <Image source={require('@/assets/images/bagFruit.svg')} style={styles.readyToSaveImage} />
       </View>
 
       {/* Categories Section */}
-      <View style={styles.bannerContainer}>
-        <Text style={styles.bannerText}>Categories</Text>
-      </View>
-
-      {/* Categories */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesContainer}>
-        {categories.map((cat) => (
-          <TouchableOpacity key={cat.id} style={styles.categoryItem}>
-            <Image source={cat.image} style={styles.categoryImage} />
-            <Text style={styles.categoryText}>{cat.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      <CategoriesSection />
 
       {/* Featured Products */}
-      <Text style={styles.featuredProductsText}>Featured Products</Text>
-      <FlatList
-        data={products}
-        numColumns={2}
-        keyExtractor={(item) => item.id.toString()}
-        columnWrapperStyle={styles.productListColumn}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.productItem}>
-            <Image source={item.image} style={styles.productImage} />
-            <Text style={styles.productName}>{item.name}</Text>
-            <Text style={styles.productPrice}>{item.price}</Text>
-          </TouchableOpacity>
-        )}
-      />
+      <FeaturedItems products={products} />
+      </ScrollView>
     </SafeAreaView>
   );
 }
