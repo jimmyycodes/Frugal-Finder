@@ -25,7 +25,12 @@ type SvgProps = {
 
 // Store missing Icon SVG
 
-const NoIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgProps) => (
+const NoIcon = ({
+  width = 46,
+  height = 41,
+  fill = "none",
+  ...props
+}: SvgProps) => (
   <Svg
     width={width}
     height={height}
@@ -45,7 +50,12 @@ const NoIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgProps) =>
 
 // Walmart Icon SVG
 
-const WalmartIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgProps) => (
+const WalmartIcon = ({
+  width = 46,
+  height = 41,
+  fill = "none",
+  ...props
+}: SvgProps) => (
   <Svg
     width={width}
     height={height}
@@ -67,7 +77,12 @@ const WalmartIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgProp
 
 // SafeWay Icon SVG
 
-const SafeWayIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgProps) => (
+const SafeWayIcon = ({
+  width = 46,
+  height = 41,
+  fill = "none",
+  ...props
+}: SvgProps) => (
   <Svg
     width={width}
     height={height}
@@ -91,7 +106,12 @@ const SafeWayIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgProp
   </Svg>
 );
 
-const TraderJoesIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgProps) => (
+const TraderJoesIcon = ({
+  width = 46,
+  height = 41,
+  fill = "none",
+  ...props
+}: SvgProps) => (
   <Svg
     width={width}
     height={height}
@@ -109,4 +129,25 @@ const TraderJoesIcon = ({width = 46, height = 41, fill = 'none', ...props}: SvgP
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon };
+const SearchIcon = ({
+  width = 20,
+  height = 20,
+  fill = "none",
+  ...props
+}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 20 20"
+    fill="none"
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M18.5056 17.3283L14.0682 12.8909C15.1699 11.53 15.8332 9.80088 15.8332 7.91758C15.8332 3.55262 12.2815 0.000976562 7.91656 0.000976562C3.55161 0.000976562 0 3.55258 0 7.91754C0 12.2825 3.55164 15.8341 7.9166 15.8341C9.7999 15.8341 11.5291 15.1708 12.8899 14.0692L17.3273 18.5066C17.4898 18.6691 17.7031 18.7508 17.9165 18.7508C18.1298 18.7508 18.3432 18.6691 18.5057 18.5066C18.8315 18.1808 18.8315 17.6541 18.5056 17.3283ZM7.9166 14.1675C4.46996 14.1675 1.66666 11.3642 1.66666 7.91754C1.66666 4.47089 4.46996 1.6676 7.9166 1.6676C11.3632 1.6676 14.1665 4.47089 14.1665 7.91754C14.1665 11.3642 11.3632 14.1675 7.9166 14.1675Z"
+      fill="#868889"
+    />
+  </Svg>
+);
+
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, SearchIcon };
