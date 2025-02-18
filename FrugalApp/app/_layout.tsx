@@ -2,12 +2,17 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { View, Text, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SearchResults from '@/app/(tabs)/SearchResults';
+import { RootStackParamList } from '@/types/navigation';
 
+// Define props for custom tab bar button
 interface CustomTabBarButtonProps {
   children: React.ReactNode;
-  onPress?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
 }
 
+// Custom button component for tab bar
 function CustomTabBarButton({ children, onPress }: CustomTabBarButtonProps) {
   return (
     <TouchableOpacity
@@ -19,9 +24,21 @@ function CustomTabBarButton({ children, onPress }: CustomTabBarButtonProps) {
   );
 }
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+// Create a stack navigator for the app
+const Stack = createStackNavigator<RootStackParamList>();
 
+// Main navigator component for the app
+function AppNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Tabs" component={TabsComponent} options={{ headerShown: false }} />
+      <Stack.Screen name="SearchResults" component={SearchResults} />
+    </Stack.Navigator>
+  );
+}
+
+// Component for rendering tab navigation
+function TabsComponent() {
   return (
     <Tabs
       screenOptions={{
@@ -89,3 +106,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default AppNavigator;

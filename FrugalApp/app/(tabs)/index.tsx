@@ -5,6 +5,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import CategoriesSection from '@/components/Categories/CategoriesSection';
 import FeaturedItems from '@/components/FeaturedItems/FeaturedItems';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@/types/navigation';
+import { useNavigation } from '@react-navigation/native';
+import SearchBar from '@/components/Buttons/SearchBar';
+
 
 
 const products = [
@@ -17,22 +22,21 @@ const products = [
 ];
 
 export default function HomeScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [searchText, setSearchText] = useState('');
-  const theme = useColorScheme() ?? 'dark';
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
       {/* Search Bar */}
-      <View style={styles.searchBar}>
-        <Ionicons name="search" size={24} color="gray" style={styles.searchIcon} />
-        <TextInput
-          placeholder="Search keywords..."
-          style={styles.searchInput}
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-      </View>
+      <SearchBar
+     onFilterPress={() => console.log('Filter pressed')}
+     onTextUpdate={setSearchText}
+     onSubmit={() => {
+       navigation.navigate('SearchResults', { searchText });
+     }}
+     onFocus={() => console.log('Search focused')}
+     onFocusStop={() => console.log('Search focus stopped')}
+   />
 
       {/* Ready to Save Banner */}
       <View style={styles.readyToSaveContainer}>
