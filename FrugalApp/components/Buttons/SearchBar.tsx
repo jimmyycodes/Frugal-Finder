@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
 import { SearchIcon } from "../Icons/SvgHandler";
 import { SettingsIcon } from "../Icons/SvgHandler";
