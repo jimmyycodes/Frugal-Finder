@@ -52,7 +52,7 @@ function TabsComponent() {
           title: "Home",
           tabBarButton: (props) => (
             <CustomTabBarButton {...props}>
-              <Text style={styles.tabBarButtonText}>Home</Text>
+              <Text style={styles.tabBarButtonText}>Button</Text>
             </CustomTabBarButton>
           ),
         }}
