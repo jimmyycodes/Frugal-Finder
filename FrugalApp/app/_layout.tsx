@@ -1,6 +1,5 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { View, Text, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SearchResults from '@/app/(tabs)/SearchResults';
