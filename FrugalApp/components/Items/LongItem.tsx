@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   rightSpacer: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    width: "38%",
+    flex: 1,
   },
   removeAddContainer: {
     flexDirection: "row",
