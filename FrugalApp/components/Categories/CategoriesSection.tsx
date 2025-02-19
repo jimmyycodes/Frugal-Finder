@@ -6,8 +6,8 @@ const categories = [
   { id: 2, name: 'Fruits', image: require('@/assets/images/categoryIcons/fruits.svg') },
   { id: 3, name: 'Beverages', image: require('@/assets/images/categoryIcons/beverages.svg') },
   { id: 4, name: 'Grocery', image: require('@/assets/images/categoryIcons/groceries.svg') },
-  { id: 4, name: 'Edible Oil', image: require('@/assets/images/categoryIcons/oil.svg') },
-  { id: 5, name: 'Household', image: require('@/assets/images/categoryIcons/household.svg') },
+  { id: 5, name: 'Edible Oil', image: require('@/assets/images/categoryIcons/oil.svg') },
+  { id: 6, name: 'Household', image: require('@/assets/images/categoryIcons/household.svg') },
 ];
 
 export default function CategoriesSection() {

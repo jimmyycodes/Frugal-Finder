@@ -2,7 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SearchResults from '@/app/(tabs)/SearchResults';
+import SearchResults from '@/components/pages/SearchResults';
 import { RootStackParamList } from '@/types/navigation';
 
 // Define props for custom tab bar button

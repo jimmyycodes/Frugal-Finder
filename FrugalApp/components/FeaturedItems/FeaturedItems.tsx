@@ -16,19 +16,16 @@ export default function FeaturedItems({ products }: FeaturedItemsProps) {
   return (
     <View>
       <Text style={styles.featuredProductsText}>Featured Products</Text>
-      <FlatList
-        data={products}
-        numColumns={2}
-        keyExtractor={(item) => item.id.toString()}
-        columnWrapperStyle={styles.productListColumn}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.productItem}>
+      {/* Container that wraps all product items */}
+      <View style={styles.productsContainer}>
+        {products.map((item) => (
+          <TouchableOpacity key={item.id} style={styles.productItem}>
             <Image source={item.image} style={styles.productImage} />
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.productPrice}>{item.price}</Text>
           </TouchableOpacity>
-        )}
-      />
+        ))}
+      </View>
     </View>
   );
 }
@@ -40,6 +37,11 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   productListColumn: {
+    justifyContent: 'space-between',
+  },
+  productsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
   productItem: {
