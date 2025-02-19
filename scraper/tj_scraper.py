@@ -64,16 +64,23 @@ class TJScraper:
                     name = item.find_element(By.CSS_SELECTOR, "a.SearchResultCard_searchResultCard__titleLink__2nz6x").text
 
                     try:
+                        img_element = item.find_element(By.TAG_NAME, "img")
+                        image_url = img_element.get_attribute("src")
+                    except Exception:
+                        image_url = "N/A"
+
+                    try:
                         price = item.find_element(By.CLASS_NAME, "ProductPrice_productPrice__price__3-50j").text
                     except Exception:
                         price = "N/A"
 
-                    product_info = {"name": name, "price": price}
+                    product_info = {"name": name, "price": price, "image_url": image_url}
                     products.append(product_info)
 
                     print(f"\n🔹 Product {index}")
                     print(f"\t📌 Name:  {name}")
                     print(f"\t💰 Price: {price}")
+                    print(f"\t📸 Image: {image_url}")
                     print("-" * 40)
 
                 except Exception as e:
@@ -138,4 +145,4 @@ tj_all_products = tj_scraper.scrape(current_cart)
 for query, products in tj_all_products.items():
     print(f"\n📌 Results for '{query}':")
     for product in products:
-        print(f"🔹 {product['name']} - {product['price']}")
+        print(f"🔹 {product['name']} - {product['price']} - {product['image_url']}  ")
