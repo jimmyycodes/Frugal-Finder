@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SearchResults from '@/components/pages/SearchResults';
+import ProductDetails from '@/components/pages/ProductDetails';
 import { RootStackParamList } from '@/types/navigation';
 
 // Define props for custom tab bar button
@@ -32,6 +33,7 @@ function AppNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Tabs" component={TabsComponent} options={{ headerShown: false }} />
       <Stack.Screen name="SearchResults" component={SearchResults} />
+      <Stack.Screen name="ProductDetails" component={ProductDetails} />
     </Stack.Navigator>
   );
 }

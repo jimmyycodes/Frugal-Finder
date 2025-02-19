@@ -148,13 +148,14 @@
 
 import {View, Text, StyleSheet} from 'react-native';
 import StoreList from '@/components/Icons/StoreList';
+import ProductDetails from '@/components/pages/ProductDetails';
 
 export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
-      <StoreList stores={["Walmart", "Walmart", "Safeway", "", "Trader Joes"]} />
+      {/* <Text style={styles.text}>Home</Text> */}
+      <ProductDetails/>
     </View>
   );
 }
