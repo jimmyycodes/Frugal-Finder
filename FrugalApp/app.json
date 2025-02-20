@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "nmiv",
     "name": "FrugalApp",
     "slug": "FrugalApp",
     "version": "1.0.0",
@@ -33,7 +34,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
