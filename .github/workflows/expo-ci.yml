@@ -36,3 +36,18 @@ jobs:
       - name: Run Jest tests
         working-directory: FrugalApp
         run: npm test  -- --ci
+
+        # Set up for testing the scraper
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest FrugalApp/__tests__/test_tj_scraper.py
