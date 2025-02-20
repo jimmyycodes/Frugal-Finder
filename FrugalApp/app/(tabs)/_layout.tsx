@@ -3,8 +3,19 @@
  * The tabs bar style is defined in this file.
  */
 
-import { Tabs } from 'expo-router';
-import {View, StyleSheet, TouchableOpacity, Text, GestureResponderEvent } from 'react-native';
+// TODO: The nav button press area is too big
+
+import { Tabs } from "expo-router";
+import {
+ View, StyleSheet,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from "react-native";
+import {
+  HomepageIcon,
+  CartPageIcon,
+  HeartPageIcon,
+} from "@/components/Icons/SvgHandler";
 import BackButton from '@/components/Buttons/BackButton';
 
 // Define props for custom tab bar button
@@ -15,18 +26,10 @@ interface CustomTabBarButtonProps {
 
 // Custom button component for tab bar
 function CustomTabBarButton({ children, onPress }: CustomTabBarButtonProps) {
-  return (
-    <TouchableOpacity
-      style={styles.tabBarButton}
-      onPress={onPress}
-    >
-      {children}
-    </TouchableOpacity>
-  );
+  return <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>;
 }
 
 export default function TabsComponent() {
-
   return (
     <Tabs
       screenOptions={{
@@ -40,7 +43,9 @@ export default function TabsComponent() {
           title: "Home",
           tabBarButton: (props) => (
             <CustomTabBarButton {...props}>
-              <Text style={styles.tabBarButtonText}>Home</Text>
+              <View style={styles.tabBarButton}>
+                <HomepageIcon />
+              </View>
             </CustomTabBarButton>
           ),
         }}
@@ -51,7 +56,9 @@ export default function TabsComponent() {
           title: "Heart",
           tabBarButton: (props) => (
             <CustomTabBarButton {...props}>
-              <Text style={styles.tabBarButtonText}>Heart</Text>
+              <View style={styles.tabBarButton}>
+                <HeartPageIcon />
+              </View>
             </CustomTabBarButton>
           ),
         }}
@@ -64,28 +71,18 @@ export default function TabsComponent() {
           headerShown: false,
           headerLeft: backButton,
           tabBarButton: (props) => (
+            <View style={styles.tabBarButton}>
             <CustomTabBarButton {...props}>
-              <Text style={styles.tabBarButtonText}>Cart</Text>
+                <CartPageIcon />
             </CustomTabBarButton>
+            </View>
           ),
         }}
       />
-      <Tabs.Screen
-        name="search"
-        options={{ href: null }}
-      />
-      <Tabs.Screen
-        name="productDetails"
-        options={{ href: null }}
-      />
-      <Tabs.Screen
-        name="productDetailsMock"
-        options={{ href: null }}
-      />
-      <Tabs.Screen
-        name="cart"
-        options={{ href: null }}
-        />
+      <Tabs.Screen name="search" options={{ href: null }} />
+      <Tabs.Screen name="productDetails" options={{ href: null }} />
+      <Tabs.Screen name="productDetailsMock" options={{ href: null }} />
+      <Tabs.Screen name="cart" options={{ href: null }} />
     </Tabs>
   );
 }
@@ -100,21 +97,16 @@ const backButton = () => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around', // Distribute buttons evenly
-    alignItems: 'center',
-    height: 70,
-    backgroundColor: 'white',
-    paddingHorizontal: 20, // Add padding to the left and right
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    height: 57,
+    borderTopRightRadius: 17,
+    borderTopLeftRadius: 17,
   },
   tabBarButton: {
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'green',
-    borderRadius: 30, // Half of the width/height to make it circular
-    margin: 10,
+    width: 47,
+    left: 43,
   },
   tabBarButtonText: {
     color: 'white',
