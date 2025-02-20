@@ -5,13 +5,30 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import requests
 import os
+from dotenv import find_dotenv, load_dotenv
+import mysql.connector
 from urllib.parse import urlparse
 import pandas as pd
 import datetime
+import re
 
 class TJScraper:
 
     def __init__(self):
+        # Load environment variables
+        dotenv_path = find_dotenv()
+
+        load_dotenv(dotenv_path)
+        # Initialize MySQL connection
+        self.db_connection = mysql.connector.connect(
+            host=os.getenv("MYSQL_HOST"),
+            user=os.getenv("MYSQL_USER"),
+            password=os.getenv("MYSQL_PASSWORD"),
+            database=os.getenv("MYSQL_DATABASE")
+        )
+
+        self.cursor = self.db_connection.cursor()
+
         # Initialize WebDriver
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
@@ -23,6 +40,32 @@ class TJScraper:
         # Open Trader Joe's search results page
         self.url = "https://www.traderjoes.com/home/search?q={}&section=products&global=yes"
 
+
+    def close_connection(self):
+        """Close database connection."""
+        self.cursor.close()
+        self.db_connection.close()
+
+    def insert_into_db(self, name, price, search_query, image_path):
+        """Insert product data into MySQL database."""
+        try:
+                    # Remove any non-numeric characters from the price (like $)
+            price = re.sub(r"[^\d.]", "", price) if price != "N/A" else None
+
+            # Convert price to float if it's valid
+            price = float(price) if price else None
+
+            sql = """
+                INSERT INTO tjproducts (name, price, searchQuery, imagePath)
+                VALUES (%s, %s, %s, %s)
+            """
+
+            values = (name, price, search_query, image_path)
+            self.cursor.execute(sql, values)
+            self.db_connection.commit()
+            print(f"✅ Inserted into DB: {name} - {price}")
+        except Exception as e:
+            print(f"❌ Error inserting into DB: {e}")
 
     # Close the cookie banner if it exists
     def close_cookie_banner(self):
@@ -79,16 +122,11 @@ class TJScraper:
             print(f"Error downloading image: {e}")
             return "N/A"
 
-    def scrape_page(self):
-        products = []
+    def scrape_page(self, search_query):
         try:
             self.close_newsletter_popup()
             # Wait until at least one product appears
             items = self.wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "SearchResultCard_searchResultCard__3V-_h")))
-
-            print("\n" + "=" * 80)
-            print(f"📌 Found {len(items)} items on this page.")
-            print("=" * 80)
 
             for index, item in enumerate(items, start = 1):
                 try:
@@ -98,8 +136,8 @@ class TJScraper:
                     try:
                         img_element = item.find_element(By.TAG_NAME, "img")
                         image_url = img_element.get_attribute("src")
+
                         # Download the image and get local path
-                        print(f"Downloading image: {image_url}")
                         local_image_path = self.download_image(image_url, name)
 
                     except Exception:
@@ -111,20 +149,7 @@ class TJScraper:
                     except Exception:
                         price = "N/A"
 
-                    product_info = {
-                        "name": name,
-                        "price": price,
-                        "image_url": image_url,
-                        "local_image_path": local_image_path
-                    }
-                    products.append(product_info)
-
-                    print(f"\n🔹 Product {index}")
-                    print(f"\t📌 Name:  {name}")
-                    print(f"\t💰 Price: {price}")
-                    print(f"\t📸 Image: {image_url}")
-                    print(f"\t💾 Saved: {local_image_path}")
-                    print("-" * 40)
+                    self.insert_into_db(name, price, search_query, local_image_path)
 
                 except Exception as e:
                     print("Error extracting product details:", e)
@@ -133,23 +158,17 @@ class TJScraper:
         except Exception as e:
             print("Timeout: No search results found.", e)
 
-        return products
-
-
     def scrape(self, queries):
-        all_products = {}
 
         for query in queries:
             print(f"\n🔍 Searching for '{query}' at Trader Joe's...\n")
 
             self.driver.get(self.url.format(query))
-            count = 1
 
             self.close_cookie_banner()
-            query_products = []
 
             while True:
-                query_products.extend(self.scrape_page())
+                self.scrape_page(query)
 
                 try:
                     next_button = self.driver.find_element(By.CSS_SELECTOR, ".Pagination_pagination__arrow_side_right__9YUGr")
@@ -160,48 +179,14 @@ class TJScraper:
 
                     next_button.click()
 
-                    count += 1
-                    print("Navigating to next page ", count)
-
                     time.sleep(1)
                 except Exception as e:
                     print("Pagination button not found or error:", e)
                     break
-            all_products[query] = query_products
 
         # Close browser
         self.driver.quit()
-
-        return all_products
-
-    def save_to_csv(self, data, filename=None):
-        """Save product data to CSV file."""
-        try:
-            # If filename not provided, use timestamp
-            if filename is None:
-                filename = f"trader_joes_products_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
-
-            # Flatten the nested dictionary structure
-            flattened_data = []
-            for query, products in data.items():
-                for product in products:
-                    product_data = {
-                        'search_query': query,
-                        'name': product['name'],
-                        'price': product['price'],
-                        'local_image_path': product['local_image_path']
-                    }
-                    flattened_data.append(product_data)
-
-            # Create and save DataFrame
-            df = pd.DataFrame(flattened_data)
-            df.to_csv(filename, index=False)
-            print(f"✅ Data saved to {filename}")
-            return filename
-        except Exception as e:
-            print(f"❌ Error saving data to CSV: {e}")
-            return None
-
+        self.close_connection()
 
 # Sample queries to search
 current_cart = ["meat"]
@@ -209,14 +194,4 @@ current_cart = ["meat"]
 # Create an instance of the scraper
 tj_scraper = TJScraper()
 
-# Scrape all queries
-tj_all_products = tj_scraper.scrape(current_cart)
-
-# Print all collected data
-for query, products in tj_all_products.items():
-    print(f"\n📌 Results for '{query}':")
-    for product in products:
-        print(f"🔹 {product['name']} - {product['price']} - {product['image_url']}  ")
-
-# Update the end of the script to save the results
-tj_scraper.save_to_csv(tj_all_products)
+tj_scraper.scrape(current_cart)
