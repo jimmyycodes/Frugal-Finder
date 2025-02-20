@@ -3,12 +3,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import requests
+import os
+from urllib.parse import urlparse
+import pandas as pd
+import datetime
 
 class TJScraper:
 
     def __init__(self):
         # Initialize WebDriver
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        self.driver = webdriver.Chrome(options=options)
 
         # Wait for elements to load (longer timeout for React-rendered content)
         self.wait = WebDriverWait(self.driver, 20)
@@ -47,6 +54,31 @@ class TJScraper:
         except Exception:
             print("✅ No newsletter pop-up detected, continuing...")
 
+    def download_image(self, image_url, product_name):
+        """Download and save image from URL."""
+        try:
+            if image_url == "N/A":
+                return "N/A"
+
+            # Create images directory if it doesn't exist
+            if not os.path.exists('images'):
+                os.makedirs('images')
+
+            # Clean filename of invalid characters
+            clean_name = "".join(c for c in product_name if c.isalnum() or c in (' ', '-', '_')).rstrip()
+            filename = f'images/{clean_name}.jpg'
+
+            # Download image
+            response = requests.get(image_url)
+            if response.status_code == 200:
+                with open(filename, 'wb') as f:
+                    f.write(response.content)
+                return filename
+            return "Bad status code"
+        except Exception as e:
+            print(f"Error downloading image: {e}")
+            return "N/A"
+
     def scrape_page(self):
         products = []
         try:
@@ -66,21 +98,32 @@ class TJScraper:
                     try:
                         img_element = item.find_element(By.TAG_NAME, "img")
                         image_url = img_element.get_attribute("src")
+                        # Download the image and get local path
+                        print(f"Downloading image: {image_url}")
+                        local_image_path = self.download_image(image_url, name)
+
                     except Exception:
                         image_url = "N/A"
+                        local_image_path = "N/A"
 
                     try:
                         price = item.find_element(By.CLASS_NAME, "ProductPrice_productPrice__price__3-50j").text
                     except Exception:
                         price = "N/A"
 
-                    product_info = {"name": name, "price": price, "image_url": image_url}
+                    product_info = {
+                        "name": name,
+                        "price": price,
+                        "image_url": image_url,
+                        "local_image_path": local_image_path
+                    }
                     products.append(product_info)
 
                     print(f"\n🔹 Product {index}")
                     print(f"\t📌 Name:  {name}")
                     print(f"\t💰 Price: {price}")
                     print(f"\t📸 Image: {image_url}")
+                    print(f"\t💾 Saved: {local_image_path}")
                     print("-" * 40)
 
                 except Exception as e:
@@ -131,9 +174,37 @@ class TJScraper:
 
         return all_products
 
+    def save_to_csv(self, data, filename=None):
+        """Save product data to CSV file."""
+        try:
+            # If filename not provided, use timestamp
+            if filename is None:
+                filename = f"trader_joes_products_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+
+            # Flatten the nested dictionary structure
+            flattened_data = []
+            for query, products in data.items():
+                for product in products:
+                    product_data = {
+                        'search_query': query,
+                        'name': product['name'],
+                        'price': product['price'],
+                        'local_image_path': product['local_image_path']
+                    }
+                    flattened_data.append(product_data)
+
+            # Create and save DataFrame
+            df = pd.DataFrame(flattened_data)
+            df.to_csv(filename, index=False)
+            print(f"✅ Data saved to {filename}")
+            return filename
+        except Exception as e:
+            print(f"❌ Error saving data to CSV: {e}")
+            return None
+
 
 # Sample queries to search
-current_cart = ["meat", "eggs"]
+current_cart = ["meat"]
 
 # Create an instance of the scraper
 tj_scraper = TJScraper()
@@ -146,3 +217,6 @@ for query, products in tj_all_products.items():
     print(f"\n📌 Results for '{query}':")
     for product in products:
         print(f"🔹 {product['name']} - {product['price']} - {product['image_url']}  ")
+
+# Update the end of the script to save the results
+tj_scraper.save_to_csv(tj_all_products)
