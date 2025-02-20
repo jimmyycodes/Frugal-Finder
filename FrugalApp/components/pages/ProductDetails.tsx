@@ -15,13 +15,29 @@ export default function ProductDetails() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Product Details</Text>
-      {/* <Image /> */}
-      <Text>$5.00-$8.00</Text>
-      <Text>Organic Lemons</Text>
-      <Text>1.50 lbs</Text>
-      <StoreList stores={["", "", "", ""]} />
-      <Text>Description</Text>
+      <View style={styles.header}>
+        <View style={styles.imageHeader}>
+          <Image
+            style={styles.HeaderImage}
+            source={{
+              uri: "https://www.producemarketguide.com/media/user_RZKVrm5KkV/504/lemon_commodity-page.png",
+            }}
+          />
+        </View>
+
+        <View style={styles.favoriteButton}>
+          <FavButton onPress={() => null} />
+        </View>
+
+        <View style={styles.textHeader}>
+          <Text style={styles.price}>$5.00-$8.00</Text>
+          <Text style={styles.title}>Organic Lemons</Text>
+          <Text style={styles.ammount}>1.50 lbs</Text>
+          <StoreList stores={["walmart", "Safeway", "", "", "Trader joes"]} />
+          <Text>Description</Text>
+        </View>
+      </View>
+
       <PrimaryButton title="Add to Cart" onPress={() => null} />
       <View style={styles.longItemContainer}>
         <LongItem
@@ -39,7 +55,6 @@ export default function ProductDetails() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -48,9 +63,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
-  text: {
-    fontSize: 18,
-    marginBottom: 20,
-    color: "black",
+  HeaderImage: {
+    width: "100%",
+    height: 200,
+  },
+  header: {
+    width: "100%",
+  },
+  imageHeader: {},
+  textHeader: {
+    padding: 10,
+  },
+  favoriteButton: {
+    position: "absolute",
+    right: 20,
+    top: 210,
+  },
+  price: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#6CC51D",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  ammount: {
+    color: "#868889",
   },
 });
