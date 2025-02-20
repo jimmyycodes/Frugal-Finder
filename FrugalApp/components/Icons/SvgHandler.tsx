@@ -417,4 +417,3 @@ const EmptyHeartIcon = ({width = 24, height = 24, ...props}: SvgProps) => (
 );
 
 export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon, HeartFillIcon, EmptyHeartIcon };
-
