@@ -86,5 +86,6 @@ const styles = StyleSheet.create({
   },
   settingsIcon: {
     marginLeft: "auto",
+    right: 10,
   },
 });
