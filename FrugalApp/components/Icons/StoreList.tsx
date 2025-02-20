@@ -25,10 +25,7 @@ function storesToIcons(stores: Set<string>): JSX.Element[] {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    alignItems: "center",
     flexDirection: "row",
     gap: 2,
-    padding: 10,
   },
 });
