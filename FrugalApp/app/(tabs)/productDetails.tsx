@@ -5,7 +5,7 @@ import { useState } from "react";
 import LongItem from "@/components/Items/LongItem";
 import { PlusIcon, MinusIcon } from "@/components/Icons/SvgHandler";
 import FavButton from "@/components/Buttons/FavButton";
-
+import BackButton from "@/components/Buttons/BackButton";
 
 export default function productDetails() {
 
@@ -19,6 +19,9 @@ export default function productDetails() {
   return (
     <ScrollView>
       <View style={styles.container}>
+        <View style={styles.backButton}>
+          <BackButton />
+        </View>
         <View style={styles.header}>
           <View style={styles.imageHeader}>
             <Image
@@ -212,5 +215,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 10,
+  },
+  backButton: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    zIndex: 100,
   },
 });
