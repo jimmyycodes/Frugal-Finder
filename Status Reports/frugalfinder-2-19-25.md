@@ -66,22 +66,20 @@
 ## [Jimmy Le]
 
 ### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- Finish setting up tests for the scrapper and setting up the CI/CD pipeline for this. 
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Setting up the database through azure and connecting it to the scrapper
 - Key learnings:
-  - [What was learned this week]
+  - I learned how to set up the database through azure and connect it to the scrapper.
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - I had some issues with connection to the server due to firewall and security issues. 
+  - There were also some issues with the team on being able to set this up as well. 
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- Begin working on the other scrapers and being able to have that set up. Estimated time: [4 hours]
+- Start looking at how to build a algorithm to compare prices for items to generate most ideal shopping plan. Estimated time: [3 hours]
 
 ---
 

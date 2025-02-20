@@ -7,16 +7,16 @@
 
 import { Tabs } from "expo-router";
 import {
-  StyleSheet,
+ View, StyleSheet,
   TouchableOpacity,
   GestureResponderEvent,
-  View,
 } from "react-native";
 import {
   HomepageIcon,
   CartPageIcon,
   HeartPageIcon,
 } from "@/components/Icons/SvgHandler";
+import BackButton from '@/components/Buttons/BackButton';
 
 // Define props for custom tab bar button
 interface CustomTabBarButtonProps {
@@ -64,9 +64,12 @@ export default function TabsComponent() {
         }}
       />
       <Tabs.Screen
-        name="cart"
+        name="cartMock"
         options={{
-          title: "Cart",
+          title: "Shopping Cart",
+          headerTitleAlign: 'center',
+          headerShown: false,
+          headerLeft: backButton,
           tabBarButton: (props) => (
             <View style={styles.tabBarButton}>
             <CustomTabBarButton {...props}>
@@ -83,6 +86,14 @@ export default function TabsComponent() {
   );
 }
 
+const backButton = () => {
+  return (
+    <View style={styles.backButton}>
+      <BackButton />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   tabBar: {
     flexDirection: "row",
@@ -96,4 +107,14 @@ const styles = StyleSheet.create({
     width: 47,
     left: 43,
   },
+  tabBarButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 20,
+    left: 30,
+    zIndex: 100,
+  }
 });
