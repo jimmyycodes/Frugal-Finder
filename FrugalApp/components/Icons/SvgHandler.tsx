@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
-import {Mask, Defs, Rect, LinearGradient, Stop, G, ClipPath} from 'react-native-svg';
+import {Mask, Defs, Rect, LinearGradient, Stop, G, ClipPath, Line} from 'react-native-svg';
 // TODO: find easier way for SVGs and SVG urls
 
 // 1.
@@ -416,4 +416,49 @@ const EmptyHeartIcon = ({width = 24, height = 24, ...props}: SvgProps) => (
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon, HeartFillIcon, EmptyHeartIcon };
+const PlusIcon = ({width=15, height=15, fill="none", ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 15 15"
+    fill={fill}
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Line
+      x1={7.79639}
+      y1={1}
+      x2={7.79639}
+      y2={13.1538}
+      stroke="#6CC51D"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+    <Path
+      d="M13.5586 7.0769L1 7.0769"
+      stroke="#6CC51D"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+const MinusIcon = ({width=15, height=15, fill="none", ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 15 2"
+    fill={fill}
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M13.8333 0.999999L0.999918 0.999999"
+      stroke="#6CC51D"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon, HeartFillIcon, EmptyHeartIcon, PlusIcon, MinusIcon };

@@ -122,9 +122,9 @@ export default function LongItem({
 
         <Text style={styles.title}>{name}</Text>
 
-        <View style={styles.ammountsCOntainer}>
+        <View style={styles.amountsCOntainer}>
           <Text style={styles.price}>{"$" + price.toFixed(2)}</Text>
-          <Text style={styles.ammount}>{amount}</Text>
+          <Text style={styles.amount}>{amount}</Text>
         </View>
       </View>
       <View style={styles.rightSpacer}>{canAdd ? addButton : removeX}</View>
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 6,
   },
-  ammountsCOntainer: {
+  amountsCOntainer: {
     flexDirection: "row",
     gap: 20,
   },
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   price: {
     color: "#6CC51D",
   },
-  ammount: {
+  amount: {
     color: "#868889",
   },
   rightSpacer: {
