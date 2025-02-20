@@ -82,6 +82,7 @@ export default function TabsComponent() {
       <Tabs.Screen name="search" options={{ href: null }} />
       <Tabs.Screen name="productDetails" options={{ href: null }} />
       <Tabs.Screen name="productDetailsMock" options={{ href: null }} />
+      <Tabs.Screen name="cart" options={{ href: null }} />
     </Tabs>
   );
 }
