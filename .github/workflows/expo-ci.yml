@@ -32,6 +32,7 @@ jobs:
       - name: Install dependencies
         working-directory: FrugalApp
         run: npm install  # or npm install
+        #install scraper dependencies
 
       - name: Run Jest tests
         working-directory: FrugalApp
