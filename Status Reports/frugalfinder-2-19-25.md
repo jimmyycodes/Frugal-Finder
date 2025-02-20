@@ -25,22 +25,21 @@
 ### David Lym
 
 ### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- Have UI ready for demo this week
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Build a rough protoype and was able to achieve a build
+  - Completed home screen as per the figma
 - Key learnings:
-  - [What was learned this week]
+  - certain react native aspects aren't shared with general react, very specific imports.
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - Time completion before beta testing is close.
+  - Dependencies are messeing up sometimes.
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- Backend setup (AWS or Azure)(Whole Team) - Estimated time: [5 hours]
+- Frontend cleaned up (Nathan David) - Estimated time: [3 hours]
 
 ---
 
