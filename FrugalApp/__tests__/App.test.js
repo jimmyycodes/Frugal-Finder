@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react-native';
-import home from '../app/(tabs)/home';
+import Home from '../app/(tabs)/home';
 import React from 'react';
 
 jest.mock('@expo/vector-icons', () => ({
@@ -12,7 +12,7 @@ jest.mock('@expo/vector-icons', () => ({
 // Post-conditions: App renders correctly
 test('App renders correctly', () => {
   const tree = render(
-    <home />
+    <Home />
   );
   expect(tree).toBeTruthy();
 });
