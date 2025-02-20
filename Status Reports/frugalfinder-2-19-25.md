@@ -132,21 +132,21 @@
 ## [Ronin Crawford]
 
 ### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- Work more on setting up AWS: [4 hours]
+- Help set up a basic back-end to prepare for the beta release: [4 hours]
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Helped create MySQL database using AWS
+  - Worked on connecting AWS database to VSCode, but still did not manage to get it to work (temporarily switching to Azure)
 - Key learnings:
-  - [What was learned this week]
+  - I learned a lot about how a large-scale cloud service like AWS functions, particularly how complicated it is to use
+  - I learned more about how the web scraper works from Jimmy, potential problems we could run into
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - Still stuck with AWS, switching to Microsoft Azure temporarily because we have used it before to be ready for the beta test
+  - Did not end up helping set up the back-end
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- Work on optimizing our Azure database, integrating it effectively with the front-end and scraper: [5 hours]
 
 ---
