@@ -111,8 +111,8 @@ export default function LongItem({
       }
     : { opacity: fadeAnim };
 
-  const Item = (
-    <Animated.View style={[styles.container, animatedStyle]}> //TODO: Place green fade over entiere item
+  const Item = ( //TODO: Place green fade over entiere item
+    <Animated.View style={[styles.container, animatedStyle]}>
       <Image source={{ uri: image }} style={styles.image} />
       <View style={styles.info}>
         <View style={styles.iconContainer}>
