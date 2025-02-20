@@ -1,8 +1,6 @@
 import { render } from '@testing-library/react-native';
-import HomeScreen from '../app/(tabs)/index';
+import home from '../app/(tabs)/home';
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-
 
 jest.mock('@expo/vector-icons', () => ({
   Ionicons: () => null,
@@ -14,9 +12,7 @@ jest.mock('@expo/vector-icons', () => ({
 // Post-conditions: App renders correctly
 test('App renders correctly', () => {
   const tree = render(
-    <NavigationContainer>
-      <HomeScreen />
-    </NavigationContainer>
+    <home />
   );
   expect(tree).toBeTruthy();
 });
