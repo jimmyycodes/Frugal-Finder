@@ -1,21 +1,27 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
-import StoreList from "../Icons/StoreList";
-import FavButton from "../Buttons/FavButton";
+import StoreList from "../../components/Icons/StoreList";
+import FavButton from "../../components/Buttons/FavButton";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "@/types/navigation";
-import { StackNavigationProp } from "@react-navigation/stack";
-import PrimaryButton from "../Buttons/PrimaryButton";
-import LongItem from "../Items/LongItem";
+import PrimaryButton from "../../components/Buttons/PrimaryButton";
+import LongItem from "../../components/Items/LongItem";
 import { ScrollView } from "react-native";
-import { PlusIcon, MinusIcon } from "../Icons/SvgHandler";
+import { PlusIcon, MinusIcon } from "../../components/Icons/SvgHandler";
 import { useState } from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-type ProductDetailsRouteProp = RouteProp<RootStackParamList, "ProductDetails">;
+type ProductDetailsMockRouteProp = RouteProp<
+  RootStackParamList,
+  "ProductDetailsMock"
+>;
+
 type SearchResultsNavigationProp = StackNavigationProp<RootStackParamList, "SearchResults">;
 
-export default function ProductDetails() {
-  const navigation = useNavigation();
-  const route = useRoute<ProductDetailsRouteProp>();
+  // TODO: Long item names can be too long
+
+export default function ProductDetailsMock() {
+  const navigation = useNavigation<SearchResultsNavigationProp>();
+  const route = useRoute<ProductDetailsMockRouteProp>();
   const productId = route.params?.productId || "No product ID provided";
 
   const [quantity, setQuantity] = useState(1);
@@ -33,7 +39,7 @@ export default function ProductDetails() {
             <Image
               style={styles.HeaderImage}
               source={{
-                uri: "https://www.producemarketguide.com/media/user_RZKVrm5KkV/504/lemon_commodity-page.png",
+                uri: "https://target.scene7.com/is/image/Target/GUEST_27ecaa50-cac2-49f8-9a9b-e59800e28d8a?wid=1200&hei=1200&qlt=80&fmt=webp",
               }}
             />
           </View>
@@ -43,10 +49,10 @@ export default function ProductDetails() {
           </View>
 
           <View style={styles.textHeader}>
-            <Text style={styles.price}>$5.00-$8.00</Text>
-            <Text style={styles.title}>Organic Lemons</Text>
+            <Text style={styles.price}>$4.29-$6.49</Text>
+            <Text style={styles.title}>Green Grapes</Text>
             <Text style={styles.amount}>3 results</Text>
-            <StoreList stores={["walmart", "Safeway", "", "", "Trader joes"]} />
+            <StoreList stores={["Target", "Walmart", "Trader joes"]} />
             <Text style={styles.desc}>
               {
                 "Organic Mountain works as a seller for many organic growers of organic lemons. Organic lemons are easy to spot in your produce aisle. They are just like regular lemons, but they will usually have a few more scars on the outside of the lemon skin. Organic lemons are considered to be the world's finest lemon for juicing"
@@ -62,33 +68,36 @@ export default function ProductDetails() {
         />
 
         <View style={styles.primaryButtonCont}>
-          <PrimaryButton title="Add to Cart" onPress={() => null} />
+          <PrimaryButton
+            title="Add to Cart"
+            onPress={() => null}
+          />
         </View>
 
         <View style={styles.longItemContainer}>
           <LongItem
-            name="Organic Lemmons"
-            store="Walmart"
+            name="Extra Large Green Se..."
+            store="Target"
             canAdd={true}
-            image="https://api.algobook.info/v1/randomimage?category=food"
+            image="https://target.scene7.com/is/image/Target/GUEST_27ecaa50-cac2-49f8-9a9b-e59800e28d8a?wid=1200&hei=1200&qlt=80&fmt=webp"
             amount="1.50 lbs"
-            price={3.0}
+            price={4.29}
           />
           <LongItem
-            name="Organic Lemmons"
+            name="Fresh Green Seedles..."
             store="Walmart"
             canAdd={true}
-            image="https://api.algobook.info/v1/randomimage?category=food"
-            amount="1.50 lbs"
-            price={3.0}
+            image="https://i5.walmartimages.com/seo/Fresh-Green-Seedless-Grapes-2-25-lbs-Bag-Est_9b543e57-d12c-4b2f-af70-cbfc8166dce1.19eafb20170233f7df74f7a6c5ff5530.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF"
+            amount="2.25 lbs"
+            price={5.13}
           />
           <LongItem
-            name="Organic Lemmons"
-            store="Walmart"
+            name="Red and Green Grape..."
+            store="Trader Joes"
             canAdd={true}
-            image="https://api.algobook.info/v1/randomimage?category=food"
-            amount="1.50 lbs"
-            price={3.0}
+            image="https://www.traderjoes.com/content/dam/trjo/products/m20701/91984.png/jcr:content/renditions/webp-640.webp"
+            amount="2 lbs"
+            price={6.49}
           />
         </View>
       </View>
