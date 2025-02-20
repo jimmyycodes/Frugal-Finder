@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
-import {Mask, Defs, Rect, LinearGradient, Stop, G} from 'react-native-svg';
+import {Mask, Defs, Rect, LinearGradient, Stop, G, ClipPath, Line} from 'react-native-svg';
 // TODO: find easier way for SVGs and SVG urls
 
 // 1.
@@ -377,5 +377,88 @@ const SettingsIcon = ({width=20, height=17, fill="#868889", ...props}: SvgProps)
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon };
+const HeartFillIcon = ({width = 24, height = 24, ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 18 16"
+    fill="none"
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M16.5721 1.56581C15.6403 0.556101 14.3617 0 12.9717 0C11.9327 0 10.9811 0.328199 10.1434 0.975406C9.7207 1.3021 9.33769 1.70178 9 2.16828C8.66245 1.70192 8.2793 1.3021 7.85646 0.975406C7.01889 0.328199 6.06734 0 5.02831 0C3.63826 0 2.35959 0.556101 1.42781 1.56581C0.507156 2.56372 0 3.92701 0 5.40473C0 6.92567 0.567307 8.31791 1.78528 9.7863C2.87485 11.0998 4.44081 12.4332 6.25424 13.9772C6.87346 14.5044 7.57535 15.1021 8.30415 15.7388C8.49669 15.9072 8.74374 16 9 16C9.25612 16 9.50331 15.9072 9.69557 15.739C10.4244 15.1023 11.1267 14.5043 11.7462 13.9767C13.5593 12.433 15.1253 11.0998 16.2149 9.78616C17.4328 8.31791 18 6.92567 18 5.40459C18 3.92701 17.4928 2.56372 16.5721 1.56581Z"
+      fill="#FE585A"
+    />
+  </Svg>
+);
 
+const EmptyHeartIcon = ({width = 24, height = 24, ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 16 16"
+    fill="none"
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <G clipPath="url(#clip0_150_70)">
+      <Path
+        d="M7.99999 15.1099C7.7722 15.1099 7.5526 15.0273 7.38146 14.8774C6.7351 14.3123 6.11193 13.7811 5.56212 13.3126L5.55932 13.3102C3.94738 11.9365 2.55542 10.7502 1.58691 9.58167C0.504272 8.27527 0 7.03662 0 5.68347C0 4.36877 0.450805 3.15588 1.26928 2.26807C2.09753 1.36975 3.234 0.875 4.46972 0.875C5.3933 0.875 6.23912 1.16699 6.98363 1.7428C7.35936 2.03345 7.69994 2.38916 7.99999 2.80408C8.30016 2.38916 8.64061 2.03345 9.01646 1.7428C9.76097 1.16699 10.6068 0.875 11.5304 0.875C12.766 0.875 13.9026 1.36975 14.7308 2.26807C15.5493 3.15588 16 4.36877 16 5.68347C16 7.03662 15.4958 8.27527 14.4132 9.58154C13.4447 10.7502 12.0528 11.9364 10.4411 13.3099C9.89036 13.7792 9.26622 14.3112 8.61839 14.8777C8.44737 15.0273 8.22765 15.1099 7.99999 15.1099ZM4.46972 1.81226C3.4989 1.81226 2.60705 2.19971 1.95825 2.90332C1.2998 3.61755 0.937132 4.60486 0.937132 5.68347C0.937132 6.82153 1.36011 7.83936 2.30847 8.98364C3.22509 10.0897 4.58849 11.2516 6.1671 12.5969L6.17003 12.5994C6.72191 13.0697 7.34752 13.6029 7.99864 14.1722C8.65367 13.6018 9.28026 13.0677 9.83323 12.5967C11.4117 11.2513 12.775 10.0897 13.6916 8.98364C14.6399 7.83936 15.0628 6.82153 15.0628 5.68347C15.0628 4.60486 14.7002 3.61755 14.0417 2.90332C13.393 2.19971 12.5011 1.81226 11.5304 1.81226C10.8192 1.81226 10.1662 2.03833 9.5897 2.48413C9.07591 2.88159 8.718 3.38403 8.50816 3.7356C8.40025 3.91638 8.21031 4.02429 7.99999 4.02429C7.78966 4.02429 7.59972 3.91638 7.49181 3.7356C7.28209 3.38403 6.92418 2.88159 6.41027 2.48413C5.83373 2.03833 5.18078 1.81226 4.46972 1.81226Z"
+        fill="#868889"
+      />
+    </G>
+    <Defs>
+      <ClipPath id="clip0_150_70">
+        <Rect width={16} height={16} fill="white" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+
+const PlusIcon = ({width=15, height=15, fill="none", ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 15 15"
+    fill={fill}
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Line
+      x1={7.79639}
+      y1={1}
+      x2={7.79639}
+      y2={13.1538}
+      stroke="#6CC51D"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+    <Path
+      d="M13.5586 7.0769L1 7.0769"
+      stroke="#6CC51D"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+const MinusIcon = ({width=15, height=15, fill="none", ...props}: SvgProps) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 15 2"
+    fill={fill}
+    // xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M13.8333 0.999999L0.999918 0.999999"
+      stroke="#6CC51D"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon, HeartFillIcon, EmptyHeartIcon, PlusIcon, MinusIcon };

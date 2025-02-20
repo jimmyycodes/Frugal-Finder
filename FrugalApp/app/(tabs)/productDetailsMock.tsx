@@ -1,28 +1,14 @@
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
-import StoreList from "../../components/Icons/StoreList";
-import FavButton from "../../components/Buttons/FavButton";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "@/types/navigation";
-import PrimaryButton from "../../components/Buttons/PrimaryButton";
-import LongItem from "../../components/Items/LongItem";
-import { ScrollView } from "react-native";
-import { PlusIcon, MinusIcon } from "../../components/Icons/SvgHandler";
+import { View, Text, StyleSheet, Image, Pressable, ScrollView } from "react-native";
+import StoreList from "@/components/Icons/StoreList";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import { useState } from "react";
-import { StackNavigationProp } from "@react-navigation/stack";
-
-type ProductDetailsMockRouteProp = RouteProp<
-  RootStackParamList,
-  "ProductDetailsMock"
->;
-
-type SearchResultsNavigationProp = StackNavigationProp<RootStackParamList, "SearchResults">;
+import LongItem from "@/components/Items/LongItem";
+import { PlusIcon, MinusIcon } from "@/components/Icons/SvgHandler";
+import FavButton from "@/components/Buttons/FavButton";
 
   // TODO: Long item names can be too long
 
-export default function ProductDetailsMock() {
-  const navigation = useNavigation<SearchResultsNavigationProp>();
-  const route = useRoute<ProductDetailsMockRouteProp>();
-  const productId = route.params?.productId || "No product ID provided";
+export default function productDetailsMock() {
 
   const [quantity, setQuantity] = useState(1);
 

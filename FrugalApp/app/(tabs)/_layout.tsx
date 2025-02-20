@@ -70,6 +70,14 @@ export default function TabsComponent() {
         name="search"
         options={{ href: null }}
       />
+      <Tabs.Screen
+        name="productDetails"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="productDetailsMock"
+        options={{ href: null }}
+      />
     </Tabs>
   );
 }

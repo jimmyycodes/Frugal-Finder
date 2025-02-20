@@ -2,9 +2,12 @@ import { View, Text, StyleSheet, Image, Pressable, ScrollView } from "react-nati
 import StoreList from "@/components/Icons/StoreList";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import { useState } from "react";
+import LongItem from "@/components/Items/LongItem";
+import { PlusIcon, MinusIcon } from "@/components/Icons/SvgHandler";
+import FavButton from "@/components/Buttons/FavButton";
 
 
-export default function ProductDetails() {
+export default function productDetails() {
 
   const [quantity, setQuantity] = useState(1);
 
