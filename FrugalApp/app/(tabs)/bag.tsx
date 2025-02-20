@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 
 const bagItems = [
-  { id: 1, name: 'Fresh Peach', price: '$5.00', image: require('@/assets/images/bagFruit.svg') },
-  { id: 2, name: 'Organic Apple', price: '$3.00', image: require('@/assets/images/bagFruit.svg') },
-  { id: 3, name: 'Banana Bunch', price: '$2.00', image: require('@/assets/images/bagFruit.svg') },
+  { id: 1, name: 'Fresh Peach', price: '$5.00', image: require('@/assets/images/bagFruit.png') },
+  { id: 2, name: 'Organic Apple', price: '$3.00', image: require('@/assets/images/bagFruit.png') },
+  { id: 3, name: 'Banana Bunch', price: '$2.00', image: require('@/assets/images/bagFruit.png') },
 ];
 
 export default function BagScreen() {

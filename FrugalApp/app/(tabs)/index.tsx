@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Image, ScrollView, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import CategoriesSection from '@/components/Categories/CategoriesSection';
 import FeaturedItems from '@/components/FeaturedItems/FeaturedItems';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -13,12 +11,12 @@ import SearchBar from '@/components/Buttons/SearchBar';
 
 
 const products = [
-  { id: 1, name: 'Fresh Peach', price: '$5.00 - $8.00', image: require('@/assets/images/bagFruit.svg') },
-  { id: 2, name: 'Organic Apple', price: '$3.00 - $5.00', image: require('@/assets/images/bagFruit.svg') },
-  { id: 3, name: 'Banana Bunch', price: '$2.00 - $4.00', image: require('@/assets/images/bagFruit.svg') },
-  { id: 4, name: 'Carrot Pack', price: '$1.50 - $3.00', image: require('@/assets/images/bagFruit.svg') },
-  { id: 5, name: 'Tomato Pack', price: '$2.50 - $4.50', image: require('@/assets/images/bagFruit.svg') },
-  { id: 6, name: 'Broccoli Bunch', price: '$3.00 - $5.00', image: require('@/assets/images/bagFruit.svg') },
+  { id: 1, name: 'Fresh Peach', price: '$5.00 - $8.00', image: require('@/assets/images/bagFruit.png') },
+  { id: 2, name: 'Organic Apple', price: '$3.00 - $5.00', image: require('@/assets/images/bagFruit.png') },
+  { id: 3, name: 'Banana Bunch', price: '$2.00 - $4.00', image: require('@/assets/images/bagFruit.png') },
+  { id: 4, name: 'Carrot Pack', price: '$1.50 - $3.00', image: require('@/assets/images/bagFruit.png') },
+  { id: 5, name: 'Tomato Pack', price: '$2.50 - $4.50', image: require('@/assets/images/bagFruit.png') },
+  { id: 6, name: 'Broccoli Bunch', price: '$3.00 - $5.00', image: require('@/assets/images/bagFruit.png') },
 ];
 
 export default function HomeScreen() {
@@ -41,7 +39,7 @@ export default function HomeScreen() {
       {/* Ready to Save Banner */}
       <View style={styles.readyToSaveContainer}>
         <Text style={styles.readyToSaveText}>Ready to Save?</Text>
-        <Image source={require('@/assets/images/bagFruit.svg')} style={styles.readyToSaveImage} />
+        <Image source={require('@/assets/images/bagFruit.png')} style={styles.readyToSaveImage} />
       </View>
 
       {/* Categories Section */}
