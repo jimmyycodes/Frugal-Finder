@@ -146,7 +146,7 @@
 
 
 
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import StoreList from '@/components/Icons/StoreList';
 import ProductDetails from '@/components/pages/ProductDetails';
 
@@ -154,8 +154,8 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.text}>Home</Text> */}
       <ProductDetails/>
+      {/* <Image style={styles.image} source={{uri: "https://placekitten.com/200/300"}} /> */}
     </View>
   );
 }
@@ -169,5 +169,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     marginBottom: 20,
+  },
+  image: {
+    width: 80,
+    height: 80,
   },
 });

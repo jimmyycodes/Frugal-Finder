@@ -16,7 +16,7 @@ export default function ProductDetails() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Product Details</Text>
-      <Image />
+      {/* <Image /> */}
       <Text>$5.00-$8.00</Text>
       <Text>Organic Lemons</Text>
       <Text>1.50 lbs</Text>
@@ -25,12 +25,12 @@ export default function ProductDetails() {
       <PrimaryButton title="Add to Cart" onPress={() => null} />
       <View style={styles.longItemContainer}>
         <LongItem
-        name="Organic Lemmons"
-        store=""
-        canAdd={true}
-        image="https://fruitbubba.com/wp-content/uploads/2022/05/limones.png"
-        amount="1.50 lbs"
-        price={3.0}
+          name="Organic Lemmons"
+          store="Walmart"
+          canAdd={true}
+          image="https://api.algobook.info/v1/randomimage?category=food"
+          amount="1.50 lbs"
+          price={3.0}
         />
       </View>
     </View>
@@ -45,12 +45,8 @@ const styles = StyleSheet.create({
   },
   longItemContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    width: "90%",
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "lightgray",
   },
   text: {
     fontSize: 18,
