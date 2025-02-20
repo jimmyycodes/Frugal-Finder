@@ -110,22 +110,23 @@
 ## [Vladyslav Boiko]
 
 ### Goals for the Week
-- (Copy from "Goals for next week" in last week's report. Leave empty for the first week.)
+- Finally finish with database setup, connect to Azure or move on to SQLLite.
+- Present Beta release.
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Created users for AWS DB 
+  - Created server and DB in AWS
+  - Since we weren't able to connect through VScode, removed everything from AWS
 - Key learnings:
-  - [What was learned this week]
+  - AWS is extremely hard to connect to.
 - Issues encountered:
-  - [Issue 1] and steps taken to resolve it
-  - [Issue 2] (if unresolved, include blockers and additional context)
+  - AWS is so complecated, cannot find a single tutorial on how to grand IAM to other users 
+    to connect through VScode extension.
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- Connect scraper to DB.
+- Connect DB to backend of the app.
 
 ---
 
