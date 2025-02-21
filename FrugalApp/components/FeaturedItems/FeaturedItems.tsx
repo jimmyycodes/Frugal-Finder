@@ -135,12 +135,12 @@ export default function FeaturedItems() {
       ))}
     </ScrollView>
   );
-
+// TODO: Fix button to switch between grid and list view
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.featuredProductsText}>Featured Products</Text>
-        <TouchableOpacity onPress={() => setViewMode(prev => prev === 'grid' ? 'list' : 'grid')}>
+        <TouchableOpacity onPress={() => console.log('Switch view mode broken')}>
           <Ionicons
             name={viewMode === 'grid' ? 'list' : 'grid'}
             size={24}

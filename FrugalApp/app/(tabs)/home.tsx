@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 16,
   },
   searchBar: {
     flexDirection: 'row',
@@ -72,9 +71,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   readyToSaveImage: {
-    width: '50%',
+    width: '100%',
     height: 250,
-    borderRadius: 8,
+    left: 40,
   },
   bannerContainer: {
     marginTop: 16,
