@@ -40,7 +40,7 @@ export default function ProductDetailsMock() {
 
           <View style={styles.textHeader}>
             <Text style={styles.price}>$4.29-$6.49</Text>
-            <Text style={styles.title}>Green Grapes</Text>
+            <Text style={styles.title}>Green Seedless Grapes</Text>
             <Text style={styles.amount}>3 results</Text>
             <StoreList stores={["Target", "Walmart", "Trader joes"]} />
             <Text style={styles.desc}>

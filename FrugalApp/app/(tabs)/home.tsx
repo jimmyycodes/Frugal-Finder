@@ -11,7 +11,7 @@ export default function Home() {
   const navigation = useRouter();
 
   const handleSearch = () => {
-    navigation.push({ pathname: "/(tabs)/search", params: { searchText } });
+    navigation.push({ pathname: "/(tabs)/subPages/search", params: { searchText} });
   }
 
   return (
