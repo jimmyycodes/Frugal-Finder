@@ -529,6 +529,7 @@ const HomepageIcon = ({width=47, height=48, ...props}: SvgProps) => (
   </Svg>
 );
 
+
 const BackArrowIcon = ({width=23, height=16, fill="none", ...props}: SvgProps) => (
   <Svg
     width={width}
@@ -549,4 +550,4 @@ const BackArrowIcon = ({width=23, height=16, fill="none", ...props}: SvgProps) =
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon, HeartFillIcon, EmptyHeartIcon, PlusIcon, MinusIcon, BackArrowIcon, CartPageIcon, HeartPageIcon, HomepageIcon };
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon, HeartFillIcon, EmptyHeartIcon, PlusIcon, MinusIcon, BackArrowIcon, CartPageIcon, HeartPageIcon, HomepageIcon};
