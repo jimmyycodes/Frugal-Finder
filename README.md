@@ -70,4 +70,7 @@ inside the __tests__ folder is the App.test.js file. All tests for the app can b
 CI testing will always run and check for all tests to pass in the App.test.js file when pushing to any branch or merging any two branches.
 
 
+### Environment Variable
+In order to run the app fully, you will need an environment variable. Please contact any of us to receive this. 
+
 
