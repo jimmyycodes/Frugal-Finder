@@ -80,18 +80,9 @@ export default function TabsComponent() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="search"
-        options={{
-          href: null,
-          headerShown: true,
-          headerLeft: backButton,
-          headerTitleAlign: "center",
-        }}
-      />
-      <Tabs.Screen name="productDetails" options={{ href: null }} />
-      <Tabs.Screen name="productDetailsMock" options={{ href: null }} />
       <Tabs.Screen name="cart" options={{ href: null }} />
+      <Tabs.Screen name="subPages" options={{ href: null }} />
+
     </Tabs>
   );
 }

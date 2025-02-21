@@ -65,7 +65,7 @@ const grapeProducts = [
 
 export default function Search() {
   const { searchText } = useLocalSearchParams();
-  const navigation = useRouter();
+  const router = useRouter();
   const [newSearchText, setNewSearchText] = useState(searchText);
   const [favorites, setFavorites] = useState<number[]>([]);
 
@@ -76,7 +76,7 @@ export default function Search() {
   };
 
   const handleSearch = () => {
-    navigation.push({ pathname: "/(tabs)/search", params: { searchText: newSearchText } });
+    router.replace({ pathname: "/(tabs)/subPages/search", params: { searchText: newSearchText} });
   };
 
   return (
@@ -96,7 +96,11 @@ export default function Search() {
         </View>
         <View style={styles.productsContainer}>
           {grapeProducts.map((item) => (
-            <TouchableOpacity key={item.id} style={styles.productItem}>
+            <TouchableOpacity
+            onPress={() => router.push({ pathname: "/(tabs)/subPages/productDetailsMock"})}
+            key={item.id}
+            style={styles.productItem}
+            >
               <TouchableOpacity
                 style={styles.heartButton}
                 onPress={() => toggleFavorite(item.id)}
