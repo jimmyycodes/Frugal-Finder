@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import { View, StyleSheet, Pressable, TextInput } from "react-native";
 import { SearchIcon } from "../Icons/SvgHandler";
 import { SettingsIcon } from "../Icons/SvgHandler";
 import { useState } from "react";

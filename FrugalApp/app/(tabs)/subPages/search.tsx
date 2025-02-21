@@ -9,26 +9,26 @@ import StoreList from '@/components/Icons/StoreList';
 const grapeProducts = [
   {
     id: 1,
-    name: 'Red Seedless Grapes',
-    price: '$3.99 - $5.99',
+    name: 'Red Globe Grapes',
+    price: '$3.89 - $5.99',
     weight: '2 lbs',
     image: require('@/assets/images/produce/redGrapes.png'),
     backgroundColor: '#FFE1E1',
-    stores: "Walmart,Trader Joes,Target"
+    stores: "Walmart,Walmart,Target"
   },
   {
     id: 2,
-    name: 'Green Globe Grapes',
-    price: '$4.99 - $6.99',
+    name: 'Green Seedless Grapes',
+    price: '$4.29 - $6.49',
     weight: '3 lbs',
     image: require('@/assets/images/produce/greenGrapes.png'),
     backgroundColor: '#E8FFE1',
-    stores: "Walmart,Walmart,Target"
+    stores: "Walmart,Trader Joes,Target"
   },
   {
     id: 3,
     name: 'Concord Grapes',
-    price: '$5.99 - $7.99',
+    price: '$5.29 - $7.99',
     weight: '2.5 lbs',
     image: require('@/assets/images/produce/blueGrapes.png'),
     backgroundColor: '#E1EEFF',
@@ -37,11 +37,11 @@ const grapeProducts = [
   {
     id: 4,
     name: 'Cotton Candy Grapes',
-    price: '$6.99 - $8.99',
+    price: '$6.59 - $8.99',
     weight: '2 lbs',
     image: require('@/assets/images/produce/cottonGrapes.png'),
     backgroundColor: '#FFE1FF',
-    stores: "Trader Joes,Safeway,target"
+    stores: "Target,Safeway,target"
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const grapeProducts = [
     weight: '1.5 lbs',
     image: require('@/assets/images/produce/moonGrapes.png'),
     backgroundColor: '#FFF1E1',
-    stores: "Trader Joes,Safeway,target"
+    stores: "Trader Joes,Walmart,target, "
   },
   {
     id: 6,
@@ -65,7 +65,7 @@ const grapeProducts = [
 
 export default function Search() {
   const { searchText } = useLocalSearchParams();
-  const navigation = useRouter();
+  const router = useRouter();
   const [newSearchText, setNewSearchText] = useState(searchText);
   const [favorites, setFavorites] = useState<number[]>([]);
 
@@ -76,7 +76,7 @@ export default function Search() {
   };
 
   const handleSearch = () => {
-    navigation.push({ pathname: "/(tabs)/search", params: { searchText: newSearchText } });
+    router.replace({ pathname: "/(tabs)/subPages/search", params: { searchText: newSearchText} });
   };
 
   return (
@@ -96,7 +96,11 @@ export default function Search() {
         </View>
         <View style={styles.productsContainer}>
           {grapeProducts.map((item) => (
-            <TouchableOpacity key={item.id} style={styles.productItem}>
+            <TouchableOpacity
+            onPress={() => router.push({ pathname: "/(tabs)/subPages/productDetailsMock"})}
+            key={item.id}
+            style={styles.productItem}
+            >
               <TouchableOpacity
                 style={styles.heartButton}
                 onPress={() => toggleFavorite(item.id)}
