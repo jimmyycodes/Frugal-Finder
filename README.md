@@ -28,7 +28,7 @@ For our detailed requirements, design, and updates, view it here (https://docs.g
 
 ### Try an early test build on Android
 
-[Build Link](https://drive.google.com/file/d/1ot_F4GrERslvyqbaRlYhvdsp3OZ8MLiv/view?usp=sharing). Open and install on the android device.
+[Build Link](https://drive.google.com/drive/folders/1VtWwrHwWZjd6j1pr5CO34eAwXnOIhk1B?usp=sharing). Open and install on the android device.
 
 ### Make your own build
 
