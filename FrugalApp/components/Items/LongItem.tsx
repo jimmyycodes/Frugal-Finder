@@ -83,7 +83,7 @@ export default function LongItem({
       onPressOut={stopAnim}
       onLongPress={handleLongPress}
       delayLongPress={delay}
-      style={styles.removeAddContainer}
+      style={styles.removeContainer}
     >
       <RemoveCartIcon fill="#868889" width={25} height={25} />
     </Pressable>
@@ -92,7 +92,7 @@ export default function LongItem({
   const addButton = (
     <Pressable
       onPress={onAdd}
-      style={styles.removeAddContainer}
+      style={styles.addContainer}
       onPressIn={startAnim}
       onPressOut={stopAnim}
       onLongPress={handleLongPress}
@@ -179,11 +179,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     flex: 1,
   },
-  removeAddContainer: {
+  addContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
     height: "100%",
     width: 50,
+  },
+  removeContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    height: "100%",
+    width: 50,
+    right: 10,
   },
 });
