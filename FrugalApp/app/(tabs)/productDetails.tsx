@@ -7,7 +7,7 @@ import { PlusIcon, MinusIcon } from "@/components/Icons/SvgHandler";
 import FavButton from "@/components/Buttons/FavButton";
 import BackButton from "@/components/Buttons/BackButton";
 
-export default function productDetails() {
+export default function ProductDetails() {
 
   const [quantity, setQuantity] = useState(1);
 

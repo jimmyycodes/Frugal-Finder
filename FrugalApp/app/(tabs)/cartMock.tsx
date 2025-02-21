@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import LongItem from "@/components/Items/LongItem";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
 
-export default function cart() {
+export default function CartMock() {
   return (
     <View style={styles.container}>
       <ScrollView>

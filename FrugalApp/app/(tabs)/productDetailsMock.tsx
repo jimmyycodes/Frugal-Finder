@@ -9,7 +9,7 @@ import BackButton from "@/components/Buttons/BackButton";
 
   // TODO: Long item names can be too long
 
-export default function productDetailsMock() {
+export default function ProductDetailsMock() {
 
   const [quantity, setQuantity] = useState(1);
 
