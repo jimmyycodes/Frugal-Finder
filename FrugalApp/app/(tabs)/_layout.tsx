@@ -7,7 +7,8 @@
 
 import { Tabs } from "expo-router";
 import {
- View, StyleSheet,
+  View,
+  StyleSheet,
   TouchableOpacity,
   GestureResponderEvent,
 } from "react-native";
@@ -16,7 +17,7 @@ import {
   CartPageIcon,
   HeartPageIcon,
 } from "@/components/Icons/SvgHandler";
-import BackButton from '@/components/Buttons/BackButton';
+import BackButton from "@/components/Buttons/BackButton";
 
 // Define props for custom tab bar button
 interface CustomTabBarButtonProps {
@@ -67,19 +68,27 @@ export default function TabsComponent() {
         name="cartMock"
         options={{
           title: "Shopping Cart",
-          headerTitleAlign: 'center',
+          headerTitleAlign: "center",
           headerShown: false,
           headerLeft: backButton,
           tabBarButton: (props) => (
             <View style={styles.tabBarButton}>
-            <CustomTabBarButton {...props}>
+              <CustomTabBarButton {...props}>
                 <CartPageIcon />
-            </CustomTabBarButton>
+              </CustomTabBarButton>
             </View>
           ),
         }}
       />
-      <Tabs.Screen name="search" options={{ href: null }} />
+      <Tabs.Screen
+        name="search"
+        options={{
+          href: null,
+          headerShown: true,
+          headerLeft: backButton,
+          headerTitleAlign: "center",
+        }}
+      />
       <Tabs.Screen name="productDetails" options={{ href: null }} />
       <Tabs.Screen name="productDetailsMock" options={{ href: null }} />
       <Tabs.Screen name="cart" options={{ href: null }} />
@@ -93,7 +102,7 @@ const backButton = () => {
       <BackButton />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -109,13 +118,13 @@ const styles = StyleSheet.create({
     left: 43,
   },
   tabBarButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   backButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 20,
     left: 30,
     zIndex: 100,
-  }
+  },
 });

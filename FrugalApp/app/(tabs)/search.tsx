@@ -81,9 +81,6 @@ export default function Search() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.back()}>
-        <Image source={require('@/assets/images/marks/arrow.svg')} style={styles.backArrow} />
-      </TouchableOpacity>
       <ScrollView>
         <View style={styles.searchContainer}>
           <SearchBar
@@ -135,7 +132,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 50,
   },
   backButton: {
     position: 'absolute',
@@ -149,7 +145,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 16,
   },
   text: {
     fontSize: 18,
