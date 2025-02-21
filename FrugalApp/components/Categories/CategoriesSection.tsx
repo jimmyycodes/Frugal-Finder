@@ -7,7 +7,7 @@ export default function CategoriesSection() {
       <Text style={styles.title}>Categories</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesContainer}>
         <Image
-          source={require('/Users/davidlym/Desktop/Frugal-Finder/FrugalApp/assets/images/categoryIcons/catItems.png')}
+          source={require('@/assets/images/categoryIcons/catItems.png')}
           style={styles.categoryIcons}
           resizeMode="contain"
         />
