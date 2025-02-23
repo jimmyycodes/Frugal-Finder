@@ -1,6 +1,9 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 
+// might move sql stuff to different file
+import mysql from "mysql";
+
 dotenv.config();
 
 const app: Express = express();
