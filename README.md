@@ -50,6 +50,26 @@ the flow is home screen -> search for grapes -> inspet your item -> add to cart
 
 ### Make your own build
 
+** The following is referencing to inside the server dir **
+
+1. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+2. Build the server
+
+   ```bash
+    npm run build
+   ```
+
+3. Start the server
+
+   ```bash
+    npm run build
+   ```
+
 ** The following is referencing to inside the FrugalApp dir **
 
 1. Install dependencies
@@ -102,7 +122,11 @@ After developing your feature create a test for it in the file FrugalApp/__tests
 
 ## Writting tests for back-end
 
-(please expand)
+After developing your feature create a test for it in the directory server/__tests__
+- Create a new file if need to test a new file (with format file_name.test.ts)
+- Add tests to the existing test file if you added to an existing file
+
+* All tests must have a comment with a name description and pre/post conditions.
 
 
 
