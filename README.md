@@ -75,7 +75,8 @@ You can start developing by editing the files inside the **app** directory. This
 
 ### Environment Variable
 
-In order to run the app fully, you will need an environment variable. Please contact any of us to receive this. (please expand. is this only for developers or for TAs playing with the android build too?)
+In order to run the app fully, you will need an environment variable. Please contact any of us to receive this. The environment variable is responsible for connecting to the DB. Since our scrapper will be the main one updating to the DB it is required that anyone who forks the repo must need an environment variable to have the scrapper run properly. 
+It is fine to place the environment variable in the root file of the directory. 
 
 ## How to test the app
 
