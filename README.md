@@ -11,8 +11,8 @@ FrugalFinder is a application that helps our users save money on groceries by co
 - **.github/workflows**: CI testing
 - **FrugalApp**: App source code
 - **Status Reports**: Developer updates
-- **scraper**: Backend webscraping
-- **Status Reports**: Developer updates
+- **server**: Backend source code
+- **scraper**: Backend webscraper source code
 
 
 ## Living Document
@@ -42,11 +42,11 @@ Report Here: https://forms.microsoft.com/r/TLnYW75a2s
 
 [Build Link](https://drive.google.com/drive/folders/1VtWwrHwWZjd6j1pr5CO34eAwXnOIhk1B?usp=sharing). Open and install on the android device.
 
-* How to use the app: The app is currently in a demo state. Most featuers are a work in progress however to get a feel of what it would be like to use the app you may follow the app flow demonstrated in this video
+* How to use the app: The app is currently in a demo state. Most features are a work in progress however to get a feel of what it would be like to use the app you may follow the app flow demonstrated in this video
 
 https://youtu.be/TcvoPW6sT5U
 
-the flow is home screen -> search for grapes -> inspet your item -> add to cart
+the flow is home screen -> search for grapes -> inspect your item -> add to cart
 
 ### Make your own build
 
@@ -67,7 +67,7 @@ the flow is home screen -> search for grapes -> inspet your item -> add to cart
 3. Start the server
 
    ```bash
-    npm run build
+    npm run start
    ```
 
 ** The following is referencing to inside the FrugalApp dir **
@@ -95,8 +95,8 @@ You can start developing by editing the files inside the **app** directory. This
 
 ### Environment Variable
 
-In order to run the app fully, you will need an environment variable. Please contact any of us to receive this. The environment variable is responsible for connecting to the DB. Since our scrapper will be the main one updating to the DB it is required that anyone who forks the repo must need an environment variable to have the scrapper run properly. 
-It is fine to place the environment variable in the root file of the directory. 
+In order to run the app fully, you will need environment variables for both the scraper and the backend. Please contact any of us to receive this. The environment variables are responsible for connecting to the DB. Since our scraper will be the main one updating to the DB it is required that anyone who forks the repo must need the environment variables to have the scraper and backend run properly. 
+It is fine to place the environment variables in the root file of the directory. 
 
 ## How to test the app
 
@@ -127,7 +127,3 @@ After developing your feature create a test for it in the directory server/__tes
 - Add tests to the existing test file if you added to an existing file
 
 * All tests must have a comment with a name description and pre/post conditions.
-
-
-
-
