@@ -2,19 +2,41 @@ import { View, Text, StyleSheet, Image, Pressable, ScrollView } from "react-nati
 import StoreList from "@/components/Icons/StoreList";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import { useState } from "react";
-import LongItem from "@/components/Items/LongItem";
 import { PlusIcon, MinusIcon } from "@/components/Icons/SvgHandler";
 import FavButton from "@/components/Buttons/FavButton";
 import BackButton from "@/components/Buttons/BackButton";
+import { singleItem } from "@/constants/Types";
+import genLongItems from "@/constants/Tools";
+import { mockItems } from "@/constants/MockVars";
 
-export default function ProductDetails() {
+type productDetailsProps = {
+  desc?: string;
+  items: singleItem[];
+};
 
-  const [quantity, setQuantity] = useState(1);
+export default function ProductDetails( { desc, items}: productDetailsProps) {
+  const itemsUsed = items ? items : mockItems;
 
+  // Hooks
+  const [quantity, setQuantity] = useState(1); // TODO: For now quantity is cut from the design
+  const [longItems, setItems] = useState(genLongItems(itemsUsed, () => null, handleAdd, true));
+
+  // cut desc to 319 characters
+  if (desc && desc.length > 319) {
+    desc = desc.substring(0, 319) + "...";
+  }
+
+  // Functions
   const handleQuantity = (quantity: number) => {
     setQuantity(quantity);
     return quantity;
   };
+
+  const allStores = itemsUsed.map((item) => item.store).splice(0, 5);
+  const maxPrice = itemsUsed.reduce((max, item) => (item.price > max ? item.price : max), 0);
+  const minPrice = itemsUsed.reduce((min, item) => (item.price < min ? item.price : min), maxPrice);
+  const price = minPrice === maxPrice ? minPrice : null;
+  const priceText = price ? price : `${minPrice} - ${maxPrice}`;
 
   return (
     <ScrollView>
@@ -27,7 +49,7 @@ export default function ProductDetails() {
             <Image
               style={styles.HeaderImage}
               source={{
-                uri: "https://www.producemarketguide.com/media/user_RZKVrm5KkV/504/lemon_commodity-page.png",
+                uri: (itemsUsed[0].image)
               }}
             />
           </View>
@@ -37,13 +59,13 @@ export default function ProductDetails() {
           </View>
 
           <View style={styles.textHeader}>
-            <Text style={styles.price}>$5.00-$8.00</Text>
-            <Text style={styles.title}>Organic Lemons</Text>
-            <Text style={styles.amount}>3 results</Text>
-            <StoreList stores={["walmart", "Safeway", "", "", "Trader joes"]} />
+            <Text style={styles.price}>{priceText}</Text>
+            <Text style={styles.title}>{itemsUsed[0].name}</Text>
+            <Text style={styles.amount}>{itemsUsed.length + " results"}</Text>
+            <StoreList stores={allStores} />
             <Text style={styles.desc}>
               {
-                "Organic Mountain works as a seller for many organic growers of organic lemons. Organic lemons are easy to spot in your produce aisle. They are just like regular lemons, but they will usually have a few more scars on the outside of the lemon skin. Organic lemons are considered to be the world's finest lemon for juicing"
+                itemsUsed[0].desc
               }
             </Text>
           </View>
@@ -56,38 +78,22 @@ export default function ProductDetails() {
         />
 
         <View style={styles.primaryButtonCont}>
-          <PrimaryButton title="Add to Cart" onPress={() => null} />
+          <PrimaryButton
+            title="Add Cheapest to Cart"
+            onPress={() => null}
+          />
         </View>
 
         <View style={styles.longItemContainer}>
-          <LongItem
-            name="Organic Lemmons"
-            store="Walmart"
-            canAdd={true}
-            image="https://api.algobook.info/v1/randomimage?category=food"
-            amount="1.50 lbs"
-            price={3.0}
-          />
-          <LongItem
-            name="Organic Lemmons"
-            store="Walmart"
-            canAdd={true}
-            image="https://api.algobook.info/v1/randomimage?category=food"
-            amount="1.50 lbs"
-            price={3.0}
-          />
-          <LongItem
-            name="Organic Lemmons"
-            store="Walmart"
-            canAdd={true}
-            image="https://api.algobook.info/v1/randomimage?category=food"
-            amount="1.50 lbs"
-            price={3.0}
-          />
+          {longItems}
         </View>
       </View>
     </ScrollView>
   );
+}
+
+function handleAdd(item: singleItem) {
+  console.log("Add item with itemKey: " + item.key);
 }
 
 type QuantityProps = {
