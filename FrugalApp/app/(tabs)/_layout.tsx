@@ -65,11 +65,11 @@ export default function TabsComponent() {
         }}
       />
       <Tabs.Screen
-        name="cartMock"
+        name="cart"
         options={{
           title: "Shopping Cart",
           headerTitleAlign: "center",
-          headerShown: false,
+          headerShown: true,
           headerLeft: backButton,
           tabBarButton: (props) => (
             <View style={styles.tabBarButton}>
@@ -80,7 +80,6 @@ export default function TabsComponent() {
           ),
         }}
       />
-      <Tabs.Screen name="cart" options={{ href: null }} />
       <Tabs.Screen name="subPages" options={{ href: null }} />
 
     </Tabs>

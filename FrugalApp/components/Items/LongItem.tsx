@@ -10,6 +10,7 @@ import { Dimensions } from "react-native";
 import StoreIcon from "../Icons/StoreIcon";
 import { RemoveCartIcon, AddToCartIcon } from "../Icons/SvgHandler";
 import { useRef } from "react";
+import { singleItem } from "@/constants/Types";
 
 const { height, width } = Dimensions.get("window");
 
@@ -19,9 +20,14 @@ type LongItemProps = {
   price: number;
   image: string;
   amount: string;
+  itemKey: string;
+  key: string;
+  desc?: string;
+  category?: string;
+  upc?: string;
   canAdd?: boolean;
-  onRemove?: () => void;
-  onAdd?: () => void;
+  onRemove?: (key: string) => void;
+  onAdd?: (item: singleItem) => void;
 };
 
 export default function LongItem({
@@ -31,12 +37,35 @@ export default function LongItem({
   image,
   amount,
   canAdd,
+  itemKey,
+  desc,
+  category,
+  upc,
   onRemove,
   onAdd,
 }: LongItemProps) {
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const colorAnim = useRef(new Animated.Value(0)).current;
   const delay = 500;
+
+  const thisItem: singleItem = {
+    name: name,
+    store: store,
+    price: price,
+    image: image,
+    amount: amount,
+    key: itemKey,
+    desc: desc,
+    category: category,
+    upc: upc,
+  };
+
+
+
+  // cut name to 20 characters
+  if (name.length > 20) {
+    name = name.substring(0, 20) + "...";
+  }
 
   // fade only starts if canAdd is false
   const startAnim = () => {
@@ -71,9 +100,9 @@ export default function LongItem({
   const handleLongPress = () => {
     stopAnim();
     if (canAdd) {
-      onAdd && onAdd();
+      onAdd && onAdd(thisItem);
     } else if (!canAdd) {
-      onRemove && onRemove();
+      onRemove && onRemove(itemKey);
     }
   };
 
@@ -91,7 +120,6 @@ export default function LongItem({
 
   const addButton = (
     <Pressable
-      onPress={onAdd}
       style={styles.addContainer}
       onPressIn={startAnim}
       onPressOut={stopAnim}

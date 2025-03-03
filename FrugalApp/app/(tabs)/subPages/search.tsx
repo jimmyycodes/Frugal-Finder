@@ -97,7 +97,7 @@ export default function Search() {
         <View style={styles.productsContainer}>
           {grapeProducts.map((item) => (
             <TouchableOpacity
-            onPress={() => router.push({ pathname: "/(tabs)/subPages/productDetailsMock"})}
+            onPress={() => router.push({ pathname: "/(tabs)/subPages/productDetails"})}
             key={item.id}
             style={styles.productItem}
             >
@@ -136,16 +136,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-  },
-  backButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    zIndex: 1,
-  },
-  backArrow: {
-    width: 24,
-    height: 24,
   },
   searchContainer: {
     alignItems: 'center',
