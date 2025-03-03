@@ -40,8 +40,8 @@ export default function SearchFlowLayout() {
 const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
-    top: 20,
-    left: 30,
+    top: 10,
+    left: 15,
     zIndex: 100,
   },
 })
