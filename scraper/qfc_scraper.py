@@ -16,11 +16,15 @@ class QFCScraper:
 
   PRODUCT_CARD = "ProductCard"
   LOAD_MORE_BUTTON = "LoadMore__load-more-button"
-  PRODUCT_DESC_TRUNC = "ProductDescription-truncated"
+  PRODUCT_DESC_TRUNC = "ProductDetails-header"
   PROMO_PRICE = "kds-Price-promotional"
   REGULAR_PRICE = "kds-Price-original"
   NO_THANKS_BUTTON = "QSIWebResponsiveDialog-Layout1-SI_9yJLD8psVL8MwL4_button QSIWebResponsiveDialog-Layout1-SI_9yJLD8psVL8MwL4_button-2 QSIWebResponsiveDialog-Layout1-SI_9yJLD8psVL8MwL4_button-medium QSIWebResponsiveDialog-Layout1-SI_9yJLD8psVL8MwL4_button-border-radius-moderately-rounded"
-  
+  PRODUCT_UPC = "ProductDetails-upc"
+  PRODUCT_WEIGHT = "ProductDetails-sellBy"
+
+  PRODUCT_EXTRA_DESC = "body-l line-length"
+
   def __init__(self):
 
     # Configure Chrome
@@ -42,7 +46,7 @@ class QFCScraper:
   def close_popup(self):
       try:
           # Wait for the popup button
-          no_thanks_buttons = WebDriverWait(self.driver, 5).until(
+          no_thanks_buttons = WebDriverWait(self.driver, 3).until(
               EC.presence_of_all_elements_located((By.XPATH, "//button[contains(text(), 'No, thanks')]"))
           )
 
@@ -63,50 +67,91 @@ class QFCScraper:
 
   def scrape_products(self):
     try:
-      # add a pop-up close function here if needed
+        self.close_popup()
 
-      self.close_popup()
+        wait = WebDriverWait(self.driver, 10)
+        product_cards = wait.until(
+            EC.visibility_of_all_elements_located((By.CLASS_NAME, self.PRODUCT_CARD))
+        )
+        print(f"Found {len(product_cards)} products")
 
-      wait = WebDriverWait(self.driver, 10)
-      product_cards = wait.until(
-        EC.visibility_of_all_elements_located((By.CLASS_NAME, self.PRODUCT_CARD))
-      )
-      print (f"Found {len(product_cards)} products")
-
-      time.sleep(3)
-      for product in product_cards:
-        try:
-          # Extract the product name
-          name = product.find_element(By.CLASS_NAME, self.PRODUCT_DESC_TRUNC).text
-
-          try:
-            # Extract the price
-            # Some products have promotional prices, check if promo price exists, if not, use regular price
+        for index in range(len(product_cards)):
             try:
-              price = product.find_element(By.CLASS_NAME, self.PROMO_PRICE).text
-            except NoSuchElementException:
-              price = product.find_element(By.CLASS_NAME, self.REGULAR_PRICE).text
+                # Re-locate the product cards after navigating back
+                product_cards = wait.until(
+                    EC.visibility_of_all_elements_located((By.CLASS_NAME, self.PRODUCT_CARD))
+                )
+                product = product_cards[index]
 
-            # Clean up the price string
-            price = price.replace("\n", "").replace(" ", "").replace("lb", "/lb")
+                # Click on the product link to get more details
+                link = product.find_element(By.TAG_NAME, "a")
+                href = link.get_attribute("href")
+                print(f"Product {index + 1} URL: {href}")
 
-            print(f"Name: {name}, Price: {price}")
-          except Exception:
-            price = "N/A"
-        except Exception as e:
-          print("Error extracting product details:", e)
+                link.click()
 
+                # Wait for the product details to load
+                wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.PRODUCT_DESC_TRUNC)))
+
+                # Extract product details
+                name = self.extract_text(wait, self.PRODUCT_DESC_TRUNC)
+                price = self.extract_price(wait)
+                upc = self.extract_text(wait, self.PRODUCT_UPC)
+                weight = self.extract_text(wait, self.PRODUCT_WEIGHT)
+                description = self.extract_description(wait)
+
+                print(f"Product: {name}\nPrice: {price}\nUPC: {upc}\nWeight: {weight}\nDescription: {description}\n")
+                
+                self.close_popup()
+
+                # Go back to the previous page
+                self.driver.back()
+                wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, self.PRODUCT_CARD)))
+
+            except Exception as e:
+                print("Error extracting product details:", e)
 
     except NoSuchElementException:
-      print("No products found.")
+        print("No products found.")
     except TimeoutException:
-      print("Timeout waiting for products.")
+        print("Timeout waiting for products.")
     except Exception as e:
-      print("Error scraping products:", e)
+        print("Error scraping products:", e)
+
+  def extract_text(self, wait, class_name):
+    try:
+        return wait.until(EC.presence_of_element_located((By.CLASS_NAME, class_name))).text
+    except Exception as e:
+        print(f"Error extracting text for {class_name}:", e)
+        return "N/A"
+
+  def extract_price(self, wait):
+    try:
+        try:
+            price = wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.PROMO_PRICE))).text
+        except NoSuchElementException:
+            price = wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.REGULAR_PRICE))).text
+        return price.replace("\n", "").replace(" ", "").replace("lb", "/lb")
+    except Exception as e:
+        print("Error extracting price:", e)
+        return "N/A"
+
+  def extract_description(self, wait):
+    try:
+        drop_down = wait.until(EC.element_to_be_clickable((By.ID, "product-details-button")))
+        drop_down.click()
+        time.sleep(2)
+        description_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="product-details-romance-description"] p')))
+        description_text = description_element.text
+
+        return description_text
+    except NoSuchElementException:
+        return "N/A"
+    except Exception as e:
+        return "N/A"
 
   def scrape(self, queries):
-
-    for query in queries: 
+    for query in queries:
       print(f"\n🔍 Searching for '{query}' at QFC...\n")
 
       self.driver.get(self.url)
@@ -133,12 +178,12 @@ class QFCScraper:
       while True:
         try:
 
-          next_button = self.wait.until(
-            EC.element_to_be_clickable((By.CLASS_NAME, self.LOAD_MORE_BUTTON))
-          )
-
-          # check if the button doesn't exist anymore if it doesn't then break the loop
-          if not next_button:
+          try:
+            next_button = self.wait.until(
+              EC.element_to_be_clickable((By.CLASS_NAME, self.LOAD_MORE_BUTTON))
+            )
+          except:
+            # if pagination button is not found then break
             print("No more pages.")
             break
 
@@ -151,7 +196,7 @@ class QFCScraper:
               // Remove fixed header
               var header = document.querySelector('.query.searchInputWrapper');
               if (header) header.style.display = 'none';
-              
+
               // Remove any other fixed elements that might interfere
               var fixedElements = document.querySelectorAll('[style*="position: fixed"]');
               fixedElements.forEach(function(el) {
@@ -159,12 +204,12 @@ class QFCScraper:
               });
           """)
 
-          try: 
+          try:
             self.close_popup()
             print("Successfully clicked the button")
             next_button.click()
           except:
-            try: 
+            try:
               self.driver.execute_script("arguments[0].click();", next_button)
             except:
               ActionChains(self.driver).move_to_element(next_button).click().perform()
@@ -184,13 +229,14 @@ class QFCScraper:
         except Exception as e:
           print("Pagination button not found or error:", e)
           break
-     #self.scrape_products()
+
+      self.scrape_products()
 
     # Close browser
     self.driver.quit()
 
 
-current_cart = ["Orange"]
+current_cart = ["bread"]
 
 qfc_scraper = QFCScraper()
 
