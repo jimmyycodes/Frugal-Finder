@@ -149,8 +149,6 @@ class TJScraper:
                     except Exception:
                         price = "N/A"
 
-                    self.insert_into_db(name, price, search_query, local_image_path)
-
                 except Exception as e:
                     print("Error extracting product details:", e)
             self.close_newsletter_popup()
