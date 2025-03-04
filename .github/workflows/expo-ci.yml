@@ -16,12 +16,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js front-end
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: 'npm'  # or yarn
           cache-dependency-path: FrugalApp/package-lock.json
+
+      - name: Setup Node.js back-end
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8
@@ -29,25 +36,18 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Install dependencies
+      - name: Install front-end dependencies
         working-directory: FrugalApp
         run: npm install  # or npm install
 
-      - name: Run Jest tests
+      - name: Install back-end dependencies
+        working-directory: server
+        run: npm install  # or npm install
+
+      - name: Run Jest tests front-end
         working-directory: FrugalApp
         run: npm test  -- --ci
-
-        # Set up for testing the scraper
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest
-          pip install -r requirements.txt
-
-      - name: Run tests
-        run: pytest FrugalApp/__tests__/test_tj_scraper.py
+      
+      - name: Run Jest tests back-end
+        working-directory: server
+        run: npm test  -- --ci
