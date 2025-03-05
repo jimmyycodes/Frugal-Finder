@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS frugaldatabase.StoreProducts;
+DROP TABLE IF EXISTS frugaldatabase.Products;
 DROP TABLE IF EXISTS frugaldatabase.Stores;
-DROP TABLE IF EXISTS frugaldatabase.ProductInfo;
-/*DROP TABLE IF EXISTS FrugalFinderDB.Users;
+/*DROP TABLE IF EXISTS frugaldatabase.ProductInfo;
+DROP TABLE IF EXISTS FrugalFinderDB.Users;
 DROP TABLE IF EXISTS FrugalFinderDB.OrderHistory;
 DROP TABLE IF EXISTS FrugalFinderDB.ProductOrderHistory;
 DROP TABLE IF EXISTS FrugalFinderDB.Coupons;*/
@@ -14,18 +14,21 @@ longitudeStore TEXT,
 latitudeStore TEXT
 );
 
+/*
 CREATE TABLE ProductInfo (
 pid INTEGER PRIMARY KEY AUTO_INCREMENT,
 name TEXT NOT NULL
 );
-
-CREATE TABLE StoreProducts (
-pid INTEGER REFERENCES ProductInfo(pid),
+*/
+CREATE TABLE Products (
+pid INTEGER PRIMARY KEY AUTO_INCREMENT,
 sid INTEGER REFERENCES Stores(sid),
+name TEXT NOT NULL,
+description TEXT, 
+amount TEXT,
 price FLOAT,
 searchQuery TEXT,
-imagePath TEXT,
-PRIMARY KEY (pid, sid)
+imagePath TEXT
 );
 
 /*
