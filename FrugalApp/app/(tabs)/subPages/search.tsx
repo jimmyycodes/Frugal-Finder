@@ -13,7 +13,7 @@ export default function Search() {
   const router = useRouter();
   const [newSearchText, setNewSearchText] = useState(searchText as string || '');
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [searchResults, setSearchResults] = useState<singleItem[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
@@ -46,12 +46,12 @@ export default function Search() {
     return values.split(',').map(item => item.trim());
   }
 
-  const handleAddToCart = (item: singleItem) => {
-    console.log(`Added ${item.name} to cart`);
+  const handleAdd = (key: string) => {
+    console.log('Added item:', key);
   };
 
-  const handleRemoveFromCart = (key: string) => {
-    console.log(`Removed item ${key} from cart`);
+  const handleRemove = (key: string) => {
+    console.log('Removed item:', key);
   };
 
   const renderGridView = () => (
@@ -75,7 +75,7 @@ export default function Search() {
               color={favorites.includes(item.key) ? "red" : "gray"}
             />
           </TouchableOpacity>
-          <View style={[styles.imageContainer]}>
+          <View style={[styles.imageContainer, { backgroundColor: item.backgroundColor || '#F5FFE1' }]}>
             <Image
               source={{ uri: item.image }}
               style={styles.productImage}
@@ -85,28 +85,9 @@ export default function Search() {
           <Text style={styles.productWeight}>{item.amount}</Text>
           <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
           <View style={styles.storeIconsContainer}>
-            <StoreList stores={commaToList(item.store || item.store)}/>
+            <StoreList stores={commaToList(item.stores || item.store)} />
           </View>
         </TouchableOpacity>
-      ))}
-    </View>
-  );
-
-  const renderListView = () => (
-    <View style={styles.listContainer}>
-      {searchResults.map((item) => (
-        <LongItem
-          key={item.key}
-          itemKey={item.key}
-          name={item.name}
-          price={item.price}
-          amount={item.amount}
-          store={item.store}
-          image={item.image}
-          canAdd={true}
-          onAdd={() => handleAddToCart(item)}
-          onRemove={() => handleRemoveFromCart(item.key)}
-        />
       ))}
     </View>
   );
@@ -138,9 +119,6 @@ export default function Search() {
               <TouchableOpacity onPress={() => setViewMode('grid')} style={viewMode === 'grid' ? styles.activeToggle : styles.inactiveToggle}>
                 <Ionicons name="grid-outline" size={24} color={viewMode === 'grid' ? "#6CC51D" : "#999"} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setViewMode('list')} style={viewMode === 'list' ? styles.activeToggle : styles.inactiveToggle}>
-                <Ionicons name="list-outline" size={24} color={viewMode === 'list' ? "#6CC51D" : "#999"} />
-              </TouchableOpacity>
             </View>
           </View>
 
@@ -152,7 +130,7 @@ export default function Search() {
                 <Text style={styles.noResultsSubText}>Try a different search term</Text>
               </View>
             ) : (
-              viewMode === 'grid' ? renderGridView() : renderListView()
+              renderGridView()
             )}
           </ScrollView>
         </>
@@ -164,18 +142,42 @@ export default function Search() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
   },
   searchContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    padding: 16,
+    backgroundColor: '#fff',
   },
   resultHeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    marginVertical: 8,
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  resultsText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  highlight: {
+    fontWeight: '600',
+    color: '#000',
+  },
+  viewToggle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  activeToggle: {
+    padding: 8,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 4,
+    marginLeft: 8,
+  },
+  inactiveToggle: {
+    padding: 8,
+    marginLeft: 8,
   },
   loadingContainer: {
     flex: 1,
@@ -187,50 +189,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
   },
-  resultsText: {
-    fontSize: 16,
-    flex: 1,
-  },
-  highlight: {
-    color: '#6CC51D',
-    fontWeight: 'bold',
-  },
   noResultsContainer: {
-    alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     paddingTop: 100,
   },
   noResultsText: {
-    fontSize: 18,
-    fontWeight: '500',
     marginTop: 16,
-    color: '#333',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#666',
   },
   noResultsSubText: {
-    fontSize: 14,
-    color: '#666',
     marginTop: 8,
-  },
-  viewToggle: {
-    flexDirection: 'row',
-  },
-  activeToggle: {
-    padding: 8,
-    backgroundColor: '#F2FFE6',
-    borderRadius: 8,
-    marginLeft: 8,
-  },
-  inactiveToggle: {
-    padding: 8,
-    marginLeft: 8,
+    fontSize: 14,
+    color: '#999',
   },
   productsContainer: {
-    padding: 16,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-  },
-  listContainer: {
     padding: 16,
   },
   productItem: {
@@ -240,9 +219,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     width: '48%',
     alignItems: 'center',
-    borderWidth: 4,
+    borderWidth: 1,
     borderColor: '#f0f0f0',
     position: 'relative',
+    height: 250,
   },
   heartButton: {
     position: 'absolute',
@@ -253,41 +233,42 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     borderRadius: 50,
-    padding: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
     width: 100,
     height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
   },
   productImage: {
+    width: 80,
+    height: 80,
     resizeMode: 'contain',
-    width: '80%',
-    height: '80%',
   },
   productName: {
     fontSize: 14,
     fontWeight: '500',
-    marginTop: 8,
     textAlign: 'center',
+    marginBottom: 4,
+    height: 40,
   },
   productWeight: {
-    color: '#666',
     fontSize: 12,
-    textAlign: 'center',
-    marginTop: 4,
+    color: '#666',
+    marginBottom: 4,
   },
   productPrice: {
+    fontSize: 16,
+    fontWeight: '600',
     color: '#6CC51D',
-    fontSize: 14,
-    fontWeight: '500',
-    textAlign: 'center',
-    marginTop: 4,
+    marginBottom: 8,
   },
   storeIconsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     width: '100%',
     marginTop: 8,
-    paddingHorizontal: 4,
+  },
+  listContainer: {
+    padding: 16,
   },
 });

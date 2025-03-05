@@ -3,11 +3,31 @@ import { singleItem } from '@/constants/Types';
 
 // Define an extended item with display properties
 interface EnhancedItem extends singleItem {
-  backgroundColor: string;
+  backgroundColor?: string;
   stores?: string;
 }
 
-// Add background color and stores property to each item
+/**
+ * Search for items based on a search term
+ * Returns items with enhanced display properties like multiple stores
+ */
+export function searchItems(searchTerm: string): EnhancedItem[] {
+  if (!searchTerm) return [];
+
+  const searchTermLower = searchTerm.toLowerCase();
+
+  // Filter and enhance items for display
+  return mockItems
+    .filter(item =>
+      item.name.toLowerCase().includes(searchTermLower) ||
+      item.category?.toLowerCase().includes(searchTermLower)
+    )
+    .map(item => enhanceItemForDisplay(item));
+}
+
+/**
+ * Enhance an item with display properties like background color and multiple stores
+ */
 function enhanceItemForDisplay(item: singleItem): EnhancedItem {
   // Generate a pastel background color based on the item name
   const hash = item.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -19,55 +39,28 @@ function enhanceItemForDisplay(item: singleItem): EnhancedItem {
   return {
     ...item,
     backgroundColor,
-    stores: item.store, // Use the store field as stores
+    // Convert store field to stores field for consistency with FeaturedItems
+    stores: generateRandomStores(item.store),
+    // Keep original store field for compatibility
+    store: item.store
   };
 }
 
-// Map product names to categories for demo purposes
-const productCategories: Record<string, string> = {
-  "Organic Bananas": "Fruits",
-  "Fresh Strawberries": "Fruits",
-  "Avocado": "Fruits",
-  "Baby Spinach": "Vegetables",
-  "Cucumber": "Vegetables",
-  "Tomatoes": "Vegetables",
-  "Almond Milk": "Beverages",
-  "Greek Yogurt": "Dairy",
-  "Cheddar Cheese": "Dairy",
-  "Fresh Salmon Fillet": "Meat",
-  "Organic Chicken Breast": "Meat",
-  "Extra Virgin Olive Oil": "Cooking Oil",
-  "Red Wine Vinegar": "Cooking Oil",
-  "Peanut Butter": "Grocery",
-  "Brown Rice": "Grocery",
-  "Whole Wheat Pasta": "Grocery",
-  "Dark Chocolate": "Grocery",
-  "Whole Grain Bread": "Bakery"
-};
+/**
+ * Generate a comma-separated list of stores including the primary store
+ * and 1-2 random additional stores
+ */
+function generateRandomStores(primaryStore: string): string {
+  const allStores = ["Walmart", "Safeway", "Trader Joes", "Target"];
+  const storeSet = new Set<string>([primaryStore]);
 
-export function searchItems(query: string): EnhancedItem[] {
-  if (!query || query.trim() === '') {
-    // Return a few featured items for empty search
-    return mockItems.slice(0, 6).map(enhanceItemForDisplay);
+  // Add 1-2 more random stores
+  const additionalStores = Math.floor(Math.random() * 2) + 1;
+
+  for (let i = 0; i < additionalStores; i++) {
+    const randomStore = allStores[Math.floor(Math.random() * allStores.length)];
+    storeSet.add(randomStore);
   }
 
-  const searchTerm = query.toLowerCase().trim();
-
-  // Check if it's a category search
-  if (['fruits', 'vegetables', 'beverages', 'dairy', 'meat', 'cooking oil', 'grocery', 'bakery', 'household'].includes(searchTerm)) {
-    return mockItems
-      .filter(item => {
-        const category = productCategories[item.name];
-        return category && category.toLowerCase() === searchTerm;
-      })
-      .map(enhanceItemForDisplay);
-  }
-
-  // Regular search by name or store
-  return mockItems
-    .filter(item =>
-      item.name.toLowerCase().includes(searchTerm) ||
-      item.store.toLowerCase().includes(searchTerm)
-    )
-    .map(enhanceItemForDisplay);
+  return Array.from(storeSet).join(',');
 }
