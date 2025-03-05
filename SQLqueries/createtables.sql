@@ -14,14 +14,18 @@ longitudeStore TEXT,
 latitudeStore TEXT
 );
 
+/*
 CREATE TABLE ProductInfo (
 pid INTEGER PRIMARY KEY AUTO_INCREMENT,
 name TEXT NOT NULL
 );
-
-CREATE TABLE StoreProducts (
+*/
+CREATE TABLE Products (
 pid INTEGER REFERENCES ProductInfo(pid),
 sid INTEGER REFERENCES Stores(sid),
+name TEXT NOT NULL,
+description TEXT, 
+amount TEXT,
 price FLOAT,
 searchQuery TEXT,
 imagePath TEXT,
