@@ -21,15 +21,14 @@ name TEXT NOT NULL
 );
 */
 CREATE TABLE Products (
-pid INTEGER REFERENCES ProductInfo(pid),
+pid INTEGER PRIMARY KEY AUTO_INCREMENT,
 sid INTEGER REFERENCES Stores(sid),
 name TEXT NOT NULL,
 description TEXT, 
 amount TEXT,
 price FLOAT,
 searchQuery TEXT,
-imagePath TEXT,
-PRIMARY KEY (pid, sid)
+imagePath TEXT
 );
 
 /*
