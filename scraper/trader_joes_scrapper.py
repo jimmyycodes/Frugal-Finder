@@ -18,46 +18,43 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import random
 
-class QFCScraper:
+class TJ_test:
   # main card of the website
-  PRODUCT_CARD = "ProductCard"
+  PRODUCT_CARD = "SearchResultCard_searchResultCard__3V-_h"
 
   # button to load the next page
-  LOAD_MORE_BUTTON = "LoadMore__load-more-button"
+  LOAD_MORE_BUTTON = ".Pagination_pagination__arrow_side_right__9YUGr"
 
   # Inner details header of the product we clicked in
-  PRODUCT_DESC_TRUNC = "ProductDetails-header"
-
-  # Inner details Promotional price of product 
-  PROMO_PRICE = "kds-Price-promotional"
+  PRODUCT_DESC_TRUNC = "ProductDetails_main__title__14Cnm"
 
   # Inner details Regular price of product
-  REGULAR_PRICE = "kds-Price-original"
+  REGULAR_PRICE = "ProductPrice_productPrice__price__3-50j"
 
   # Popup close button
-  NO_THANKS_BUTTON = "//button[contains(text(), 'No, thanks')]"
-  
+  NO_THANKS_BUTTON = "CookiesAlert_cookiesAlert__3qSl1"
+
+  # News letter popup close button
+  NEWSLETTER_CLOSE_BUTTON = "needsclick.klaviyo-close-form"
+
   # Inner details weight of product
-  PRODUCT_WEIGHT = "ProductDetails-sellBy"
+  PRODUCT_WEIGHT = "ProductPrice_productPrice__unit__2jvkA"
 
   # Search button to search for the product
-  SEARCH_BUTTON = "SearchBar-input"
-
-  # Inner detail to open up the drop down button
-  DROP_DOWN_BUTTON = "product-details-button"
+  SEARCH_BUTTON = "SearchField_searchField__inputText__2IH6E"
 
   # Inner details detailed description of product
-  PRODUCT_EXTRA_DESC = '[data-testid="product-details-romance-description"] p'
+  PRODUCT_EXTRA_DESC = 'ProductDetails_main__description__2R7nN'
 
   # Store name
-  STORE_NAME = "QFC"
+  STORE_NAME = "TraderJoes"
 
   # Store address
-  STORE_ADDRESS = "2746 NE 45th St, Seattle, WA 98105"
+  STORE_ADDRESS = "4555 Roosevelt Way NE, Seattle, WA 98105"
 
   # Store longitude and latitude
-  STORE_LONGITUDE = 47.662262685059616
-  STORE_LATITUDE = -122.29642623208059
+  STORE_LONGITUDE = 47.6646866989066
+  STORE_LATITUDE = -122.31754117071971
 
   # Inner detail page image class name
   IMAGE_CLASS_NAME = "iiz__zoom-img "
@@ -92,7 +89,15 @@ class QFCScraper:
 
     self.wait = WebDriverWait(self.driver, 20)
 
-    self.url = "https://www.qfc.com/"
+    self.url = "https://www.traderjoes.com/"
+
+    # clear the images directory
+    if os.path.exists('images'):
+        # Remove all files in the images directory
+        for file in os.listdir('images'):
+            os.remove(os.path.join('images', file))
+    else:
+        os.makedirs('images')
 
   def close_connection(self):
     """Close database connection."""
@@ -147,17 +152,11 @@ class QFCScraper:
 
   def close_popup(self):
       try:
-          # Wait for the popup button
-          no_thanks_buttons = WebDriverWait(self.driver, 3).until(
-              EC.presence_of_all_elements_located((By.XPATH, self.NO_THANKS_BUTTON))
-          )
-
-          if no_thanks_buttons:
-              self.driver.execute_script("arguments[0].click();", no_thanks_buttons[0])
-              print("✅ Popup closed")
-              time.sleep(1)
-          else:
-              print("⚠️ No popup button found")
+        cookie_banner = self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.NO_THANKS_BUTTON)))
+        close_button = cookie_banner.find_element(By.TAG_NAME, "button")
+        close_button.click()
+        print("Closed cookie banner.")
+        time.sleep(2)  # Allow time for the banner to disappear
 
       except NoSuchElementException:
           print("❌ No popup found, continuing...")
@@ -166,15 +165,29 @@ class QFCScraper:
       except Exception as e:
           print("🚨 Error closing popup:", e)
 
+    # Close the newsletter pop-up if it appears
+  def close_newsletter_popup(self):
+    """Check if the newsletter pop-up exists and close it."""
+    try:
+        # Wait for a short time (2 seconds) to see if the pop-up appears
+        popup_close_button = WebDriverWait(self.driver, 3).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, self.NEWSLETTER_CLOSE_BUTTON))
+        )
+
+        popup_close_button.click()  # Click the close button
+        print("✅ Closed newsletter pop-up.")
+
+        # Wait briefly to ensure it's fully closed before continuing
+        WebDriverWait(self.driver, 1).until(EC.invisibility_of_element(popup_close_button))
+
+    except Exception:
+        print("✅ No newsletter pop-up detected, continuing...")
+
   def download_image(self, image_url, product_name):
     """Download and save image from URL"""
     try:
         if image_url == "N/A":
             return "N/A"
-
-        # Create images directory if it doesn't exist
-        if not os.path.exists('images'):
-            os.makedirs('images')
 
         # Clean filename of invalid characters
         clean_name = "".join(c for c in product_name if c.isalnum() or c in (' ', '-', '_')).rstrip()
@@ -193,7 +206,7 @@ class QFCScraper:
 
   def scrape_products(self, search_query, retry=True, start_index=0):
     try:
-        self.close_popup()
+        self.close_newsletter_popup()
 
         wait = WebDriverWait(self.driver, 10)
         product_cards = wait.until(
@@ -212,8 +225,6 @@ class QFCScraper:
                 # Click on the product link to get more details
                 link = product.find_element(By.TAG_NAME, "a")
 
-                self.close_popup()
-
                 # Scroll element into view
                 self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", link)
                 time.sleep(1)
@@ -231,19 +242,16 @@ class QFCScraper:
                 # Extract product details
                 name = self.extract_text(wait, self.PRODUCT_DESC_TRUNC)
                 price = self.extract_price(wait)
-                weight = self.extract_text(wait, self.PRODUCT_WEIGHT)
+                weight = self.extract_weight(wait)
                 description = self.extract_description(wait)
                 image_url = self.extract_image(name)
-                
+
                 self.insert_into_db(name, description, weight, price, search_query, image_url)
 
                 print(f"Product: {name}\nPrice: {price}\nWeight: {weight}\nDescription: {description}\n Image: {image_url}\n\n")
 
                 # set retry back to true to retry the next product potentially
                 retry = True
-
-
-                self.close_popup()
 
                 # Go back to the previous page
                 self.driver.back()
@@ -270,19 +278,27 @@ class QFCScraper:
     except Exception as e:
         print("Error scraping products:", e)
 
+  def extract_weight(self, wait):
+    try:
+        element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.PRODUCT_WEIGHT)))
+        text_part = element.text.split("\n")
+        filtered_text = "".join(text_part).replace("/", "").strip()
+        return filtered_text
+    except Exception as e:
+        print(f"Error extracting weight: {e}")
+        return "N/A"  # Let the main retry handle it
+    
   def extract_image(self, name):
     # get the product image
     try:
-        img_element = self.driver.find_element(By.CLASS_NAME, self.IMAGE_CLASS_NAME)
+        img_element = self.wait.until(EC.presence_of_element_located((By.XPATH, "//img[contains(@src, 'products')]")))
         image_url = img_element.get_attribute("src")
-        print(f"Image URL: {image_url}")
-
-        # check if image_url is http
-        if image_url.startswith("https"):
-            return image_url
-        else:
+        if "jcr:content" in image_url or "renditions" in image_url:
+            print("⚠️ Image is private and session-based:", image_url)
             local_image_path = self.download_image(image_url, name)
             return local_image_path
+        else:
+            return image_url
     except Exception as e:
         print("Error extracting image:", e)
         return "N/A"
@@ -296,22 +312,17 @@ class QFCScraper:
 
   def extract_price(self, wait):
     try:
-        price = wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.PROMO_PRICE))).text
-    except NoSuchElementException:
-        try:
-            price = wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.REGULAR_PRICE))).text
-        except Exception as e:
-            print("Error extracting price:", e)
-            return "N/A"
-    return price.replace("\n", "").replace(" ", "").replace("lb", "/lb")
+        return wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.REGULAR_PRICE))).text
+    except Exception as e:
+        print("Error extracting price:", e)
+        return "N/A"
 
   def extract_description(self, wait):
     try:
-        drop_down = wait.until(EC.element_to_be_clickable((By.ID, self.DROP_DOWN_BUTTON)))
-        drop_down.click()
-        time.sleep(2)
-        description_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.PRODUCT_EXTRA_DESC)))
-        return description_element.text
+        description_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, self.PRODUCT_EXTRA_DESC)))
+        all_paragraphs = description_element.find_elements(By.TAG_NAME, "p")
+        description_text = " ".join([p.text for p in all_paragraphs])
+        return description_text
     except Exception as e:
         print(f"Error extracting description: {e}")
         return "N/A"
@@ -326,8 +337,12 @@ class QFCScraper:
       self.driver.delete_all_cookies()
       self.driver.execute_script("window.localStorage.clear();")
 
+      # click the search action
+      search_action = self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "Search_action__2LXEg")))
+      search_action.click()
+
       # Human-like interaction with search bar
-      search_bar = self.wait.until(EC.element_to_be_clickable((By.ID, self.SEARCH_BUTTON)))
+      search_bar = self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, self.SEARCH_BUTTON)))
       ActionChains(self.driver).move_to_element(search_bar).pause(1).click().perform()
 
       # Simulate typing
@@ -341,62 +356,37 @@ class QFCScraper:
       time.sleep(2)
 
       self.close_popup()
+      self.close_newsletter_popup()
+
+      # go to the products tab
+      products_view = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'All Products')]" )))
+      products_view.click()
+
+      time.sleep(5)
       while True:
         try:
 
+          self.scrape_products(query)
           try:
             next_button = self.wait.until(
-              EC.element_to_be_clickable((By.CLASS_NAME, self.LOAD_MORE_BUTTON))
+              EC.element_to_be_clickable((By.CSS_SELECTOR, self.LOAD_MORE_BUTTON))
             )
           except:
             # if pagination button is not found then break
             print("No more pages.")
             break
 
-          # Scroll the button into view
-          self.driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
-          time.sleep(1)
-
-          # Second try: Remove any overlapping elements that might intercept the click
-          self.driver.execute_script("""
-              // Remove fixed header
-              var header = document.querySelector('.query.searchInputWrapper');
-              if (header) header.style.display = 'none';
-
-              // Remove any other fixed elements that might interfere
-              var fixedElements = document.querySelectorAll('[style*="position: fixed"]');
-              fixedElements.forEach(function(el) {
-                  el.style.display = 'none';
-              });
-          """)
-
           try:
-            self.close_popup()
             print("Successfully clicked the button")
             next_button.click()
           except:
-            try:
-              self.driver.execute_script("arguments[0].click();", next_button)
-            except:
-              ActionChains(self.driver).move_to_element(next_button).click().perform()
-
+            print("Error clicking the button")
+            break
           time.sleep(2)
 
-                  # Restore any elements we hid
-          self.driver.execute_script("""
-              var header = document.querySelector('.query.searchInputWrapper');
-              if (header) header.style.display = '';
-
-              var fixedElements = document.querySelectorAll('[style*="position: fixed"]');
-              fixedElements.forEach(function(el) {
-                  el.style.display = '';
-              });
-          """)
         except Exception as e:
           print("Pagination button not found or error:", e)
           break
-
-      self.scrape_products(query)
 
     # Close browser
     self.driver.quit()
@@ -404,6 +394,6 @@ class QFCScraper:
 
 current_cart = ["bread"]
 
-qfc_scraper = QFCScraper()
+tj_scraper = TJ_test()
 
-qfc_scraper.scrape(current_cart)
+tj_scraper.scrape(current_cart)
