@@ -8,14 +8,24 @@ import BackButton from "@/components/Buttons/BackButton";
 import { singleItem } from "@/constants/Types";
 import genLongItems from "@/constants/Tools";
 import { mockItems } from "@/constants/MockVars";
+import { useLocalSearchParams } from "expo-router";
 
-type productDetailsProps = {
-  desc?: string;
-  items: singleItem[];
-};
+export default function ProductDetails() {
+  // Get params
+  const { items, descParam } = useLocalSearchParams();
 
-export default function ProductDetails( { desc, items}: productDetailsProps) {
-  const itemsUsed = items ? items : mockItems;
+  let itemsUsed = mockItems;
+  let desc = descParam as string;
+
+  try {
+    if (items) {
+      itemsUsed = JSON.parse(items as string) as singleItem[];
+    }
+  }
+  catch (e) {
+    console.log(e);
+  }
+
 
   // Hooks
   const [quantity, setQuantity] = useState(1); // TODO: For now quantity is cut from the design
