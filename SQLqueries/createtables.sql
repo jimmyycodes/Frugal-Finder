@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS frugaldatabase.StoreProducts;
+DROP TABLE IF EXISTS frugaldatabase.Products;
 DROP TABLE IF EXISTS frugaldatabase.Stores;
-DROP TABLE IF EXISTS frugaldatabase.ProductInfo;
-/*DROP TABLE IF EXISTS FrugalFinderDB.Users;
+/*DROP TABLE IF EXISTS frugaldatabase.ProductInfo;
+DROP TABLE IF EXISTS FrugalFinderDB.Users;
 DROP TABLE IF EXISTS FrugalFinderDB.OrderHistory;
 DROP TABLE IF EXISTS FrugalFinderDB.ProductOrderHistory;
 DROP TABLE IF EXISTS FrugalFinderDB.Coupons;*/
