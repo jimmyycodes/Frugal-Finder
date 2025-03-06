@@ -18,7 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import random
 
-class QFCScraper:
+class QFC_scraper:
   # main card of the website
   PRODUCT_CARD = "ProductCard"
 
@@ -400,10 +400,3 @@ class QFCScraper:
 
     # Close browser
     self.driver.quit()
-
-
-current_cart = ["bread"]
-
-qfc_scraper = QFCScraper()
-
-qfc_scraper.scrape(current_cart)

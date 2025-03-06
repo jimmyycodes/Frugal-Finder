@@ -18,7 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import random
 
-class TJ_test:
+class TJ_scraper:
   # main card of the website
   PRODUCT_CARD = "SearchResultCard_searchResultCard__3V-_h"
 
@@ -329,7 +329,7 @@ class TJ_test:
 
   def scrape(self, queries):
     for query in queries:
-      print(f"\n🔍 Searching for '{query}' at QFC...\n")
+      print(f"\n🔍 Searching for '{query}' at Trader Joes...\n")
 
       self.driver.get(self.url)
 
@@ -363,6 +363,8 @@ class TJ_test:
       products_view.click()
 
       time.sleep(5)
+
+      self.scrape_products(query)
       while True:
         try:
 
@@ -390,10 +392,3 @@ class TJ_test:
 
     # Close browser
     self.driver.quit()
-
-
-current_cart = ["bread"]
-
-tj_scraper = TJ_test()
-
-tj_scraper.scrape(current_cart)
