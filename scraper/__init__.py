@@ -1,6 +1,32 @@
 from multiprocessing import Process
 from trader_joes_scraper import TJ_scraper
 from qfc_scraper import QFC_scraper
+from dotenv import find_dotenv, load_dotenv
+import mysql.connector
+import os
+
+def clear_products_table(): 
+    # deletes all the necessary records from the product table before running the scrapers.
+    
+    # Load environment variables
+    dotenv_path = find_dotenv()
+
+    load_dotenv(dotenv_path)
+
+    # Initialize MySQL connection
+    db_connection = mysql.connector.connect(
+        host=os.getenv("MYSQL_HOST"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        database=os.getenv("MYSQL_DATABASE")
+    )
+
+    cursor = db_connection.cursor()
+    cursor.execute("DELETE FROM products")
+    cursor.execute("ALTER TABLE products AUTO_INCREMENT = 1")
+    cursor.commit()
+    cursor.close()
+    db_connection.close()
 
 def run_tj_scraper():
     categories = ["bread"]
@@ -13,6 +39,9 @@ def run_qfc_scraper():
     qfc_scraper.scrape(categories)
 
 if __name__ == '__main__':
+    # Clear products table
+    clear_products_table()
+    
     # Create processes
     p1 = Process(target=run_tj_scraper)
     p2 = Process(target=run_qfc_scraper)
