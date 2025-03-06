@@ -65,4 +65,4 @@ jobs:
           pip install -r requirements.txt
       - name: Run Web Scrapers in Parallel
         run: |
-          python __init__.py
+          python scraper/__init__.py
