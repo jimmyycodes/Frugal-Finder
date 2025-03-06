@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { WalmartIcon, SafeWayIcon, TraderJoesIcon } from '../Icons/SvgHandler';
 import StoreList from '@/components/Icons/StoreList';
 import LongItem from '../Items/LongItem';
 
@@ -122,7 +121,8 @@ export default function FeaturedItems() {
     <ScrollView style={styles.listContainer}>
       {products.map((item) => (
         <LongItem
-          key={item.id}
+          key={item.id.toString()}
+          itemKey={item.id.toString()}
           name={item.name}
           price={item.price}
           amount={item.amount}

@@ -1,171 +1,228 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { useRouter } from 'expo-router';
 import SearchBar from '@/components/Buttons/SearchBar';
 import StoreList from '@/components/Icons/StoreList';
-
-const grapeProducts = [
-  {
-    id: 1,
-    name: 'Red Globe Grapes',
-    price: '$3.89 - $5.99',
-    weight: '2 lbs',
-    image: require('@/assets/images/produce/redGrapes.png'),
-    backgroundColor: '#FFE1E1',
-    stores: "Walmart,Walmart,Target"
-  },
-  {
-    id: 2,
-    name: 'Green Seedless Grapes',
-    price: '$4.29 - $6.49',
-    weight: '3 lbs',
-    image: require('@/assets/images/produce/greenGrapes.png'),
-    backgroundColor: '#E8FFE1',
-    stores: "Walmart,Trader Joes,Target"
-  },
-  {
-    id: 3,
-    name: 'Concord Grapes',
-    price: '$5.29 - $7.99',
-    weight: '2.5 lbs',
-    image: require('@/assets/images/produce/blueGrapes.png'),
-    backgroundColor: '#E1EEFF',
-    stores: "Trader Joes,Safeway,target"
-  },
-  {
-    id: 4,
-    name: 'Cotton Candy Grapes',
-    price: '$6.59 - $8.99',
-    weight: '2 lbs',
-    image: require('@/assets/images/produce/cottonGrapes.png'),
-    backgroundColor: '#FFE1FF',
-    stores: "Target,Safeway,target"
-  },
-  {
-    id: 5,
-    name: 'Moon Drop Grapes',
-    price: '$5.49 - $7.49',
-    weight: '1.5 lbs',
-    image: require('@/assets/images/produce/moonGrapes.png'),
-    backgroundColor: '#FFF1E1',
-    stores: "Trader Joes,Walmart,target, "
-  },
-  {
-    id: 6,
-    name: 'Champagne Grapes',
-    price: '$7.99 - $9.99',
-    weight: '1 lb',
-    image: require('@/assets/images/produce/champGrapes.png'),
-    backgroundColor: '#E1FFF1',
-    stores: "Trader Joes,Safeway,target"
-  },
-];
+import LongItem from '@/components/Items/LongItem';
+import { searchItems } from '@/services/searchService';
+import { singleItem } from '@/constants/Types';
 
 export default function Search() {
   const { searchText } = useLocalSearchParams();
   const router = useRouter();
-  const [newSearchText, setNewSearchText] = useState(searchText);
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const [newSearchText, setNewSearchText] = useState(searchText as string || '');
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  const toggleFavorite = (id: number) => {
+  useEffect(() => {
+    // Perform search when searchText changes
+    setIsLoading(true);
+
+    // Simulate API request delay
+    setTimeout(() => {
+      const results = searchItems(searchText as string || '');
+      setSearchResults(results);
+      setIsLoading(false);
+    }, 800);
+  }, [searchText]);
+
+  const toggleFavorite = (key: string) => {
     setFavorites(prev =>
-      prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id]
+      prev.includes(key) ? prev.filter(itemKey => itemKey !== key) : [...prev, key]
     );
   };
 
   const handleSearch = () => {
-    router.replace({ pathname: "/(tabs)/subPages/search", params: { searchText: newSearchText} });
+    if (newSearchText?.trim()) {
+      router.replace({ pathname: "/(tabs)/subPages/search", params: { searchText: newSearchText } });
+    }
   };
+
+  function commaToList(values: string): string[] {
+    if (!values) return [];
+    return values.split(',').map(item => item.trim());
+  }
+
+  const handleAdd = (key: string) => {
+    console.log('Added item:', key);
+  };
+
+  const handleRemove = (key: string) => {
+    console.log('Removed item:', key);
+  };
+
+  const renderGridView = () => (
+    <View style={styles.productsContainer}>
+      {searchResults.map((item) => (
+        <TouchableOpacity
+          key={item.key}
+          onPress={() => router.push({
+            pathname: "/(tabs)/subPages/productDetails",
+            params: { productId: item.key }
+          })}
+          style={styles.productItem}
+        >
+          <TouchableOpacity
+            style={styles.heartButton}
+            onPress={() => toggleFavorite(item.key)}
+          >
+            <Ionicons
+              name={favorites.includes(item.key) ? "heart" : "heart-outline"}
+              size={24}
+              color={favorites.includes(item.key) ? "red" : "gray"}
+            />
+          </TouchableOpacity>
+          <View style={[styles.imageContainer, { backgroundColor: item.backgroundColor || '#F5FFE1' }]}>
+            <Image
+              source={{ uri: item.image }}
+              style={styles.productImage}
+            />
+          </View>
+          <Text style={styles.productName}>{item.name}</Text>
+          <Text style={styles.productWeight}>{item.amount}</Text>
+          <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
+          <View style={styles.storeIconsContainer}>
+            <StoreList stores={commaToList(item.stores || item.store)} />
+          </View>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.searchContainer}>
-          <SearchBar
-            onFilterPress={() => console.log('Filter pressed')}
-            onTextUpdate={setNewSearchText}
-            onSubmit={handleSearch}
-            onFocus={() => console.log('Search focused')}
-            onFocusStop={() => console.log('Search focus stopped')}
-          />
-          <Text style={styles.text}>
-            Showing results for "<Text style={styles.highlight}>{searchText}</Text>"
-          </Text>
+      <View style={styles.searchContainer}>
+        <SearchBar
+          onFilterPress={() => console.log('Filter pressed')}
+          onTextUpdate={setNewSearchText}
+          onSubmit={handleSearch}
+          onFocus={() => console.log('Search focused')}
+          onFocusStop={() => console.log('Search focus stopped')}
+        />
+      </View>
+
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#6CC51D" />
+          <Text style={styles.loadingText}>Searching products...</Text>
         </View>
-        <View style={styles.productsContainer}>
-          {grapeProducts.map((item) => (
-            <TouchableOpacity
-            onPress={() => router.push({ pathname: "/(tabs)/subPages/productDetails"})}
-            key={item.id}
-            style={styles.productItem}
-            >
-              <TouchableOpacity
-                style={styles.heartButton}
-                onPress={() => toggleFavorite(item.id)}
-              >
-                <Ionicons
-                  name={favorites.includes(item.id) ? "heart" : "heart-outline"}
-                  size={24}
-                  color={favorites.includes(item.id) ? "red" : "gray"}
-                />
+      ) : (
+        <>
+          <View style={styles.resultHeaderContainer}>
+            <Text style={styles.resultsText}>
+              Showing results for "<Text style={styles.highlight}>{searchText}</Text>"
+            </Text>
+            <View style={styles.viewToggle}>
+              <TouchableOpacity onPress={() => setViewMode('grid')} style={viewMode === 'grid' ? styles.activeToggle : styles.inactiveToggle}>
+                <Ionicons name="grid-outline" size={24} color={viewMode === 'grid' ? "#6CC51D" : "#999"} />
               </TouchableOpacity>
-              <View style={[styles.imageContainer, { backgroundColor: item.backgroundColor }]}>
-                <Image source={item.image} style={styles.productImage} />
+            </View>
+          </View>
+
+          <ScrollView>
+            {searchResults.length === 0 ? (
+              <View style={styles.noResultsContainer}>
+                <Ionicons name="search-outline" size={64} color="#ccc" />
+                <Text style={styles.noResultsText}>No results found</Text>
+                <Text style={styles.noResultsSubText}>Try a different search term</Text>
               </View>
-              <Text style={styles.productName}>{item.name}</Text>
-              <Text style={styles.productWeight}>{item.weight}</Text>
-              <Text style={styles.productPrice}>{item.price}</Text>
-              <View style={styles.storeIconsContainer}>
-                <StoreList stores={commaToList(item.stores)}/>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+            ) : (
+              renderGridView()
+            )}
+          </ScrollView>
+        </>
+      )}
     </View>
   );
-}
-
-function commaToList(values: string): string[] {
-  return values.split(',').map(item => item.trim());
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
   },
   searchContainer: {
-    alignItems: 'center',
-    marginTop: 16,
+    padding: 16,
+    backgroundColor: '#fff',
   },
-  text: {
-    fontSize: 18,
-    marginTop: 10,
-    marginBottom: 20,
+  resultHeaderContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  resultsText: {
+    fontSize: 14,
+    color: '#666',
   },
   highlight: {
-    color: 'blue',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    color: '#000',
+  },
+  viewToggle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  activeToggle: {
+    padding: 8,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 4,
+    marginLeft: 8,
+  },
+  inactiveToggle: {
+    padding: 8,
+    marginLeft: 8,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: '#666',
+  },
+  noResultsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  noResultsText: {
+    marginTop: 16,
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#666',
+  },
+  noResultsSubText: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#999',
   },
   productsContainer: {
-    padding: 16,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    padding: 16,
   },
   productItem: {
     backgroundColor: '#ffffff',
     padding: 8,
     borderRadius: 8,
-    marginTop: 18,
+    marginBottom: 16,
     width: '48%',
     alignItems: 'center',
-    borderWidth: 4,
+    borderWidth: 1,
     borderColor: '#f0f0f0',
     position: 'relative',
+    height: 250,
   },
   heartButton: {
     position: 'absolute',
@@ -176,40 +233,42 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     borderRadius: 50,
-    padding: 8,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
     width: 100,
     height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
   },
   productImage: {
+    width: 80,
+    height: 80,
     resizeMode: 'contain',
-    width: '80%',
-    height: '80%',
   },
   productName: {
     fontSize: 14,
     fontWeight: '500',
-    marginTop: 8,
     textAlign: 'center',
+    marginBottom: 4,
+    height: 40,
   },
   productWeight: {
-    color: '#666',
     fontSize: 12,
-    textAlign: 'center',
-    marginTop: 4,
+    color: '#666',
+    marginBottom: 4,
   },
   productPrice: {
-    color: '#999',
-    fontSize: 12,
-    textAlign: 'center',
-    marginTop: 4,
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#6CC51D',
+    marginBottom: 8,
   },
   storeIconsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     width: '100%',
     marginTop: 8,
-    paddingHorizontal: 4,
+  },
+  listContainer: {
+    padding: 16,
   },
 });
