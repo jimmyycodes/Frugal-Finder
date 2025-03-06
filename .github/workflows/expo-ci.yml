@@ -70,7 +70,11 @@ jobs:
 
       - name: Debug MySQL Connection
         run: |
-          mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD -e "SHOW DATABASES;"
+          echo "Checking MySQL Connection..."
+          echo "DB_HOST=$DB_HOST"
+          echo "DB_USER=$DB_USER"
+          echo "DB_NAME=$DB_NAME"
+          mysql --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASSWORD" -e "SHOW DATABASES;"
 
       - name: Run Web Scrapers in Parallel
         env:
