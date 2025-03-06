@@ -18,8 +18,24 @@ const dbConfig: ConnectionOptions = {
 
 // Create a connection pool
 const pool = mysql.createPool(dbConfig);
-const queryGetAllProductsFromAllStores = 'SELECT s.name AS store, p.name AS product, sp.price, sp.searchQuery, sp.imagePath FROM StoreProducts sp JOIN Stores s ON sp.sid = s.sid JOIN ProductInfo p ON sp.pid = p.pid;';
-const queryGetAllProductsFromAllStoresFromcategory = 'SELECT s.name AS store, p.name AS product, sp.price, sp.searchQuery, sp.imagePath FROM StoreProducts sp JOIN Stores s ON sp.sid = s.sid JOIN ProductInfo p ON sp.pid = p.pid WHERE sp.searchQuery LIKE ?;';
+
+const queryGetAllProductsFromAllStores = `
+    SELECT p.pid, p.sid, s.name AS store, p.name AS product, p.amount, p.description, p.price, p.searchQuery, p.imagePath 
+    FROM Products p 
+    JOIN Stores s ON p.sid = s.sid
+    `;
+const queryGetAllProductsFromAllStoresFromcategory = `
+        SELECT p.pid, s.sid, s.name AS store, p.name AS product, p.price, p.amount, p.description, p.searchQuery, p.imagePath 
+        FROM Products p 
+        JOIN Stores s ON p.sid = s.sid 
+        WHERE p.searchQuery LIKE ?;
+        `;
+const queryGetProductsByPIDs = `
+    SELECT p.pid, s.sid, s.name AS store, p.name AS product, p.amount, p.description, p.price, p.searchQuery, p.imagePath 
+    FROM Products p 
+    JOIN Stores s ON p.sid = s.sid  
+    WHERE p.pid IN (?);
+`;
 
 // get all products
 export const getAll = async (req: Request, res: Response): Promise<void> => {
@@ -27,6 +43,19 @@ export const getAll = async (req: Request, res: Response): Promise<void> => {
         const [results] = await pool.query(queryGetAllProductsFromAllStores);
         res.json({results});
     } catch(error) {
+        console.error("Database error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+// get featured
+export const getFeatured = async (req: Request, res: Response): Promise<void> => {
+    const arrayOfPIDs = [136, 140, 142, 143, 146, 151, 160, 165, 168];
+
+    try {
+        const [results] = await pool.query(queryGetProductsByPIDs, [arrayOfPIDs]);
+        res.json({ results });
+    } catch (error) {
         console.error("Database error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
