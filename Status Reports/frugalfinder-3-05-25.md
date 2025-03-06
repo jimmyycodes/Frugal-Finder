@@ -7,38 +7,35 @@
 
 ### Progress and Issues
 - Tasks completed:
-  - [Task 1]
-  - [Task 2]
+  - Backend & Scaper Core elements
 - Key learnings:
-  - [What was learned this week]
+  - Real world SWE talk
 - Issues encountered:
   - [Issue 1] and steps taken to resolve it
   - [Issue 2] (if unresolved, include blockers and additional context)
 
 ### Goals for Next Week
-- [Task 1] (Responsibility: [Team Member 1]) - Estimated time: [X hours]
-- [Task 2] (Responsibility: [Team Member 2]) - Estimated time: [X hours]
-- [Task 3] Longer-term goal (Responsibility: [Team Member or Team])
+- FINSIH!!!
 
 ---
 
 ### David Lym
 
 ### Goals for the Week
-- Have UI ready for demo this week
+- Complete end to end setup
 
 ### Progress and Issues
 - Tasks completed:
-  - Build a rough protoype and was able to achieve a build
-  - Completed home screen as per the figma
+  - Connecting pages
+  - Backend and frontend coordination
 - Key learnings:
-  - certain react native aspects aren't shared with general react, very specific imports.
+  - Talk and coordinate as much as possible. 
 - Issues encountered:
-  - Time completion before beta testing is close.
-  - Dependencies are messeing up sometimes.
+  - Time completion before final release is close.
+  - Dependencies are messeing up sometimes & a couple problems with setup instructions.
 
 ### Goals for Next Week
-- Backend setup (AWS or Azure)(Whole Team) - Estimated time: [5 hours]
+- Backend completion (AWS or Azure)(Whole Team) - Estimated time: [5 hours]
 - Frontend cleaned up (Nathan David) - Estimated time: [3 hours]
 
 ---
