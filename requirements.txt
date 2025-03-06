@@ -1,4 +1,6 @@
 selenium
+undetected-chromedriver
+mysql-connector-python
 requests
 pandas
 pytest
