@@ -49,16 +49,16 @@ jobs:
       - name: Run Jest tests front-end
         working-directory: FrugalApp
         run: npm test  -- --ci
-      
+
       - name: Run Jest tests back-end
         working-directory: server
         run: npm test  -- --ci
-      
+
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
           python-version: '3.11'
-      
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
@@ -68,15 +68,25 @@ jobs:
         run: |
           pip install undetected-chromedriver
 
-      - name: Debug MySQL Connection
-        run: |
-          echo "Checking MySQL Connection..."
-          echo "DB_HOST=$DB_HOST"
-          echo "DB_USER=$DB_USER"
-          echo "DB_NAME=$DB_NAME"
-          mysql -h frugal-finder-server25.mysql.database.azure.com -u frugalfinderUW -p "--ssl-ca=DigiCertGlobalRootCA.crt.pem"
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Run Web Scrapers in Parallel
+      # Authenticate with Azure
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # Connect to Azure MySQL and run SQL commands
+      - name: Run SQL Commands on Azure MySQL
+        uses: azure/mysql@v1
+        with:
+          server-name: your-database.mysql.database.azure.com
+          connection-string: ${{ secrets.AZURE_MYSQL_CONNECTION_STRING }}
+
+      - name: Run Python Script
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_USER: ${{ secrets.DB_USER }}
@@ -84,3 +94,8 @@ jobs:
           DB_NAME: ${{ secrets.DB_NAME }}
         run: |
           python scraper/__init__.py
+
+      # Logout from Azure (optional but recommended)
+      - name: Logout from Azure
+        run: |
+          az logout
