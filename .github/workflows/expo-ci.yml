@@ -74,7 +74,7 @@ jobs:
           echo "DB_HOST=$DB_HOST"
           echo "DB_USER=$DB_USER"
           echo "DB_NAME=$DB_NAME"
-          mysql --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASSWORD" -e "SHOW DATABASES;"
+          mysql -h frugal-finder-server25.mysql.database.azure.com -u frugalfinderUW -p "--ssl-ca=DigiCertGlobalRootCA.crt.pem"
 
       - name: Run Web Scrapers in Parallel
         env:
