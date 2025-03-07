@@ -13,7 +13,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     env:
       MYSQL_HOST: ${{ secrets.DB_HOST }}
       MYSQL_USER: ${{ secrets.DB_USER }}
@@ -52,16 +52,13 @@ jobs:
           echo "🔍 MYSQL_USER: $MYSQL_USER"
           echo "   MYSQL_USER: ${{ secrets.MYSQL_USER }}"
           echo "🔍 MYSQL_PASSWORD is set: [MASKED]"
-        env:
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
 
       - name: Test Direct MySQL Connection
         run: |
           mysql --protocol=tcp \
             --host="frugal-finder-server25.mysql.database.azure.com" \
-            --user="${{ secrets.MYSQL_USER }}" \
+            --user="$MYSQL_USER" \
             --password="${{ secrets.MYSQL_PASSWORD }}" \
             --ssl-mode=REQUIRED \
             -e "SHOW DATABASES;"
