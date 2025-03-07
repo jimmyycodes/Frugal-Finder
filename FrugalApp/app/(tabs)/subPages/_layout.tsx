@@ -29,10 +29,6 @@ export default function SearchFlowLayout() {
         name="productDetails"
         options={{ headerShown: false, title: "Product Details" }}
       />
-      <Stack.Screen
-        name="productDetailsMock"
-        options={{ headerShown: false, title: "Product Details Mock" }}
-      />
     </Stack>
   );
 }

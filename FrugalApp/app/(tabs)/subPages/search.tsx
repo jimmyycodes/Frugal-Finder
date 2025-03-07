@@ -61,7 +61,7 @@ export default function Search() {
           key={item.key}
           onPress={() => router.push({
             pathname: "/(tabs)/subPages/productDetails",
-            params: { productId: item.key }
+            params: { items: JSON.stringify([item]), desc: item.description }
           })}
           style={styles.productItem}
         >
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: 4,
+    // marginBottom: 0,
     height: 40,
   },
   productWeight: {
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#6CC51D',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   storeIconsContainer: {
     flexDirection: 'row',
