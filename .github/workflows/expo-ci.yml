@@ -46,7 +46,17 @@ jobs:
       - name: Test MySQL Network Connectivity
         run: |
           nc -zv frugal-finder-server25.mysql.database.azure.com 3306
-      
+
+      - name: Debug MySQL Credentials
+        run: |
+          echo "🔍 MYSQL_USER: $MYSQL_USER"
+          echo "   MYSQL_USER: ${{ secrets.MYSQL_USER }}"
+          echo "🔍 MYSQL_PASSWORD is set: [MASKED]"
+        env:
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+
+
       - name: Test Direct MySQL Connection
         run: |
           mysql --protocol=tcp \
@@ -59,12 +69,6 @@ jobs:
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
-      - name: Debug env variables (masked)
-        run: |
-          echo "Host: $MYSQL_HOST"
-          echo "User: $MYSQL_USER"
-          echo "Database: $MYSQL_DATABASE"
-          echo "Certificate path: /etc/ssl/certs/DigiCertGlobalRootCA.crt.pem"
 
       - name: Run Python Script
         run: |
