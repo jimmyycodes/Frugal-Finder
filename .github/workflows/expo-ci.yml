@@ -42,7 +42,11 @@ jobs:
       - name: Download SSL Certificate
         run: |
           sudo wget https://cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem -O /etc/ssl/certs/DigiCertGlobalRootCA.crt.pem
-
+      
+      - name: Test MySQL Network Connectivity
+        run: |
+          nc -zv frugal-finder-server25.mysql.database.azure.com 3306
+      
       - name: Debug env variables (masked)
         run: |
           echo "Host: $MYSQL_HOST"
