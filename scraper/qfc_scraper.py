@@ -62,7 +62,7 @@ class QFC_scraper:
   # Inner detail page image class name
   IMAGE_CLASS_NAME = "iiz__zoom-img "
 
-  def __init__(self):
+  def __init__(self, driver):
     # Load environment variables
     dotenv_path = find_dotenv()
 
@@ -79,17 +79,8 @@ class QFC_scraper:
 
     self.cursor = self.db_connection.cursor()
 
-    # Configure Chrome
-    self.options = uc.ChromeOptions()
-    self.options.add_argument("--start-maximized")
-    self.options.add_argument("--disable-popup-blocking")
-    self.options.add_argument("--disable-notifications")
-    # self.options.add_argument("--incognito")  # Fresh session
-    self.options.add_argument("--disable-blink-features=AutomationControlled")
-    self.options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
-
     # Initialize WebDriver
-    self.driver = uc.Chrome(options=self.options)
+    self.driver = driver
 
     self.wait = WebDriverWait(self.driver, 20)
 

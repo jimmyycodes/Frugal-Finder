@@ -1,13 +1,26 @@
 from multiprocessing import Process
+import undetected_chromedriver as uc
 from trader_joes_scraper import TJ_scraper
 from qfc_scraper import QFC_scraper
 from dotenv import find_dotenv, load_dotenv
 import mysql.connector
 import os
 
+def init_driver():
+    options = uc.ChromeOptions()
+    options.add_argument("--start-maximized")
+    options.add_argument("--disable-popup-blocking")
+    options.add_argument("--disable-notifications")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
+    options.headless = True
+
+    driver = uc.Chrome(options=options, use_subprocess=True)
+    return driver
+
 def clear_products_table(): 
     # deletes all the necessary records from the product table before running the scrapers.
-    
+
     # Load environment variables
     dotenv_path = find_dotenv()
 
@@ -29,23 +42,27 @@ def clear_products_table():
     cursor.close()
     db_connection.close()
 
-def run_tj_scraper():
+def run_tj_scraper(driver):
     categories = ["Fruits", "Vegetables", "Meat"]
-    tj_scraper = TJ_scraper()
+    tj_scraper = TJ_scraper(driver=driver)
     tj_scraper.scrape(categories)
 
-def run_qfc_scraper():
+def run_qfc_scraper(driver):
     categories = ["Fruits", "Vegetables", "Meat"]
-    qfc_scraper = QFC_scraper()
+    qfc_scraper = QFC_scraper(driver=driver)
     qfc_scraper.scrape(categories)
 
 if __name__ == '__main__':
+
+    # Initialize driver
+    driver = init_driver()
+
     # Clear products table
     clear_products_table()
 
     # Create processes
-    p1 = Process(target=run_tj_scraper)
-    p2 = Process(target=run_qfc_scraper)
+    p1 = Process(target=run_tj_scraper, args=(driver,))
+    p2 = Process(target=run_qfc_scraper, args=(driver,))
 
     # Start processes
     p1.start()
@@ -54,3 +71,5 @@ if __name__ == '__main__':
     # Wait for both processes to finish
     p1.join()
     p2.join()
+
+    driver.quit()
