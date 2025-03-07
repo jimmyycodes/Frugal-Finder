@@ -71,7 +71,7 @@ class TJ_scraper:
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD"),
         database=os.getenv("MYSQL_DATABASE"),
-        ssl_mode="REQUIRED"
+        ssl_ca="/etc/ssl/certs/DigiCertGlobalRootCA.crt.pem"
     )
 
     self.cursor = self.db_connection.cursor()

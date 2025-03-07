@@ -18,7 +18,8 @@ def clear_products_table():
         host=os.getenv("MYSQL_HOST"),
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD"),
-        database=os.getenv("MYSQL_DATABASE")
+        database=os.getenv("MYSQL_DATABASE"),
+        ssl_ca="/etc/ssl/certs/DigiCertGlobalRootCA.crt.pem"
     )
 
     cursor = db_connection.cursor()
