@@ -49,20 +49,9 @@ jobs:
 
       - name: Test direct connection pt 1
         run: |
-          mysql -h frugal-finder-server25.mysql.database.azure.com -P 3306 -u frugalfinderUW -p ${{ secrets.MYSQL_PASSWORD }} -e "SHOW DATABASES;"
-
-      - name: Test Direct MySQL Connection pt 2
-        run: |
-          mysql --protocol=tcp \
-            --host="frugal-finder-server25.mysql.database.azure.com" \
-            --user="$MYSQL_USER" \
-            --password="${{ secrets.MYSQL_PASSWORD }}" \
-            --ssl-mode=REQUIRED \
-            -e "SHOW DATABASES;"
+          mysql -h frugal-finder-server25.mysql.database.azure.com -P 3306 -u frugalfinderUW -p "$MYSQL_PASSWORD" -e "SHOW DATABASES;"
         env:
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-
 
       - name: Run Python Script
         run: |
