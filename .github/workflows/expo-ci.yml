@@ -47,11 +47,15 @@ jobs:
         run: |
           nc -zv frugal-finder-server25.mysql.database.azure.com 3306
 
-      - name: Debug MySQL Credentials
+      - name: Debug MySQL Password
         run: |
-          echo "🔍 MYSQL_USER: $MYSQL_USER"
-          echo "   MYSQL_USER: ${{ secrets.MYSQL_USER }}"
-          echo "🔍 MYSQL_PASSWORD is set: [MASKED]"
+          if [ -z "$MYSQL_PASSWORD" ]; then
+            echo "❌ MYSQL_PASSWORD is NOT SET!"
+          else
+            echo "✅ MYSQL_PASSWORD is set (masked for security)."
+          fi
+        env:
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
       - name: Test direct connection pt 1
         run: |
