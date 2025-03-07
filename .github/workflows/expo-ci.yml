@@ -47,9 +47,9 @@ jobs:
         env:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
-      - name: Test direct connection pt 1
+      - name: Test Direct MySQL Connection (Fixed)
         run: |
-          mysql -h frugal-finder-server25.mysql.database.azure.com -P 3306 -u frugalfinderUW -p "$MYSQL_PASSWORD" -e "SHOW DATABASES;"
+          mysql -h frugal-finder-server25.mysql.database.azure.com -P 3306 -u frugalfinderUW -p"${MYSQL_PASSWORD}" --ssl-mode=REQUIRED -e "SHOW DATABASES;"
         env:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
