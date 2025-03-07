@@ -49,11 +49,7 @@ jobs:
 
       - name: Debug MySQL Password
         run: |
-          if [ -z "$MYSQL_PASSWORD" ]; then
-            echo "❌ MYSQL_PASSWORD is NOT SET!"
-          else
-            echo "✅ MYSQL_PASSWORD is set (masked for security)."
-          fi
+          echo "$MYSQL_PASSWORD"
         env:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
