@@ -53,8 +53,11 @@ jobs:
           echo "   MYSQL_USER: ${{ secrets.MYSQL_USER }}"
           echo "🔍 MYSQL_PASSWORD is set: [MASKED]"
 
+      - name: Test direct connection pt 1
+        run: |
+          mysql -h frugal-finder-server25.mysql.database.azure.com -P 3306 -u frugalfinderUW -p ${{ secrets.MYSQL_PASSWORD }} -e "SHOW DATABASES;"
 
-      - name: Test Direct MySQL Connection
+      - name: Test Direct MySQL Connection pt 2
         run: |
           mysql --protocol=tcp \
             --host="frugal-finder-server25.mysql.database.azure.com" \
