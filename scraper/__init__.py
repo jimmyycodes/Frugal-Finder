@@ -1,6 +1,6 @@
 from multiprocessing import Process
-from trader_joes_scraper import TJ_scraper
-from qfc_scraper import QFC_scraper
+from .trader_joes_scraper import TJ_scraper
+from .qfc_scraper import QFC_scraper
 from dotenv import find_dotenv, load_dotenv
 import mysql.connector
 import os
