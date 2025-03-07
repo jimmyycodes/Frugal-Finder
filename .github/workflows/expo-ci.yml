@@ -64,6 +64,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install Azure SSL Certificate
+        run: |
+          sudo wget https://cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem
+          
       - name: Run Python Script
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
