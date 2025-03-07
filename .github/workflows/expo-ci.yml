@@ -47,6 +47,18 @@ jobs:
         run: |
           nc -zv frugal-finder-server25.mysql.database.azure.com 3306
       
+      - name: Test Direct MySQL Connection
+        run: |
+          mysql --protocol=tcp \
+            --host="frugal-finder-server25.mysql.database.azure.com" \
+            --user="${{ secrets.MYSQL_USER }}" \
+            --password="${{ secrets.MYSQL_PASSWORD }}" \
+            --ssl-mode=REQUIRED \
+            -e "SHOW DATABASES;"
+        env:
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+
       - name: Debug env variables (masked)
         run: |
           echo "Host: $MYSQL_HOST"
