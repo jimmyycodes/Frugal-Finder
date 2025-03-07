@@ -13,22 +13,17 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    
+    env:
+      MYSQL_HOST: ${{ secrets.DB_HOST }}
+      MYSQL_USER: ${{ secrets.DB_USER }}
+      MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      MYSQL_DATABASE: ${{ secrets.DB_NAME }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      - name: Debug env variables
-        run: |
-          echo $DB_HOST
-          echo $DB_USER
-          echo $DB_PASSWORD
-          echo $DB_NAME
-      
-      - name: Check MySQL Connection
-        run: |
-          mysql --protocol=tcp --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASSWORD" --ssl-mode=REQUIRED -e "SHOW DATABASES;"
-
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
@@ -38,16 +33,27 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Install Azure SSL Certificate
+      
+      - name: Install MySQL client
         run: |
-          sudo wget https://cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+      
+      - name: Download SSL Certificate
+        run: |
+          sudo wget https://cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem -O /etc/ssl/certs/DigiCertGlobalRootCA.crt.pem
+
+      - name: Debug env variables (masked)
+        run: |
+          echo "Host: $MYSQL_HOST"
+          echo "User: $MYSQL_USER"
+          echo "Database: $MYSQL_DATABASE"
+          echo "Certificate path: /etc/ssl/certs/DigiCertGlobalRootCA.crt.pem"
+      
+      - name: Check MySQL Connection
+        run: |
+          mysql --protocol=tcp --host="$MYSQL_HOST" --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" --ssl-mode=REQUIRED -e "SHOW DATABASES;"
 
       - name: Run Python Script
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
         run: |
-          python scraper/__init__.py
+          python -m scraper
