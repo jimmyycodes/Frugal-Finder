@@ -25,7 +25,7 @@ def clear_products_table():
     cursor = db_connection.cursor()
     cursor.execute("DELETE FROM products")
     cursor.execute("ALTER TABLE products AUTO_INCREMENT = 1")
-    cursor.commit()
+    db_connection.commit()
     cursor.close()
     db_connection.close()
 
