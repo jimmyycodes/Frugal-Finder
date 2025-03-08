@@ -73,18 +73,22 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Install Google Chrome
+      - name: Install Chrome 134+
         run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+          wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/134.0.6998.35/linux64/chrome-linux64.zip"
+          unzip chrome-linux64.zip
+          sudo mv chrome-linux64 /opt/google/chrome
+          sudo ln -sf /opt/google/chrome/chrome /usr/bin/google-chrome
+          google-chrome --version  # ✅ Verify installed version
 
-      - name: Install Matching ChromeDriver (133)
+      - name: Install Matching ChromeDriver (134+)
         run: |
           CHROME_VERSION=134.0.6998.35  # ✅ Manually set version
           wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROME_VERSION/linux64/chromedriver-linux64.zip"
           unzip chromedriver-linux64.zip
           sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
           chmod +x /usr/local/bin/chromedriver
+          chromedriver --version  # ✅ Verify installed version
 
 
       - name: Run Python Scraper
