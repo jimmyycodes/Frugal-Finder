@@ -19,20 +19,11 @@ def init_driver():
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
 
-    # Manually specify Chrome and Chromedriver paths
-    chrome_binary_path = os.getenv("CHROME_BINARY", "/usr/bin/google-chrome")
-    chromedriver_binary_path = os.getenv("CHROMEDRIVER_BINARY", "/usr/bin/chromedriver")
 
-    driver = uc.Chrome(
-        options=options,
-        browser_executable_path=chrome_binary_path,
-        driver_executable_path=chromedriver_binary_path,
-        use_subprocess=True
-    )
-    
+    driver = uc.Chrome(options=options, use_subprocess=True)
     return driver
 
-def clear_products_table():
+def clear_products_table(): 
     # deletes all the necessary records from the product table before running the scrapers.
 
     # Load environment variables

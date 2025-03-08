@@ -73,34 +73,21 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Install Latest Chrome & ChromeDriver
+      # 🔹 Install Google Chrome (latest stable)
+      - name: Install Google Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
-          echo "Chrome Version: $CHROME_VERSION"
-
-          # Fetch correct ChromeDriver version
-          DRIVER_URL=$(curl -sS "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json" \
-            | jq -r --arg v "$CHROME_VERSION" '.channels.Stable.downloads.chromedriver[] | select(.platform=="linux64") | .url')
-
-          wget -q "$DRIVER_URL" -O chromedriver.zip
-          unzip chromedriver.zip
-
-          # FIX: Move chromedriver from inside the chromedriver-linux64 folder
-          sudo mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
-          sudo chmod +x /usr/bin/chromedriver
-
-          echo "CHROME_BINARY=$(which google-chrome)" >> $GITHUB_ENV
-          echo "CHROMEDRIVER_BINARY=$(which chromedriver)" >> $GITHUB_ENV
-
-      - name: Debug Chrome Installation
+      # 🔹 Install Matching ChromeDriver
+      - name: Install ChromeDriver
         run: |
-          google-chrome --version
-          chromedriver --version
-          echo "Chrome Binary: $CHROME_BINARY"
-          echo "Chromedriver Binary: $CHROMEDRIVER_BINARY"
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          chmod +x /usr/local/bin/chromedriver
 
       - name: Run Python Scraper
         run: |
