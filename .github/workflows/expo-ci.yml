@@ -77,16 +77,19 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
+
           CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
           echo "Chrome Version: $CHROME_VERSION"
 
-          # Install ChromeDriver matching Chrome version
-          DRIVER_VERSION=$(curl -sS "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json" \
+          # Fetch correct ChromeDriver version
+          DRIVER_URL=$(curl -sS "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json" \
             | jq -r --arg v "$CHROME_VERSION" '.channels.Stable.downloads.chromedriver[] | select(.platform=="linux64") | .url')
 
-          wget -q "$DRIVER_VERSION" -O chromedriver.zip
+          wget -q "$DRIVER_URL" -O chromedriver.zip
           unzip chromedriver.zip
-          sudo mv chromedriver /usr/bin/chromedriver
+
+          # FIX: Move chromedriver from inside the chromedriver-linux64 folder
+          sudo mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
           sudo chmod +x /usr/bin/chromedriver
 
           echo "CHROME_BINARY=$(which google-chrome)" >> $GITHUB_ENV
