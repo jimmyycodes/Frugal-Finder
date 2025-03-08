@@ -1,5 +1,5 @@
 selenium
-webdriver-manager
+undetected-chromedriver
 mysql-connector-python
 python-dotenv
 requests

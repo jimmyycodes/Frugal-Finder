@@ -1,9 +1,4 @@
-from multiprocessing import Process
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-
+import undetected_chromedriver as uc
 from trader_joes_scraper import TJ_scraper
 from qfc_scraper import QFC_scraper
 from dotenv import find_dotenv, load_dotenv
@@ -11,7 +6,7 @@ import mysql.connector
 import os
 
 def init_driver():
-    options = Options()
+    options = uc.ChromeOptions()
     options.add_argument("--headless=new")
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
@@ -23,10 +18,7 @@ def init_driver():
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
 
-
-    service = Service(ChromeDriverManager().install())  # Auto-downloads ChromeDriver
-    driver = webdriver.Chrome(service=service, options=options)
-
+    driver = uc.Chrome(options=options, use_subprocess=True)
     return driver
 
 def clear_products_table(): 
@@ -72,14 +64,6 @@ if __name__ == '__main__':
     # Clear products table
     clear_products_table()
 
-    # Create processes
-    p1 = Process(target=run_tj_scraper)
-    p2 = Process(target=run_qfc_scraper)
+    run_tj_scraper()
 
-    # Start processes
-    p1.start()
-    p2.start()
-
-    # Wait for both processes to finish
-    p1.join()
-    p2.join()
+    run_qfc_scraper()
