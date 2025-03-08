@@ -88,7 +88,7 @@ export default function LongItem({
   const stopAnim = () => {
     if (!canAdd) {
       fadeAnim.stopAnimation(() => {
-        fadeAnim.setValue(1);
+        fadeAnim.setValue(0);
       });
     } else {
       colorAnim.stopAnimation(() => {
