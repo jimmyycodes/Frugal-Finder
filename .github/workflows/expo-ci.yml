@@ -84,7 +84,7 @@ jobs:
       - name: Install ChromeDriver 134+
         run: |
           wget -q "https://storage.googleapis.com/chrome-for-testing-public/134.0.6998.35/mac-arm64/chromedriver-mac-arm64.zip"
-          unzip chromedriver-linux64.zip
+          unzip chromedriver-linux64
           sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
           chmod +x /usr/local/bin/chromedriver
           chromedriver --version  # ✅ Verify installed version
