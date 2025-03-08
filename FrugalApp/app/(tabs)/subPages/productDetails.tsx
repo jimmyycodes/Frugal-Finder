@@ -6,20 +6,37 @@ import { PlusIcon, MinusIcon } from "@/components/Icons/SvgHandler";
 import FavButton from "@/components/Buttons/FavButton";
 import BackButton from "@/components/Buttons/BackButton";
 import { singleItem } from "@/constants/Types";
-import genLongItems from "@/constants/Tools";
+import { genLongItems } from "@/constants/Tools";
 import { mockItems } from "@/constants/MockVars";
+import { useLocalSearchParams } from "expo-router";
+import useCartStore from "@/services/cartStore";
 
-type productDetailsProps = {
-  desc?: string;
-  items: singleItem[];
-};
+export default function ProductDetails() {
+  // Define Cart Store
+  const addToCart = useCartStore((state) => state.addToCart);
 
-export default function ProductDetails( { desc, items}: productDetailsProps) {
-  const itemsUsed = items ? items : mockItems;
+  // Get params
+  const { items, descParam } = useLocalSearchParams();
+
+  let itemsUsed = mockItems;
+  let desc = descParam as string;
+
+  try {
+    if (items) {
+      itemsUsed = JSON.parse(items as string) as singleItem[];
+    }
+  }
+  catch (e) {
+    console.log(e);
+  }
 
   // Hooks
   const [quantity, setQuantity] = useState(1); // TODO: For now quantity is cut from the design
   const [longItems, setItems] = useState(genLongItems(itemsUsed, () => null, handleAdd, true));
+
+  function handleAdd(item: singleItem) {
+    addToCart(item);
+  }
 
   // cut desc to 319 characters
   if (desc && desc.length > 319) {
@@ -90,10 +107,6 @@ export default function ProductDetails( { desc, items}: productDetailsProps) {
       </View>
     </ScrollView>
   );
-}
-
-function handleAdd(item: singleItem) {
-  console.log("Add item with itemKey: " + item.key);
 }
 
 type QuantityProps = {

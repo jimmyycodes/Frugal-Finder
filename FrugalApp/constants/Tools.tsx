@@ -24,29 +24,9 @@ function addItem(items: singleItem[], newItem: singleItem): singleItem[] {
   return newItems;
 }
 
-function addItemToCart(newItem: singleItem, items: singleItem[]): singleItem[] | undefined {
-  // add cart logic here
-
-  if (items) {
-    return addItem(items, newItem);
-  } else {
-    return undefined;
-  }
-}
-
 function removeItem(items: singleItem[], itemKey: string): singleItem[] {
   const newItems = items.filter((item) => item.key !== itemKey);
   return newItems;
 }
 
-function removeFromCart(itemKey: string, items?: singleItem[]): singleItem[] | undefined { // TODO: duplicate keys can be a problem
-  // remove cart logic here
-
-  if (items) {
-    return removeItem(items, itemKey);
-  } else {
-    return undefined;
-  }
-}
-
-export default genLongItems;
+export { genLongItems, addItem, removeItem };
