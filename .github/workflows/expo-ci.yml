@@ -73,21 +73,10 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      # 🔹 Install Google Chrome (latest stable)
       - name: Install Google Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
-
-      - name: Install ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}')
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          echo "Installing ChromeDriver version: $CHROMEDRIVER_VERSION"
-          wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          chmod +x /usr/local/bin/chromedriver
 
       - name: Run Python Scraper
         run: |
