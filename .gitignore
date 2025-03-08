@@ -1,0 +1,11 @@
+# Ignore the .env file
+.env
+
+# Ignore the images folder
+images/
+
+# Ignore .pyc
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
