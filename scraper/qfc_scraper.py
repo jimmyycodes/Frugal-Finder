@@ -305,7 +305,6 @@ class QFC_scraper:
         description_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.PRODUCT_EXTRA_DESC)))
         return description_element.text
     except Exception as e:
-        print(f"Error extracting description: {e}")
         return "N/A"
 
   def scrape(self, queries):

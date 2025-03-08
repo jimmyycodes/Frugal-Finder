@@ -316,7 +316,6 @@ class TJ_scraper:
         description_text = " ".join([p.text for p in all_paragraphs])
         return description_text
     except Exception as e:
-        print(f"Error extracting description: {e}")
         return "N/A"
 
   def scrape(self, queries):

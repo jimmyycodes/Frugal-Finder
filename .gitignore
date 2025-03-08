@@ -3,3 +3,9 @@
 
 # Ignore the images folder
 images/
+
+# Ignore .pyc
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd

@@ -13,7 +13,7 @@ def init_driver():
     options.add_argument("--disable-notifications")
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
-    options.headless = True
+   # options.headless = True
 
     driver = uc.Chrome(options=options, use_subprocess=True)
     return driver
@@ -42,27 +42,27 @@ def clear_products_table():
     cursor.close()
     db_connection.close()
 
-def run_tj_scraper(driver):
+def run_tj_scraper():
+    driver = init_driver()
     categories = ["Fruits", "Vegetables", "Meat"]
     tj_scraper = TJ_scraper(driver=driver)
     tj_scraper.scrape(categories)
-
-def run_qfc_scraper(driver):
+    driver.quit()
+def run_qfc_scraper():
+    driver = init_driver()
     categories = ["Fruits", "Vegetables", "Meat"]
     qfc_scraper = QFC_scraper(driver=driver)
     qfc_scraper.scrape(categories)
+    driver.quit()
 
 if __name__ == '__main__':
-
-    # Initialize driver
-    driver = init_driver()
 
     # Clear products table
     clear_products_table()
 
     # Create processes
-    p1 = Process(target=run_tj_scraper, args=(driver,))
-    p2 = Process(target=run_qfc_scraper, args=(driver,))
+    p1 = Process(target=run_tj_scraper)
+    p2 = Process(target=run_qfc_scraper)
 
     # Start processes
     p1.start()
@@ -71,5 +71,3 @@ if __name__ == '__main__':
     # Wait for both processes to finish
     p1.join()
     p2.join()
-
-    driver.quit()
