@@ -58,7 +58,7 @@ jobs:
   # New Job: Runs Scraper ONLY on Cron Schedule
   run-scraper:
     runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'  # ✅ Ensures it runs ONLY on cron or manual trigger
+   # if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'  # ✅ Ensures it runs ONLY on cron or manual trigger
 
     steps:
       - name: Checkout Repository
