@@ -13,7 +13,7 @@ def init_driver():
     options.add_argument("--disable-notifications")
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
-   # options.headless = True
+    options.headless = True
 
     driver = uc.Chrome(options=options, use_subprocess=True)
     return driver
@@ -48,6 +48,7 @@ def run_tj_scraper():
     tj_scraper = TJ_scraper(driver=driver)
     tj_scraper.scrape(categories)
     driver.quit()
+
 def run_qfc_scraper():
     driver = init_driver()
     categories = ["Fruits", "Vegetables", "Meat"]
