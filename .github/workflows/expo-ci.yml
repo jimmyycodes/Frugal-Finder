@@ -78,18 +78,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      # ✅ Install a matching ChromeDriver
-      - name: Install ChromeDriver
-        uses: nanasess/setup-chromedriver@v2
-        with:
-          # Leave blank to auto-match with Chrome version
-          chromedriver-version: ''
-
-      # ✅ Debug Chrome and ChromeDriver versions
-      - name: Verify Chrome & ChromeDriver
+      # ✅ Automatically Install Matching ChromeDriver
+      - name: Install Matching ChromeDriver
         run: |
-          google-chrome --version
-          chromedriver --version
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+          CHROMEDRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_$CHROME_VERSION")
+          wget -q "https://storage.googleapis.com/chrome-for-testing-public/$CHROME_VERSION/linux64/chromedriver-linux64.zip"
+          unzip chromedriver-linux64.zip
+          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
+          chmod +x /usr/local/bin/chromedriver
+          chromedriver --version  # Debugging step
 
       - name: Run Python Scraper
         run: |
