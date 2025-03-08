@@ -1,4 +1,5 @@
 selenium
+undetected-chromedriver
 mysql-connector-python
 python-dotenv
 requests
