@@ -13,6 +13,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: first-step
+        run: echo "Hello, ${{ github.actor }}."
+
       # - name: Set Up Python
       #   uses: actions/setup-python@v3
       #   with:
