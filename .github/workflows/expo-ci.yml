@@ -7,9 +7,6 @@ on:
   pull_request:
     branches:
       - main
-  schedule:
-    - cron: '0 2 * * *'  # Runs at 2 AM UTC daily
-  workflow_dispatch:  # Allows manual execution if needed
 
 jobs:
   # Existing Job: Runs Jest Tests on Every Push & PR
@@ -54,54 +51,3 @@ jobs:
       - name: Run Jest tests back-end
         working-directory: server
         run: npm test -- --ci
-
-  # New Job: Runs Scraper ONLY on Cron Schedule
-  run-scraper:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'  # Ensures it runs ONLY on cron or manual trigger
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set Up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.11'
-
-      - name: Install Dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Remove Old Chrome
-        run: |
-          sudo apt-get remove -y google-chrome-stable || true
-          sudo rm -rf /usr/bin/google-chrome || true
-
-      - name: Install Chrome 134+
-        run: |
-          wget -q "https://storage.googleapis.com/chrome-for-testing-public/134.0.6998.35/linux64/chrome-linux64.zip"
-          unzip chrome-linux64.zip
-          sudo mkdir -p /opt/google/  # Create directory if it doesn't exist
-          sudo mv chrome-linux64 /opt/google/chrome
-          sudo ln -sf /opt/google/chrome/chrome /usr/bin/google-chrome
-          sudo ln -sf /opt/google/chrome/chrome /usr/local/bin/google-chrome
-          google-chrome --version  # Verify installed version
-
-      - name: Install Matching ChromeDriver (134+)
-        run: |
-          CHROME_VERSION=134.0.6998.35  # Manually set version
-          wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROME_VERSION/linux64/chromedriver-linux64.zip"
-          unzip chromedriver-linux64.zip
-          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
-          chmod +x /usr/local/bin/chromedriver
-          chromedriver --version  # Verify installed version
-
-      - name: Run Python Scraper
-        run: |
-          python scraper/__init__.py
-        env:
-          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
