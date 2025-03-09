@@ -63,21 +63,25 @@
 ## [Jimmy Le]
 
 ### Goals for the Week
-- Finish setting up tests for the scrapper and setting up the CI/CD pipeline for this. 
+- Finish up scrapers and automating the script to run it daily
 
 ### Progress and Issues
 - Tasks completed:
-  - Setting up the database through azure and connecting it to the scrapper
+  - Finished building abstract structure for scraper.
+  - Finsihed connecting scraper to DB
+  - Finished setting up CRON to run scraper daily.
 - Key learnings:
-  - I learned how to set up the database through azure and connect it to the scrapper.
+  - I learned that Github has secret actions you use to set up environments for the workflow when running certain things.
+  - I also learned how niche and specific git hub is when it comes to running scraping files as it needs to specifically download specific chrome/chromedrivers and specific dependencies.
+  - I learned how to debug error codes given from github actions as they are very very vague.
 - Issues encountered:
-  - I had some issues with connection to the server due to firewall and security issues. 
-  - There were also some issues with the team on being able to set this up as well. 
+  - Issues with connecting environment secrets to github workflow
+  - Issues with setting up proper chromedrivers to run scrapers automatically through CRON jobs. 
 
 ### Goals for Next Week
-- Begin working on the other scrapers and being able to have that set up. Estimated time: [4 hours]
-- Start looking at how to build a algorithm to compare prices for items to generate most ideal shopping plan. Estimated time: [3 hours]
-
+- Help set up google maps api and comparison algorithm [3 hours]
+- Catch up on front end and back end work [3 hours]
+- Potentially build additional scraper for walmart [1-2 hours]
 ---
 
 ## [Di Ramirez-Diaz]
