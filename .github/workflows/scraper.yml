@@ -5,6 +5,7 @@ on:
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
+# job to run the scraper
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
