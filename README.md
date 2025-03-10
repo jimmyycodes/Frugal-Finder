@@ -93,7 +93,7 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-### Environment Variable
+## Environment Variable
 
 To ensure the proper functioning of the Frugal Finder project, you need to configure environment variables for both the scraper and the backend. These variables are essential for database connectivity, API authentication, and other configurations. Follow this guide to set up your environment correctly.
 
