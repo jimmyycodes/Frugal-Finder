@@ -31,6 +31,13 @@ export default function ProductDetails() {
 
   // Hooks
   const [longItems, setItems] = useState(genLongItems(itemsUsed, () => null, handleAdd, true));
+  const [title, setTitle] = useState<string>(itemsUsed[0].name);
+  const [allStores, setAllStores] = useState<string[]>(itemsUsed.map((item) => item.store).splice(0, 5));
+  const [maxPrice, setMaxPrice] = useState<number>( itemsUsed.reduce((max, item) => (item.price > max ? item.price : max), 0));
+  const [minPrice, setMinPrice] = useState<number>(itemsUsed.reduce((min, item) => (item.price < min ? item.price : min), maxPrice));
+  const [price, setPrice] = useState<number | null>(minPrice === maxPrice ? minPrice : null);
+  const [priceText, setPriceText] = useState<string | number>(price ? price : `${minPrice} - ${maxPrice}`);
+
 
   function handleAdd(item: singleItem) {
     addToCart(item);
@@ -38,6 +45,20 @@ export default function ProductDetails() {
 
   // Effects
   useEffect(() => {
+
+    itemsUsed = mockItems;
+    desc = descParam as string;
+
+    try {
+      if (items) {
+        itemsUsed = JSON.parse(items as string) as singleItem[];
+      }
+    }
+    catch (e) {
+      console.log(e);
+    }
+
+    setTitle(itemsUsed[0].name);
     setItems(genLongItems(itemsUsed, () => null, handleAdd, true));
     setAllStores(itemsUsed.map((item) => item.store).splice(0, 5));
     setMaxPrice(itemsUsed.reduce((max, item) => (item.price > max ? item.price : max), 0));
@@ -58,14 +79,6 @@ export default function ProductDetails() {
     return quantity;
   };
 
-  // make all the above hooks
-
-  const [allStores, setAllStores] = useState<string[]>(itemsUsed.map((item) => item.store).splice(0, 5));
-  const [maxPrice, setMaxPrice] = useState<number>( itemsUsed.reduce((max, item) => (item.price > max ? item.price : max), 0));
-  const [minPrice, setMinPrice] = useState<number>(itemsUsed.reduce((min, item) => (item.price < min ? item.price : min), maxPrice));
-  const [price, setPrice] = useState<number | null>(minPrice === maxPrice ? minPrice : null);
-  const [priceText, setPriceText] = useState<string | number>(price ? price : `${minPrice} - ${maxPrice}`);
-
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -85,8 +98,8 @@ export default function ProductDetails() {
 
           <View style={styles.textHeader}>
             <Text style={styles.price}>{priceText}</Text>
-            <Text style={styles.title}>{itemsUsed[0].name}</Text>
-            <Text style={styles.amount}>{itemsUsed.length + " results"}</Text>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.amount}>{longItems.length + " results"}</Text>
             <StoreList stores={allStores} />
             <Text style={styles.desc}>
               {
