@@ -38,7 +38,6 @@ export default function ProductDetails() {
 
   // Effects
   useEffect(() => {
-
     setItems(genLongItems(itemsUsed, () => null, handleAdd, true));
     setAllStores(itemsUsed.map((item) => item.store).splice(0, 5));
     setMaxPrice(itemsUsed.reduce((max, item) => (item.price > max ? item.price : max), 0));
