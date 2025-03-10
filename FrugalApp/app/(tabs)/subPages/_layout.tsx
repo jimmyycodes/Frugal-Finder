@@ -11,7 +11,7 @@ const backButton = () => {
   const router = useRouter();
   return (
     <View style={styles.backButton}>
-      <BackButton onPress={() => router.push({pathname: "/(tabs)/home"})} />
+      <BackButton onPress={() => router.push({ pathname: "/(tabs)/home" })} />
     </View>
   );
 };
@@ -30,7 +30,12 @@ export default function SearchFlowLayout() {
       />
       <Stack.Screen
         name="productDetails"
-        options={{ headerShown: false, title: "Product Details" }}
+        options={{
+          headerShown: true,
+          title: "Product Details",
+          headerTitleAlign: "center",
+          headerLeft: backButton,
+        }}
       />
     </Stack>
   );

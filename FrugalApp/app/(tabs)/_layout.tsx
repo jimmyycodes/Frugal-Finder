@@ -18,6 +18,7 @@ import {
   LocationIcon,
 } from "@/components/Icons/SvgHandler";
 import BackButton from "@/components/Buttons/BackButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Define props for custom tab bar button
 interface CustomTabBarButtonProps {
@@ -32,58 +33,62 @@ function CustomTabBarButton({ children, onPress }: CustomTabBarButtonProps) {
 
 export default function TabsComponent() {
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: styles.tabBar,
-      }}
-    >
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          tabBarButton: (props) => (
-            <CustomTabBarButton {...props}>
-              <View style={styles.tabBarButton}>
-                <HomepageIcon />
-              </View>
-            </CustomTabBarButton>
-          ),
+    <SafeAreaView style={styles.safeContainer} edges={["bottom"]}>
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: styles.tabBar,
         }}
-      />
-      <Tabs.Screen
-        name="plan"
-        options={{
-          headerTitleAlign: "center",
-          headerShown: true,
-          title: "Your Plan",
-          tabBarButton: (props) => (
-            <CustomTabBarButton {...props}>
-              <View style={styles.tabBarButton}>
-                <LocationIcon />
-              </View>
-            </CustomTabBarButton>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="cart"
-        options={{
-          title: "Shopping Cart",
-          headerTitleAlign: "center",
-          headerShown: true,
-          tabBarButton: (props) => (
-            <View style={styles.tabBarButton}>
+      >
+        <Tabs.Screen
+          name="home"
+          options={{
+            title: "Home",
+            tabBarHideOnKeyboard: false,
+            tabBarButton: (props) => (
               <CustomTabBarButton {...props}>
-                <CartPageIcon />
+                <View style={styles.tabBarButton}>
+                  <HomepageIcon />
+                </View>
               </CustomTabBarButton>
-            </View>
-          ),
-        }}
-      />
-      <Tabs.Screen name="subPages" options={{ href: null }} />
-
-    </Tabs>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="plan"
+          options={{
+            headerTitleAlign: "center",
+            headerShown: true,
+            title: "Your Plan",
+            tabBarHideOnKeyboard: false,
+            tabBarButton: (props) => (
+              <CustomTabBarButton {...props}>
+                <View style={styles.tabBarButton}>
+                  <LocationIcon />
+                </View>
+              </CustomTabBarButton>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="cart"
+          options={{
+            title: "Shopping Cart",
+            headerTitleAlign: "center",
+            headerShown: true,
+            tabBarHideOnKeyboard: false,
+            tabBarButton: (props) => (
+              <View style={styles.tabBarButton}>
+                <CustomTabBarButton {...props}>
+                  <CartPageIcon />
+                </CustomTabBarButton>
+              </View>
+            ),
+          }}
+        />
+        <Tabs.Screen name="subPages" options={{ href: null }} />
+      </Tabs>
+    </SafeAreaView>
   );
 }
 
@@ -103,6 +108,8 @@ const styles = StyleSheet.create({
     height: 57,
     borderTopRightRadius: 17,
     borderTopLeftRadius: 17,
+    position: "absolute",
+    bottom: 0,
   },
   tabBarButton: {
     width: 47,
@@ -117,5 +124,9 @@ const styles = StyleSheet.create({
     top: 20,
     left: 30,
     zIndex: 100,
+  },
+  safeContainer: {
+    flex: 1,
+    backgroundColor: "#ffffff",
   },
 });

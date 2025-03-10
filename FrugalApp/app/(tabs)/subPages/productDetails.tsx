@@ -64,9 +64,6 @@ export default function ProductDetails() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.backButton}>
-          <BackButton />
-        </View>
         <View style={styles.header}>
           <View style={styles.imageHeader}>
             <Image
