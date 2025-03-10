@@ -31,7 +31,6 @@ export default function ProductDetails() {
   }
 
   // Hooks
-  const [quantity, setQuantity] = useState(1); // TODO: For now quantity is cut from the design
   const [longItems, setItems] = useState(genLongItems(itemsUsed, () => null, handleAdd, true));
 
   function handleAdd(item: singleItem) {
@@ -45,7 +44,7 @@ export default function ProductDetails() {
 
   // Functions
   const handleQuantity = (quantity: number) => {
-    setQuantity(quantity);
+    alert("Feature not implemented yet");
     return quantity;
   };
 
@@ -97,7 +96,7 @@ export default function ProductDetails() {
         <View style={styles.primaryButtonCont}>
           <PrimaryButton
             title="Add Cheapest to Cart"
-            onPress={() => null}
+            onPress={() => alert("Feature not implemented yet")}
           />
         </View>
 

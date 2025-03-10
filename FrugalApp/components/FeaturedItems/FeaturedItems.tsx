@@ -3,6 +3,8 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import StoreList from '@/components/Icons/StoreList';
 import LongItem from '../Items/LongItem';
+import { mockItems } from '@/constants/MockVars';
+import { useRouter } from 'expo-router';
 
 const products = [
   {
@@ -74,6 +76,7 @@ function commaToList(values: string): string[] {
 export default function FeaturedItems() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const router = useRouter();
 
   const toggleFavorite = (id: number) => {
     setFavorites(prev =>
@@ -91,26 +94,31 @@ export default function FeaturedItems() {
 
   const renderGridView = () => (
     <View style={styles.productsContainer}>
-      {products.map((item) => (
-        <TouchableOpacity key={item.id} style={styles.productItem}>
+      {mockItems.map((item) => (
+        <TouchableOpacity
+          onPress={() =>
+            router.push({
+              pathname: "/(tabs)/subPages/productDetails",
+              params: { items: JSON.stringify([item]), desc: item.desc },
+            })
+          }
+          key={item.key}
+          style={styles.productItem}
+        >
           <TouchableOpacity
             style={styles.heartButton}
-            onPress={() => toggleFavorite(item.id)}
+            onPress={() => alert("Feature not implemented")}
           >
-            <Ionicons
-              name={favorites.includes(item.id) ? "heart" : "heart-outline"}
-              size={24}
-              color={favorites.includes(item.id) ? "red" : "gray"}
-            />
+            <Ionicons name={"heart-outline"} size={24} color={"grey"} />
           </TouchableOpacity>
-          <View style={[styles.imageContainer, { backgroundColor: item.backgroundColor }]}>
-            <Image source={item.image} style={styles.productImage} />
+          <View style={[styles.imageContainer, { backgroundColor: "#D9FEB8" }]}>
+            <Image source={{ uri: item.image }} style={styles.productImage} />
           </View>
           <Text style={styles.productName}>{item.name}</Text>
           <Text style={styles.productWeight}>{item.amount}</Text>
           <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
           <View style={styles.storeIconsContainer}>
-            <StoreList stores={commaToList(item.stores)} />
+            <StoreList stores={commaToList(item.store)} />
           </View>
         </TouchableOpacity>
       ))}
@@ -135,12 +143,12 @@ export default function FeaturedItems() {
       ))}
     </ScrollView>
   );
-// TODO: Fix button to switch between grid and list view
+  // TODO: Fix button to switch between grid and list view
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.featuredProductsText}>Featured Products</Text>
-        <TouchableOpacity onPress={() => console.log('Switch view mode broken')}>
+        <TouchableOpacity onPress={() => alert("Feature not implemented")}>
           <Ionicons
             name={viewMode === 'grid' ? 'list' : 'grid'}
             size={24}
@@ -152,7 +160,6 @@ export default function FeaturedItems() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

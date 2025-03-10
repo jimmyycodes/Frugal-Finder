@@ -4,9 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import SearchBar from '@/components/Buttons/SearchBar';
 import StoreList from '@/components/Icons/StoreList';
-import LongItem from '@/components/Items/LongItem';
 import { searchItems } from '@/services/searchService';
-import { singleItem } from '@/constants/Types';
 
 export default function Search() {
   const { searchText } = useLocalSearchParams();

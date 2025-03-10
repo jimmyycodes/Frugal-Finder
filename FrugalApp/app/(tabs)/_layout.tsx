@@ -15,7 +15,7 @@ import {
 import {
   HomepageIcon,
   CartPageIcon,
-  HeartPageIcon,
+  LocationIcon,
 } from "@/components/Icons/SvgHandler";
 import BackButton from "@/components/Buttons/BackButton";
 
@@ -52,13 +52,15 @@ export default function TabsComponent() {
         }}
       />
       <Tabs.Screen
-        name="heart"
+        name="plan"
         options={{
-          title: "Heart",
+          headerTitleAlign: "center",
+          headerShown: true,
+          title: "Your Plan",
           tabBarButton: (props) => (
             <CustomTabBarButton {...props}>
               <View style={styles.tabBarButton}>
-                <HeartPageIcon />
+                <LocationIcon />
               </View>
             </CustomTabBarButton>
           ),
@@ -70,7 +72,6 @@ export default function TabsComponent() {
           title: "Shopping Cart",
           headerTitleAlign: "center",
           headerShown: true,
-          headerLeft: backButton,
           tabBarButton: (props) => (
             <View style={styles.tabBarButton}>
               <CustomTabBarButton {...props}>
