@@ -95,8 +95,43 @@ You can start developing by editing the files inside the **app** directory. This
 
 ### Environment Variable
 
-In order to run the app fully, you will need environment variables for both the scraper and the backend. Please contact any of us to receive this. The environment variables are responsible for connecting to the DB. Since our scraper will be the main one updating to the DB it is required that anyone who forks the repo must need the environment variables to have the scraper and backend run properly. 
-It is fine to place the environment variables in the root file of the directory. 
+To ensure the proper functioning of the Frugal Finder project, you need to configure environment variables for both the scraper and the backend. These variables are essential for database connectivity, API authentication, and other configurations. Follow this guide to set up your environment correctly.
+
+### Where to Define Environment Variables?
+- For local development, create a .env file in the root directory of the project.
+- For GitHub Actions & CI/CD, set these variables in the Github repository secrets area.
+
+### How to Configure These Variables Locally? 
+
+1. Create a .env file in the project root:
+```
+   touch .env
+```
+
+2. Add these necessary environment variables:
+```
+   MYSQL_HOST = ""
+   MYSQL_USER = ""
+   MYSQL_PASSWORD = ""
+   MYSQL_DATABASE = ""
+```
+3. Information regarding these will be given once you contact one of the members.
+
+### How to Configure These Variables through Git Hub Actions & CI/CD? 
+
+1. Head to the settings tab.
+   
+3. Once here, on the left-hand side bar you should see something that says "Secrets and Variables".
+   
+4. Click this and head to Actions.
+   
+5. From here you should see two types of secrets, one labeled "Environment secrets" and one labeled "Repository secrets"
+   
+6. Create your new secrets under the Repository secrets, ensuring that the name and password are IDENTICAL to the one made in the YAML file for scraper. 
+
+### Things to note
+
+In the YAML file for scraper, there are env created that are labeled "secrets.{NAME}" for certain jobs. Ensure that the repository secrets names are exactly as labeled, as otherwise the scraper will be unable to run the scheduled task of scraping the stores. 
 
 ## How to test the app
 
