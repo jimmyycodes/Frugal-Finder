@@ -4,7 +4,6 @@ import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import { useEffect, useState } from "react";
 import { PlusIcon, MinusIcon } from "@/components/Icons/SvgHandler";
 import FavButton from "@/components/Buttons/FavButton";
-import BackButton from "@/components/Buttons/BackButton";
 import { singleItem } from "@/constants/Types";
 import { genLongItems } from "@/constants/Tools";
 import { mockItems } from "@/constants/MockVars";
@@ -41,6 +40,11 @@ export default function ProductDetails() {
   useEffect(() => {
 
     setItems(genLongItems(itemsUsed, () => null, handleAdd, true));
+    setAllStores(itemsUsed.map((item) => item.store).splice(0, 5));
+    setMaxPrice(itemsUsed.reduce((max, item) => (item.price > max ? item.price : max), 0));
+    setMinPrice(itemsUsed.reduce((min, item) => (item.price < min ? item.price : min), maxPrice));
+    setPrice(minPrice === maxPrice ? minPrice : null);
+    setPriceText(price ? price : `${minPrice} - ${maxPrice}`);
   }
   , [items]);
 
@@ -55,11 +59,13 @@ export default function ProductDetails() {
     return quantity;
   };
 
-  const allStores = itemsUsed.map((item) => item.store).splice(0, 5);
-  const maxPrice = itemsUsed.reduce((max, item) => (item.price > max ? item.price : max), 0);
-  const minPrice = itemsUsed.reduce((min, item) => (item.price < min ? item.price : min), maxPrice);
-  const price = minPrice === maxPrice ? minPrice : null;
-  const priceText = price ? price : `${minPrice} - ${maxPrice}`;
+  // make all the above hooks
+
+  const [allStores, setAllStores] = useState<string[]>(itemsUsed.map((item) => item.store).splice(0, 5));
+  const [maxPrice, setMaxPrice] = useState<number>( itemsUsed.reduce((max, item) => (item.price > max ? item.price : max), 0));
+  const [minPrice, setMinPrice] = useState<number>(itemsUsed.reduce((min, item) => (item.price < min ? item.price : min), maxPrice));
+  const [price, setPrice] = useState<number | null>(minPrice === maxPrice ? minPrice : null);
+  const [priceText, setPriceText] = useState<string | number>(price ? price : `${minPrice} - ${maxPrice}`);
 
   return (
     <ScrollView>
