@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Pressable, ScrollView } from "react-native";
 import StoreList from "@/components/Icons/StoreList";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlusIcon, MinusIcon } from "@/components/Icons/SvgHandler";
 import FavButton from "@/components/Buttons/FavButton";
 import BackButton from "@/components/Buttons/BackButton";
@@ -36,6 +36,13 @@ export default function ProductDetails() {
   function handleAdd(item: singleItem) {
     addToCart(item);
   }
+
+  // Effects
+  useEffect(() => {
+
+    setItems(genLongItems(itemsUsed, () => null, handleAdd, true));
+  }
+  , [items]);
 
   // cut desc to 319 characters
   if (desc && desc.length > 319) {

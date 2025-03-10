@@ -145,7 +145,7 @@ export default function plan() {
   function activeRender() {
     return (
       <View style={{ marginTop: 20 }}>
-        <View>{items}</View>
+        <View style={{alignItems: "center"}}>{items}</View>
         <PrimaryButton
           onPress={() => {
             setRenderState(prefrencesRender());

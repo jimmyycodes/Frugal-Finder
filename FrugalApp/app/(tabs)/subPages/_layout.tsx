@@ -1,15 +1,17 @@
 import { Stack } from "expo-router";
 import BackButton from "@/components/Buttons/BackButton";
 import { View, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 
 export const unstable_settings = {
   initialRouteName: "search",
 };
 
 const backButton = () => {
+  const router = useRouter();
   return (
     <View style={styles.backButton}>
-      <BackButton />
+      <BackButton onPress={() => router.push({pathname: "/(tabs)/home"})} />
     </View>
   );
 };
