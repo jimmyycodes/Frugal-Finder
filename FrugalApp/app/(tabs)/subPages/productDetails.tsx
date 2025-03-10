@@ -66,7 +66,7 @@ export default function ProductDetails() {
     setPrice(minPrice === maxPrice ? minPrice : null);
     setPriceText(price ? price : `${minPrice} - ${maxPrice}`);
   }
-  , [items]);
+  , [JSON.stringify(items)]);
 
   // cut desc to 319 characters
   if (desc && desc.length > 319) {
