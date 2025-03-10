@@ -38,7 +38,7 @@ jobs:
           sudo mv chrome-linux64 /opt/google/chrome
           sudo ln -sf /opt/google/chrome/chrome /usr/bin/google-chrome
           sudo ln -sf /opt/google/chrome/chrome /usr/local/bin/google-chrome
-          google-chrome --version  # ✅ Verify installed version
+          google-chrome --version  # Verify installed version
 
       - name: Install Matching ChromeDriver 134+
         run: |
@@ -46,7 +46,7 @@ jobs:
           unzip chromedriver-linux64.zip
           sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
           chmod +x /usr/local/bin/chromedriver
-          chromedriver --version  # ✅ Verify installed version
+          chromedriver --version  # Verify installed version
 
       - name: Verify Chrome and ChromeDriver Versions
         run: |
