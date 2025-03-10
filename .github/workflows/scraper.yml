@@ -9,7 +9,7 @@ on:
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -49,6 +49,9 @@ jobs:
 
       - name: Run Python Scraper
         run: |
+          export CHROME_BINARY_PATH="/opt/google/chrome/chrome"
+          export PATH="/usr/local/bin:$PATH"
+          echo "Using Chrome from: $CHROME_BINARY_PATH"
           python scraper/__init__.py
         env:
           MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
