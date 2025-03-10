@@ -20,6 +20,7 @@ export default function SearchFlowLayout() {
       <Stack.Screen
         name="search"
         options={{
+          title: "Search",
           headerShown: true,
           headerTitleAlign: "center",
           headerLeft: backButton,
@@ -40,4 +41,4 @@ const styles = StyleSheet.create({
     left: 15,
     zIndex: 100,
   },
-})
+});

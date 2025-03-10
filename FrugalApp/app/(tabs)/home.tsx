@@ -19,7 +19,7 @@ export default function Home() {
       <ScrollView>
         {/* Search Bar */}
         <SearchBar
-          onFilterPress={() => console.log('Filter pressed')}
+          onFilterPress={() => alert("Feature not implemented")}
           onTextUpdate={setSearchText}
           onSubmit={handleSearch}
           onFocus={() => console.log('Search focused')}

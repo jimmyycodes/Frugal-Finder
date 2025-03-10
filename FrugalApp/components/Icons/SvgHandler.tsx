@@ -244,8 +244,8 @@ const SecondaryButton = ({ width = 280, height = 44, ...props }: SvgProps) => (
         y2="52.5743"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop offset="0" stopColor="#B9B9B9" />
-        <Stop offset="1" stopColor="#B9B9B9" />
+        <Stop offset="0" stopColor="#BEBEBE" />
+        <Stop offset="1" stopColor="#BEBEBE" />
       </LinearGradient>
     </Defs>
     <Path
@@ -550,4 +550,29 @@ const BackArrowIcon = ({width=23, height=16, fill="none", ...props}: SvgProps) =
   </Svg>
 );
 
-export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon, HeartFillIcon, EmptyHeartIcon, PlusIcon, MinusIcon, BackArrowIcon, CartPageIcon, HeartPageIcon, HomepageIcon};
+const LocationIcon = ({width=40, height=40, ...props}: SvgProps) => (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 39 39"
+      fill="none"
+      // xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Circle cx={19.5} cy={19.5} r={19.5} fill="#6CC51D" />
+      <Path
+        d="M20 31C24.5 26.4 29 22.281 29 17.2C29 12.119 24.9706 8 20 8C15.0294 8 11 12.119 11 17.2C11 22.281 15.5 26.4 20 31Z"
+        stroke="white"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M20 21C22.2092 21 24 19.2092 24 17C24 14.7909 22.2092 13 20 13C17.7908 13 16 14.7909 16 17C16 19.2092 17.7908 21 20 21Z"
+        stroke="white"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+
+export { NoIcon, WalmartIcon, SafeWayIcon, TraderJoesIcon, PrimaryButton, SecondaryButton, ArrowIcon, RemoveCartIcon, AddToCartIcon, GasIcon, SearchIcon, SettingsIcon, HeartFillIcon, EmptyHeartIcon, PlusIcon, MinusIcon, BackArrowIcon, CartPageIcon, HeartPageIcon, HomepageIcon, LocationIcon};

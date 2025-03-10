@@ -2,14 +2,16 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import { useState } from "react";
-import { mockItems } from "@/constants/MockVars";
 import {genLongItems} from "@/constants/Tools";
 import useCartStore from "@/services/cartStore";
+import { useRouter } from 'expo-router';
+
 
 export default function Cart() {
-  // Define Cart Store
+  // Define vars
   const cartItems = useCartStore((state) => state.cart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const router = useRouter();
 
   // Hooks
   const [items, setItems] = useState(genLongItems(cartItems, handleRemove, () => null, false));
@@ -35,7 +37,7 @@ export default function Cart() {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.scrollCont}>
-          {items}
+          {items.length > 0 ? items : <Text>Your cart is empty</Text>}
         </View>
       </ScrollView>
       <View style={styles.totals}>
@@ -45,7 +47,7 @@ export default function Cart() {
         </View>
         <PrimaryButton
           title="Create A Plan!"
-          onPress={() => console.log("Checkout")}
+          onPress={() => router.push({ pathname: "/(tabs)/plan" })}
         />
       </View>
     </View>
