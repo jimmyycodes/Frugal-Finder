@@ -36,6 +36,12 @@ const queryGetProductsByPIDs = `
     JOIN Stores s ON p.sid = s.sid  
     WHERE p.pid IN (?);
 `;
+const queryGetSearchedProductsAllStoresByCategoryAndName = `
+        SELECT p.pid, s.sid, s.name AS store, p.name AS product, p.price, p.amount, p.description, p.searchQuery, p.imagePath 
+        FROM Products p 
+        JOIN Stores s ON p.sid = s.sid 
+        WHERE p.searchQuery LIKE ? OR p.name LIKE ?;
+        `;
 
 // get all products
 export const getAll = async (req: Request, res: Response): Promise<void> => {
@@ -73,6 +79,25 @@ export const getCategory = async (req: Request, res: Response): Promise<void> =>
 
         const searchQuery = `%${category}%`;
         const [results] = await pool.query(queryGetAllProductsFromAllStoresFromcategory, [searchQuery]);
+        res.json({results});
+    } catch(error) {
+        console.error("Database error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+// get product based on category query in url
+export const search = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const search = req.query.search;
+
+        if (!search) {
+            res.status(400).json({ error: "Missing search query parameter" });
+            return;
+        }
+
+        const searchQuery = `%${search}%`;
+        const [results] = await pool.query(queryGetSearchedProductsAllStoresByCategoryAndName, [searchQuery, searchQuery]);
         res.json({results});
     } catch(error) {
         console.error("Database error:", error);
