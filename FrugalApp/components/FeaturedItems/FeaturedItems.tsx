@@ -1,73 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import StoreList from '@/components/Icons/StoreList';
 import LongItem from '../Items/LongItem';
 import { mockItems } from '@/constants/MockVars';
 import { useRouter } from 'expo-router';
+import { singleItem } from '@/constants/Types';
+import { searchItems } from '@/services/searchService';
 
-const products = [
-  {
-    id: 1,
-    name: 'Fresh Baked Baguettes',
-    price: 5.00,
-    amount: '1 lb',
-    stores: "Walmart,Trader Joes,Target",
-    image: require('@/assets/images/produce/bread.png'),
-    backgroundColor: '#FFDDC1',
-    canAdd: true
-  },
-  {
-    id: 2,
-    name: 'Dairy Milk',
-    price: 3.00,
-    amount: '1 gal',
-    stores: "Safeway,Walmart,Target",
-    image: require('@/assets/images/produce/milk.png'),
-    backgroundColor: '#C1E1FF',
-    canAdd: true
-  },
-  {
-    id: 3,
-    name: 'Penne Pasta',
-    price: 2.00,
-    amount: '16 oz',
-    stores: "Trader Joes,Safeway,Walmart",
-    image: require('@/assets/images/produce/pasta.png'),
-    backgroundColor: '#C1FFC1',
-    canAdd: true
-  },
-  {
-    id: 4,
-    name: 'Filet Mignon',
-    price: 1.50,
-    amount: '8 oz',
-    stores: "Walmart,Target,Safeway",
-    image: require('@/assets/images/produce/steak.png'),
-    backgroundColor: '#FFC1C1',
-    canAdd: true
-  },
-  {
-    id: 5,
-    name: 'Specialty Wine',
-    price: 2.50,
-    amount: '750 ml',
-    stores: "Safeway,Target,Trader Joes",
-    image: require('@/assets/images/produce/wine.png'),
-    backgroundColor: '#E1C1FF',
-    canAdd: true
-  },
-  {
-    id: 6,
-    name: 'Organic Red Cabbage',
-    price: 3.00,
-    amount: '2 lbs',
-    stores: "Trader Joes,Safeway,Target",
-    image: require('@/assets/images/produce/purpleCabbage.png'),
-    backgroundColor: '#FFF1C1',
-    canAdd: true
-  },
-];
+
 
 function commaToList(values: string): string[] {
   return values.split(',').map(item => item.trim());
@@ -77,6 +18,18 @@ export default function FeaturedItems() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const router = useRouter();
+  const [products, setProducts] = useState<singleItem[]>([]);
+
+  useEffect(() => {
+    // Do search
+    const callSearch = async () => {
+      const results = await searchItems('meat');
+      setProducts(results);
+    };
+
+    callSearch();
+  }
+  , []);
 
   const toggleFavorite = (id: number) => {
     setFavorites(prev =>
@@ -94,7 +47,7 @@ export default function FeaturedItems() {
 
   const renderGridView = () => (
     <View style={styles.productsContainer}>
-      {mockItems.map((item) => (
+      {products.map((item) => (
         <TouchableOpacity
           onPress={() =>
             router.push({
@@ -118,32 +71,13 @@ export default function FeaturedItems() {
           <Text style={styles.productWeight}>{item.amount}</Text>
           <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
           <View style={styles.storeIconsContainer}>
-            <StoreList stores={commaToList(item.store)} />
+            <StoreList stores={[item.store]} />
           </View>
         </TouchableOpacity>
       ))}
     </View>
   );
 
-  const renderListView = () => (
-    <ScrollView style={styles.listContainer}>
-      {products.map((item) => (
-        <LongItem
-          key={item.id.toString()}
-          itemKey={item.id.toString()}
-          name={item.name}
-          price={item.price}
-          amount={item.amount}
-          store={commaToList(item.stores)[0]} // Pass first store for list view
-          image={item.image}
-          canAdd={item.canAdd}
-          onAdd={() => handleAdd(item.id)}
-          onRemove={() => handleRemove(item.id)}
-        />
-      ))}
-    </ScrollView>
-  );
-  // TODO: Fix button to switch between grid and list view
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -156,7 +90,7 @@ export default function FeaturedItems() {
           />
         </TouchableOpacity>
       </View>
-      {viewMode === 'grid' ? renderGridView() : renderListView()}
+      {renderGridView()}
     </View>
   );
 }

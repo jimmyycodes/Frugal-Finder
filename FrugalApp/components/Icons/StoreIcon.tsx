@@ -27,6 +27,12 @@ export default function StoreIcon({ size=15, store, overflow }: StoreIconProps) 
     case 'trader joe\'s':
       icon = <TraderJoesIcon width={size} height={size} />;
       break;
+    case 'traderjoe\'s':
+      icon = <TraderJoesIcon width={size} height={size} />;
+      break;
+    case 'traderjoes':
+      icon = <TraderJoesIcon width={size} height={size} />;
+      break;
   }
 
 

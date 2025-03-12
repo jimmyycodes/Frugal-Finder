@@ -11,19 +11,59 @@ interface EnhancedItem extends singleItem {
  * Search for items based on a search term
  * Returns items with enhanced display properties like multiple stores
  */
-export function searchItems(searchTerm: string): EnhancedItem[] {
+export async function searchItems(searchTerm: string): Promise<EnhancedItem[]> {
   if (!searchTerm) return [];
 
   const searchTermLower = searchTerm.toLowerCase();
 
-  // Filter and enhance items for display
-  return mockItems
-    .filter(item =>
-      item.name.toLowerCase().includes(searchTermLower) ||
-      item.category?.toLowerCase().includes(searchTermLower)
-    )
-    .map(item => enhanceItemForDisplay(item));
+  try {
+    // Call the search API
+    const items = await searchProducts(searchTerm);
+
+    // turn into singleItem
+    const singleItems: singleItem[] = items.map((item: any) => {
+      const singleItem: singleItem = {
+        name: item.product,
+        store: item.store,
+        price: item.price,
+        image: item.imagePath,
+        amount: item.amount,
+        desc: item.description,
+        key: item.pid.toString(),
+      };
+      return singleItem;
+    });
+
+    return singleItems.map((item) => enhanceItemForDisplay(item));
+  } catch (error) {
+    console.error("Error constructing or fetching products:", error);
+    return [];
+  }
 }
+
+const searchProducts = async (query: string) => {
+  try {
+    const response = await fetch(
+      `http://10.0.2.2:3000/api/search?search=${encodeURIComponent(query)}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
+};
 
 /**
  * Enhance an item with display properties like background color and multiple stores

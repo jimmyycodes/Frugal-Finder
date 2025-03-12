@@ -17,7 +17,7 @@ export default function CategoriesSection() {
 
   const handleCategoryPress = (category: string) => {
     // Navigate to search page with category as parameter
-    router.push({
+    router.replace({
       pathname: "/(tabs)/subPages/search",
       params: { searchText: category }
     });
