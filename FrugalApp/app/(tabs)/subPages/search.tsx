@@ -16,15 +16,15 @@ export default function Search() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   useEffect(() => {
-    // Perform search when searchText changes
-    setIsLoading(true);
-
-    // Simulate API request delay
-    setTimeout(() => {
-      const results = searchItems(searchText as string || '');
+    // Do search
+    const callSearch = async () => {
+      setIsLoading(true);
+      const results = await searchItems(searchText as string || '');
       setSearchResults(results);
       setIsLoading(false);
-    }, 800);
+    };
+
+    callSearch();
   }, [searchText]);
 
   const toggleFavorite = (key: string) => {
@@ -75,7 +75,7 @@ export default function Search() {
           </TouchableOpacity>
           <View style={[styles.imageContainer, { backgroundColor: item.backgroundColor || '#F5FFE1' }]}>
             <Image
-              source={{ uri: item.image }}
+              source={{ uri: item.image || "https://jchost.pl/blog/wp-content/uploads/2020/03/blad-429-too-many-requests-300x160.png" }}
               style={styles.productImage}
             />
           </View>
@@ -83,7 +83,7 @@ export default function Search() {
           <Text style={styles.productWeight}>{item.amount}</Text>
           <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
           <View style={styles.storeIconsContainer}>
-            <StoreList stores={commaToList(item.stores || item.store)} />
+            <StoreList stores={[item.store]} />
           </View>
         </TouchableOpacity>
       ))}

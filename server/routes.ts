@@ -14,34 +14,46 @@ const dbConfig: ConnectionOptions = {
     port: parseInt(process.env.DBPORT!),
     ssl: {ca: fs.readFileSync(process.env.SSLPATH!)}
 }
+const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY;
 
 
 // Create a connection pool
 const pool = mysql.createPool(dbConfig);
 
 const queryGetAllProductsFromAllStores = `
-    SELECT p.pid, p.sid, s.name AS store, p.name AS product, p.amount, p.description, p.price, p.searchQuery, p.imagePath 
-    FROM Products p 
+    SELECT p.pid, p.sid, s.name AS store, p.name AS product, p.amount, p.description, p.price, p.searchQuery, p.imagePath
+    FROM Products p
     JOIN Stores s ON p.sid = s.sid
+    LIMIT 25;
     `;
 const queryGetAllProductsFromAllStoresFromcategory = `
-        SELECT p.pid, s.sid, s.name AS store, p.name AS product, p.price, p.amount, p.description, p.searchQuery, p.imagePath 
-        FROM Products p 
-        JOIN Stores s ON p.sid = s.sid 
-        WHERE p.searchQuery LIKE ?;
+        SELECT p.pid, s.sid, s.name AS store, p.name AS product, p.price, p.amount, p.description, p.searchQuery, p.imagePath
+        FROM Products p
+        JOIN Stores s ON p.sid = s.sid
+        WHERE p.searchQuery LIKE ?
+        LIMIT 25;
         `;
 const queryGetProductsByPIDs = `
-    SELECT p.pid, s.sid, s.name AS store, p.name AS product, p.amount, p.description, p.price, p.searchQuery, p.imagePath 
-    FROM Products p 
-    JOIN Stores s ON p.sid = s.sid  
-    WHERE p.pid IN (?);
+    SELECT p.pid, s.sid, s.name AS store, p.name AS product, p.amount, p.description, p.price, p.searchQuery, p.imagePath
+    FROM Products p
+    JOIN Stores s ON p.sid = s.sid
+    WHERE p.pid IN (?)
+    LIMIT 25;
 `;
+const queryGetSearchedProductsAllStoresByCategoryAndName = `
+        SELECT p.pid, s.sid, s.name AS store, p.name AS product, p.price, p.amount, p.description, p.searchQuery, p.imagePath
+        FROM Products p
+        JOIN Stores s ON p.sid = s.sid
+        WHERE p.searchQuery LIKE ? OR p.name LIKE ?
+        LIMIT 25;
+        `;
 
 // get all products
 export const getAll = async (req: Request, res: Response): Promise<void> => {
     try {
         const [results] = await pool.query(queryGetAllProductsFromAllStores);
-        res.json({results});
+        const updatedResults = await replaceItemImages(results);
+        res.json({ updatedResults });
     } catch(error) {
         console.error("Database error:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -54,7 +66,8 @@ export const getFeatured = async (req: Request, res: Response): Promise<void> =>
 
     try {
         const [results] = await pool.query(queryGetProductsByPIDs, [arrayOfPIDs]);
-        res.json({ results });
+        const updatedResults = await replaceItemImages(results);
+        res.json({ updatedResults });
     } catch (error) {
         console.error("Database error:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -73,9 +86,83 @@ export const getCategory = async (req: Request, res: Response): Promise<void> =>
 
         const searchQuery = `%${category}%`;
         const [results] = await pool.query(queryGetAllProductsFromAllStoresFromcategory, [searchQuery]);
-        res.json({results});
+        const updatedResults = await replaceItemImages(results);
+        res.json({updatedResults});
     } catch(error) {
         console.error("Database error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
+
+// get product based on category query in url
+export const search = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const search = req.query.search;
+
+        if (!search) {
+            res.status(400).json({ error: "Missing search query parameter" });
+            return;
+        }
+
+        const searchQuery = `%${search}%`;
+        const [results] = await pool.query(queryGetSearchedProductsAllStoresByCategoryAndName, [searchQuery, searchQuery]);
+        const updatedResults = await replaceItemImages(results);
+        res.json(updatedResults);
+    } catch(error) {
+        console.error("Database error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+
+// Functions
+const replaceImage = async (item: any) => {
+    try {
+        const query = item.searchQuery || item.product;
+        const image = await getRelatedImage(query);
+        return { ...item, imagePath: image };
+    }
+    catch (error) {
+        console.error("Error fetching images:", error);
+        return { ...item, imagePath: "" };
+    }
+}
+
+const replaceItemImages = async (queryResult: mysql.QueryResult) => {
+    if (!Array.isArray(queryResult)) {
+        console.error("Expected an array of rows but received:", queryResult);
+        return queryResult;
+    }
+
+    const updatedRows = await Promise.all(queryResult.map(replaceImage));
+
+    return updatedRows;
+}
+
+const getRelatedImage = async (query: string) => {
+    // fetch image from pixabay
+
+    try {
+      const response = await fetch(
+        `https://pixabay.com/api/?key=${PIXABAY_API_KEY}&q=${encodeURIComponent(query)}&image_type=photo`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const hits = data.hits;
+      const randomIndex = Math.floor(Math.random() * hits.length);
+      return hits[randomIndex].webformatURL;
+    } catch (error) {
+      console.error("Error fetching images:", error);
+      return "";
+    }
+  };
