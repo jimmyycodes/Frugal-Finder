@@ -1,8 +1,6 @@
 name: Trigger Scraper
 
 on:
-  schedule:
-    - cron: '0 2 * * *'
   workflow_dispatch:
 
 # job to run the scraper
